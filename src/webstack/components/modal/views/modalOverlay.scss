@@ -46,8 +46,9 @@
     min-width: 450px;
     max-width: var(--s-6-width);
     @media(max-height: 900px) {
-        top:var(--s-9);
-        bottom:var(--s-9);
+        top: unset;
+        // top:var(--s-1);
+        // bottom:var(--s-9);
     }
     @media(max-width: 900px) {
         min-width: unset;

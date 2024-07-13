@@ -1,3 +1,4 @@
+import { IFormField } from "@webstack/components/UiForm/models/IFormModel";
 import axios, { AxiosError } from "axios";
 
 export default class ApiService {
@@ -18,18 +19,6 @@ export default class ApiService {
       });
     });
   }
-  // protected get<T>(uri: string, headers?: { 'Content-Type': 'application/json' }): Promise<T> {
-  //   return new Promise<T>((resolve, reject) => {
-  //     axios.get<T>(this.getFullUrl(uri), {
-  //       headers: this.getDefaultHeaders(),
-  //     }).then(resp => {
-  //       resolve(resp.data);
-  //     }).catch((error: AxiosError) => {
-  //       reject(this.createApiErrorForAxios(error));
-  //     });
-  //   });
-  // }
-  
 
   protected post<TInput, TResult>(uri: string, input?: TInput, headers?: {[key: string]: string}): Promise<TResult> {
     return new Promise<TResult>((resolve, reject) => {
@@ -45,6 +34,36 @@ export default class ApiService {
     });
   }
 
+  protected createApiErrorForAxios(error: any): ApiError {
+    if (!error.isAxiosError) {
+      return new ApiError("Unhandled error", 500);
+    }
+
+    if (error.response) {
+      const response: any = error.response;
+      const data: any = response.data;
+      if (data && data.status) {
+        const status = data.status.toString() as string;
+        if (status.startsWith('4') && data.title) {
+          return new ApiError(data.title, response.status, response.data?.code, response.data);  
+        }
+      }
+
+      if (error?.detail?.fields) {
+        return new FormFieldsException(error.detail.fields);
+      } else if (error.message) {
+        return new ApiError(error.message, response.status, response.data?.code, response.data);
+      }
+
+      return new ApiError("Unhandled Error", response.status, response.data?.code, response.data);
+    }
+
+    if (error.request) {
+      return new ApiError("No response was received");
+    }
+
+    return new ApiError("Unhandled Error");
+  }
   protected put<TInput, TResult>(uri: string, input: TInput): Promise<TResult> {
     return new Promise<TResult>((resolve, reject) => {
       axios.put<TResult>(this.getFullUrl(uri), input, {
@@ -94,58 +113,62 @@ export default class ApiService {
     return this.apiEndpoint + uri;
   }
 
-  protected createApiErrorForAxios(error: AxiosError): ApiError {
+  // protected createApiErrorForAxios(error: any): ApiError {
+  //   if (!error.isAxiosError) {
+  //     return new ApiError("Unhandled error", 500);
+  //   }
 
-    if (!error.isAxiosError) {
-      // error format is unknown
-      return new ApiError("unhandled error (ws.bc.1)", 500);
-    }
+  //   if (error.response) {
+  //     const response: any = error.response;
+  //     const data: any = response.data;
+  //     if (data && data.status) {
+  //       const status = data.status.toString() as string;
+  //       if (status.startsWith('4') && data.title) {
+  //         return new ApiError(data.title, response.status, response.data?.code, response.data);  
+  //       }
+  //     }
 
-    if (error.response) {
-      const response:any = error.response;
-      const data:any = response.data;
-      // Standard Microservice Errors
-      if (data && data.status) {
-        const status = data.status.toString() as string;
-        if (status.startsWith('4') && data.title) {
-          return new ApiError(data.title, response.status, response.data?.code, response.data);  
-        }
-      }
+  //     if (error?.detail?.fields) {
+  //       return new FormFieldsException(error.detail.fields);
+  //     } else if (error.message) {
+  //       return new ApiError(error.message, response.status, response.data?.code, response.data);
+  //     }
 
-      if (error.message) {
-        return new ApiError(error.message, response.status, response.data?.code, response.data);
-      }
+  //     return new ApiError("Unhandled Error", response.status, response.data?.code, response.data);
+  //   }
 
-      return new ApiError("Unhandled Error", response.status, response.data?.code, response.data);
-    }
+  //   if (error.request) {
+  //     return new ApiError("No response was received");
+  //   }
 
-    if (error.request) {
-      // The request was made but no response was received
-      // error.request is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js      
-      return new ApiError("no response was received");
-    }
-
-    // Something happened in setting up the request that triggered an Error
-    // use error.message or error.config
-
-    return new ApiError("Unhandled Error");
-
-  }
-
+  //   return new ApiError("Unhandled Error");
+  // }
 }
 
 export class ApiError {
   public status?: number;
-  // public code?: string;
   public message?: string;
   public error?: boolean;
   public detail?: string;
-  // public errorHandlerResult?: ErrorHandlerResult;
-  constructor(message?: string, status?: number, code?: string, detail?:string) {
+
+  constructor(message?: string, status?: number, code?: string, detail?: string) {
     this.message = message ?? 'Unhandled Error'
     this.status = status;
     this.detail = detail;
-    // this.code = code;
     this.error = true;
   }
 }
+
+export class FormFieldsException extends ApiError {
+  public fields?: IFormField[];
+
+  constructor(fields?: IFormField[], status?: number, code?: string) {
+    super("Form validation error", status, code);
+    this.fields = fields;
+    this.error = true;
+  }
+}
+
+
+
+

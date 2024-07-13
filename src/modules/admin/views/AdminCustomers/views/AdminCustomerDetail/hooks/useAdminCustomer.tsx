@@ -72,7 +72,6 @@ const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level:
     if (['address', 'firstName', 'lastName', 'phone'].includes(name) && value) {
       fieldContext.required = true;
     }
-
     if (!context[formName]) context[formName] = [fieldContext];
     else context[formName].push(fieldContext);
   };
@@ -142,18 +141,17 @@ const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level:
     const isDisplayField = () => {
       let context = false;
       if (keyToUse === 'contact') context = ['name', 'email', 'phone'].includes(key);
-      if (keyToUse === 'user') context = ['email', 'email_verified'].includes(key);
+      if (keyToUse === 'user') context = ['email', 'email_verified','password'].includes(key);
       if(keyToUse.includes('device'))context = true;
       return context;
     };
-
     if (isDisplayField()) {
       setDisplayFields((prevDisplay: any) => {
         const updatedDisplay = { ...prevDisplay };
         if (!updatedDisplay[keyToUse]) {
           updatedDisplay[keyToUse] = {};
         }
-        updatedDisplay[keyToUse][key] = ['undefined', 'null', 'boolean'].includes(typeof value) || String(value).length ? `${value}` : value || "n/a";
+        updatedDisplay[keyToUse][key] = value
         return updatedDisplay;
       });
     }

@@ -5,7 +5,6 @@ import IAuthenticatedUser from "~/src/models/ICustomer";
 const canViewCustomer =(customer:ICustomer, user?:IAuthenticatedUser)=>{
     const{mid}=environment.merchant;
     const level = user?.metadata?.user?.clearance;
-
     if(!customer || !level)return;
     const cust_mid = customer?.metadata?.merchant?.mid
     const is_merchant_admin = level >= 10 && cust_mid === mid;

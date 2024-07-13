@@ -1,4 +1,3 @@
-// Relative Path: ./InstagramSignIn.tsx
 import React, { useState } from 'react';
 import styles from './InstagramAuthenticate.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
@@ -9,58 +8,67 @@ import ISocialService from '~/src/core/services/SocialService/ISocialService';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { ICustomer } from "~/src/models/ICustomer";
+import { InstagramAuthenticateRequest } from '~/src/core/services/SocialService/ISocialService';
 
-// Remember to create a sibling SCSS file with the same name as this component
-
-const InstagramAuthenticate: React.FC<any> = (user: ICustomer): any => {
-
-  const formPrepData: IFormField[] = [
+const InstagramAuthenticate: React.FC<{ user: ICustomer }> = ({ user }) => {
+  const initialFormFields: IFormField[] = [
     {
       name: "username",
-      label: "username",
+      label: "Username",
       type: "text",
       autoComplete: "off"
-    }, {
-      label: "password",
+    },
+    {
       name: "password",
+      label: "Password",
       type: "password",
       autoComplete: "off"
     }
-  ]
-  const [fields, setField] = useFormState(formPrepData);
+  ];
 
+  const [fields, setField] = useFormState(initialFormFields);
+  const [error, setError] = useState<string | null>(null);
   const socialService = getService<ISocialService>("ISocialService");
-  const onSubmit = async (submitFields?: any) => {
-    // console.log('[ onSubmit ]', submitFields)
+
+  const handleSubmit = async () => {
+    if(!user?.email) return;
     const username = findField(fields, 'username')?.value;
     const password = findField(fields, 'password')?.value;
-    const request = {
+
+    const request: InstagramAuthenticateRequest = {
       email: user.email,
-      username,
-      password
-    }
+      username: username as string,
+      password: password as string
+    };
+    console.log(request)
     try {
       const response = await socialService.instagramAuthenticate(request);
-      // console.log('[ onSubmit ] ( SUCCESS! )', response)
-
+      console.log('Instagram authentication successful:', response);
+      // Handle success scenario, maybe update the UI accordingly
     } catch (error: any) {
-      console.error('Instagram [ onSubmit ]( error )', error)
-
+      console.error('Instagram authentication error:', error?.details);
+      if (error?.fields) {
+        const fieldError = error.fields[0];
+        setError(`${fieldError.name}: ${fieldError.error}`);
+      } else {
+        setError('An unknown error occurred.');
+      }
     }
-
-
   };
- 
+
   return (
     <>
       <style jsx>{styles}</style>
       <div className='instagram-sign-in'>
-        <div className='instagram-sign-in__header'>Authenticate <UiIcon icon="fa-instagram" /></div>
+        <div className='instagram-sign-in__header'>
+          Authenticate <UiIcon icon="fa-instagram" />
+        </div>
+        {error && <div className="error-message">{error}</div>}
         <UiForm
           fields={fields}
           onChange={setField}
-          onSubmit={onSubmit}
-          submitText={'instagram sign in'}
+          onSubmit={handleSubmit}
+          submitText={'Instagram Sign In'}
         />
       </div>
     </>

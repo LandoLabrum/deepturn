@@ -33,9 +33,7 @@
       position: relative;
     }
   }
-  &-flat{
-    width: var(--s-2);
-  }
+  &-flat{ padding: 0; }
   &-link {
     width: var(--s-5);
     @media(max-width:1100px) {

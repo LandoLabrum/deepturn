@@ -42,6 +42,7 @@ const AdminCustomers: React.FC = () => {
             {query.cid !== 'add' && (
               <UiButton
                 traits={{ afterIcon: 'fa-user-plus' }}
+                variant='dark'
                 onClick={() => updateViewUrl('add')}
               >
                 Add
@@ -49,6 +50,7 @@ const AdminCustomers: React.FC = () => {
             )}
             {query.cid !== 'list' && (
               <UiButton
+                variant='dark'
                 traits={{ afterIcon: 'fa-user-group' }}
                 onClick={() => updateViewUrl('list')}
               >

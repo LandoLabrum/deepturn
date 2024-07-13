@@ -119,18 +119,18 @@
         font-size: var(--s-7);
         padding: 0 ;
     }
-
-    &--input {
-        color: inherit;
-        &::placeholder{
-            color: inherit
-        }
-        &-sm{
+    &--input{
+        
+        &.form-control__element-sm{
             font-size: var(--s-8);
             height: var(--s-4);
             padding: 0 var(--s-9);
+            &.form-control__element--flat{
+                padding-right: 0;
+            }
         }
     }
+
 
     &-md {
         font-size: var(--s-6);
@@ -205,7 +205,7 @@
     }
     &--button.form-control__element--flat {
         width: inherit;
-        gap: var(--s-12);
+        gap: var(--s-9);
         &:first-child{
             padding: 0;
         }
@@ -220,19 +220,25 @@
   
     &--input,
     &--textarea {
-
+        color: inherit;
+        &::placeholder{
+            color: inherit
+        }
+     
+        &:not( .form-control__element--transparent, .form-control__element--flat){
             -webkit-text-fill-color: var(--gray-50);
             --ui-icon-color: var(--gray-50);
             background-color: var(--gray-60-o);
-            border: solid 1px var(--gray-50-o) !important;
+            border: solid 1px var(--gray-50-o);
             box-shadow: inset 1px 1px 3px 2px var(--gray-80-o);
+        }
         &:not( &--signature) {
             font-family: 'Game', sans-serif;
             font-style: italic;
         }
         
         &:focus-within {
-            &:not(.form-control__element--nav-item, .form-control__element--signature, .form-control__element--transparent) {
+            &:not(.form-control__element--nav-item, .form-control__element--signature, .form-control__element--transparent, .form-control__element--flat) {
                 border: solid 1px var(--gray-10) !important;
                 --ui-icon-color: var(--gray-10);
                 -webkit-text-fill-color: var(--gray-50);
@@ -256,6 +262,7 @@
             padding-left: var(--s-8);
         }
     }
+
 
     &--textarea {
         height: max-content;

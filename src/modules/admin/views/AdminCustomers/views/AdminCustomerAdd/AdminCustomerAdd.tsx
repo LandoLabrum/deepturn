@@ -13,10 +13,13 @@ import environment from '~/src/core/environment';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import capitalize from '@webstack/helpers/Capitalize';
+import UiButton from '@webstack/components/UiButton/UiButton';
+import { useRouter } from 'next/router';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const AdminCustomerAdd: React.FC = () => {
+  const router = useRouter();
   const {openModal, closeModal, isModalOpen}=useModal();
   const [loader, setLoader] = useLoader();
 const formDefaultCustomerAdd = useCustomerAddForm()
@@ -86,14 +89,23 @@ const formDefaultCustomerAdd = useCustomerAddForm()
       } catch (e: any) { console.log('[ Create Customer ERROR ]', e); return e }
     }
     const ModalBody = (response:any) =>{
-      return Object.entries(response).map(([k,v]:any)=>{
-        if(k!== 'data')return <>
-        <style jsx>{styles}</style>
-        <div key={k} className='admin-customer-add__modal-body'>
-          <div className='body--key'>{capitalize(k)}</div>
-          <div className='body--value'>{typeof v == 'boolean' ? <UiIcon icon={v?'fa-check':"fa-xmark"}/>:v}</div>
-        </div></>
-    })
+      let id: string | undefined = undefined;
+      return <>
+          <style jsx>{styles}</style>
+      {Object.entries(response).map(([k,v]:any)=>{
+        if(!['data','id'].includes(k))return <div key={k}>
+          <div className='admin-customer-add__modal-body'>
+            <div className='body--key'>{capitalize(k)}</div>
+            <div className='body--value'>{typeof v == 'boolean' ? <UiIcon icon={v?'fa-check':"fa-xmark"}/>:v}</div>
+          </div>
+        </div>
+        else if(k == 'id')id = v;
+    })}
+    {id && <UiButton onClick={()=>{
+          closeModal();
+          router.push({query:{cid: id}});
+        }}>Customer</UiButton>}
+      </>
     }
     handleSubmit().then((a) => {
       console.log("[ handleSubmit().then((a) ]",{a})
@@ -115,7 +127,6 @@ const formDefaultCustomerAdd = useCustomerAddForm()
         <div className='admin-customer-add__title'>
           add customer
         </div>
-        {/* {JSON.stringify(customer)} */}
         <UiForm
           fields={customer}
           onChange={updateField}

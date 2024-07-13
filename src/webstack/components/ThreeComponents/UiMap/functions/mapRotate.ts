@@ -42,14 +42,14 @@ function setUpInteractionListeners(map: MapboxMap, rotateFunction: () => void): 
     map.on("mousemove", endInteraction);
     map.on("touchmove", endInteraction);
 
-    map.on("userhoverstart", () => {
-        hoverPaused = true;
-    });
+    // map.on("userhoverstart", () => {
+    //     hoverPaused = true;
+    // });
 
-    map.on("userhoverend", () => {
-        hoverPaused = false;
-        rotateFunction();
-    });
+    // map.on("userhoverend", () => {
+    //     hoverPaused = false;
+    //     rotateFunction();
+    // });
 
     if (map.getLayer(hoverLayer)) {
         map.on('mouseenter', hoverLayer, () => map.fire('userhoverstart'));

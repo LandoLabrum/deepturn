@@ -1,8 +1,7 @@
 import ApiService from "../ApiService";
 import environment from "~/src/core/environment";
-import ISocialService from "./ISocialService";
+import ISocialService, { InstagramAuthenticateRequest } from "./ISocialService";
 import { encryptString } from "@webstack/helpers/Encryption";
-import { useUser } from "../../authentication/hooks/useUser";
 
 export default class SocialService
   extends ApiService
@@ -10,11 +9,8 @@ export default class SocialService
   constructor() {
     super(environment.serviceEndpoints.social);
   }
-  public async instagramAuthenticate({username, password, email}:{
-    username:string,
-    password:string
-    email:string
-  }): Promise<any> {
+
+  public async instagramAuthenticate({username, password, email}: InstagramAuthenticateRequest): Promise<any> {
     if (!username || !password || !email) return;
     const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
     const request = {
@@ -26,12 +22,16 @@ export default class SocialService
 
     const encryptedLoginData = encryptString(JSON.stringify(request), ENCRYPTION_KEY);
 
-    const response = await this.post<any, any>(
-      `/usage/social/instagram/authenticate`,
-      { data: encryptedLoginData },
-    );
-    console.log("[ SOCIAL (IG AUTH) ]", response)
-    return response;
+    try {
+      const response = await this.post<any, any>(
+        `/usage/social/instagram/authenticate`,
+        { data: encryptedLoginData },
+      );
+      console.log("[ SOCIAL (IG AUTH) ]", response)
+      return response;
+    } catch (error) {
+      console.log("[ SOCIAL (IG AUTH) EERRR ]", error)
+      throw error;
+    }
   }
-
 }

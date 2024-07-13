@@ -9,7 +9,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
     &__body,
     &__header {
         width: 100%;
@@ -23,7 +22,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: var(--s-1);
+        gap: var(--s-9);
         // background-color: #f30;
 
     }

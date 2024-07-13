@@ -91,7 +91,6 @@ const UiForm = ({
     };
     
     const fieldsCanPopulate = Array(fields)?.length;
-
     useEffect(() => {
         handleComplete();
     }, [fields, disabled, loading, title]);

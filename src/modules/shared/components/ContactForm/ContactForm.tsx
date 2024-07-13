@@ -12,7 +12,6 @@ interface IContactFormProps {
   }
   onSubmit: (contactData: any) => void;
   user?: any;
-  // user?: IAuthenticatedUser;
   fieldErrors?: any;
   payment?: any;
   title?: string | React.ReactElement | boolean;
@@ -20,20 +19,16 @@ interface IContactFormProps {
 
 const ContactForm: React.FC<IContactFormProps> = (props) => {
   const { onSubmit, user, submit, title = 'contact', fieldErrors } = props;
-  const window: any = useWindow();
-  const width: string | undefined = window.width <= 900 ? "33%" : undefined;
+  const windowSize = useWindow();
+
+  const getWidth = (): string => windowSize.width >= 900 ? "33%" : "100%";
+  const width = getWidth();
 
   const defaultContactFields: IFormField[] = [
-    { name: 'name', label:"name", type: 'text', placeholder: 'Herbie Hancock', required: true,
-      // value:'larz survey'
-    },
-    { name: 'email',label: 'email', type: 'email', placeholder: 'your@email.com',  required: true, width,
-      // value:'larzrandana@gmail.com'
-    },
-    { name: 'phone', value:'1 (435) 200 - 3006', label: 'phone', type: 'tel', placeholder: '1 (000) 000-0000', required: true, width },
-    { name: 'address',label: 'address', type: 'text', placeholder: 'Your Address', required: true, width, 
-      // value:{"line1":"333 S 200 E","line2":"","city":"Salt Lake City","state":"UT","postal_code":"84111","country":"US",} 
-    },
+    { name: 'name', label: "name", type: 'text', placeholder: 'Herbie Hancock', required: true },
+    { name: 'email', label: 'email', type: 'email', placeholder: 'your@email.com', required: true, width },
+    { name: 'phone', value: '1 (435) 200 - 3006', label: 'phone', type: 'tel', placeholder: '1 (000) 000-0000', required: true, width },
+    { name: 'address', label: 'address', type: 'text', placeholder: 'Your Address', required: true, width },
   ];
 
   const [fields, setFields] = useState<IFormField[]>(defaultContactFields);
@@ -91,9 +86,9 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
         color = errorColor;
       }
     }
-    console.log({name:field.name, text, b:   field.name == 'text'})
+
     const hasError = findField(fieldErrors, field.name);
-    if(fieldErrors && hasError && field.name == text){
+    if (fieldErrors && hasError && field.name == text) {
       delete field.error;
     }
     const context = { ...field, label: { text, color } };
@@ -112,28 +107,39 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
     if (fieldErrors) {
       const updatedFields = fields.map((field: IFormField) => {
         const errorField = findField(fieldErrors, field.name);
-        console.log({errorField:errorField, name:field.name})
-        if (errorField) {
-          return { ...field, error: errorField.error };
-        }
+        if (errorField) return { ...field, error: errorField.error };
         return field;
       });
       setFields(updatedFields);
     }
-  }, [fieldErrors]); 
+  }, [fieldErrors]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newWidth = getWidth();
+      setFields(prevFields => prevFields.map(field => ({
+        ...field,
+        width: field.name !== 'name' ? newWidth : field.width
+      })));
+    };
+
+    handleResize(); // Call it once to set initial widths
+  }, [windowSize.width]);
 
   return (
     <>
       <style jsx>{styles}</style>
       <div className='contact-form'>
         {title && <div className='contact-form__title'>{title}</div>}
-        {fieldErrors && <ul>
-          { Object.entries(fieldErrors).map(([index, field]:any)=>{
-              return <li key={index}>
+        {fieldErrors && (
+          <ul>
+            {Object.entries(fieldErrors).map(([index, field]: any) => (
+              <li key={index}>
                 <strong>{field?.name}: </strong>{field?.error}
               </li>
-          })}
-          </ul>}
+            ))}
+          </ul>
+        )}
         <UiForm
           fields={fields}
           disabled={disabled}

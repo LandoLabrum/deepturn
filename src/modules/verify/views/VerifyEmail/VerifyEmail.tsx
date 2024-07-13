@@ -10,6 +10,7 @@ import Login from '~/src/modules/authentication/views/Login/controller/Login';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import useDevice from '~/src/core/authentication/hooks/useDevice';
+import { useGuest } from '~/src/core/authentication/hooks/useGuest';
 
 interface IVerifyEmail {
   token?: string;
@@ -30,7 +31,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
   const [state, setState] = useState<IVerifyEmailState>({ status: 'verifying_email' });
   const MemberService = getService<IMemberService>("IMemberService");
   const { openModal } = useModal();
-
+  const guest = useGuest();
   const handleVerify = async () => {
     if (!token) {
       setState({ status: 'no_token_present' });
@@ -49,7 +50,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
         field.readonly = true;
         return field;
       });
-      console.log({ responseFields });
+      console.log({ verifiedResponse });
       if (verifiedResponse) setState({
         ...verifiedResponse,
         fields: verifiedResponse?.fields || responseFields
@@ -96,20 +97,17 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
 
   const onSubmit = async () => {
     const newPassword = state?.fields?.find((f: IFormField) => f.name == 'password')?.value;
-    let customer = state.customer;
-    customer.metadata.user.password = newPassword;
-    customer.metadata.user.devices = [device];
-    try {
-      console.log("[ verify_email (CUSTOMER) ]", customer);
-      const updateMember = await MemberService.modifyCustomer(customer);
+    let request = state.customer;
+    request.metadata.user.password = newPassword;
+    request.metadata.user.devices = [device];
+      console.log("[ verify_email (CUSTOMER) ]", request);
+      const updateMember = await MemberService.modifyCustomer(request);
+      console.log({updateMember});
       if (updateMember) {
-        console.log(updateMember);
         handleLoginModal();
-        // onSuccess(updateMember.email);
+        onSuccess(updateMember.email);
       }
-    } catch (error: any) {
-      alert(JSON.stringify(error));
-    }
+
   };
 
   const handleLoginModal = () => {
@@ -125,6 +123,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
   return (
     <>
       <style jsx>{styles}</style>
+      {JSON.stringify(guest)}
       <div className='verify-email'>
         <div className={`verify-email__content${state.status === 'verification_success' ? ' verify-email__content--success' : ''}`}>
           <div className='verify-email__content--loader'>

@@ -6,7 +6,7 @@ import CustomToken from "~/src/models/CustomToken";
 import MemberToken from "~/src/models/MemberToken";
 import IAuthenticatedUser, { GuestContext } from "~/src/models/ICustomer";
 
-import ApiService, { ApiError } from "../ApiService";
+import ApiService, { ApiError, FormFieldsException } from "../ApiService";
 import IMemberService, { IDecryptJWT, IEncryptJWT, IEncryptMetadataJWT, IResetPassword, ISessionData, OResetPassword } from "./IMemberService";
 import { IPaymentMethod } from "~/src/modules/profile/model/IMethod";
 import { encryptString } from "@webstack/helpers/Encryption";
@@ -91,7 +91,7 @@ export default class MemberService
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
     if (!cust.metadata.user.password) {
-      throw new ApiError("Password is required", 400, "MS.SI.02");
+      throw new FormFieldsException([{name:"password", "error": "Password is required"}], 400, "MS.SI.02");
     }
 
     // Encrypt the login data
@@ -103,20 +103,15 @@ export default class MemberService
       await this.post<{}, any>(
         "usage/auth/login",
         { data: encryptedLoginData },
-      ),
-      TIMEOUT // 5 seconds timeout
-    );
+        ), TIMEOUT 
+      );
     // console.log("[ signIn ]", memberJwt)
     if (!memberJwt?.fields) {
       this.saveMemberToken(memberJwt);
       this.saveLegacyAuthCookie(memberJwt);
       return this._getCurrentUser(true)!;
     }
-    else {
-
-      return memberJwt
-    }
-
+    return memberJwt
   };
 
 
@@ -401,6 +396,7 @@ export default class MemberService
           `api/customer/`,
           { data: encryptedSignUp },
         );
+        console.log("[ MODIFY RES ]",{res})
         let memberJwt: any = null;
         if (res && res?.data) memberJwt = res?.data;
         this.saveMemberToken(memberJwt);

@@ -13,34 +13,35 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 const Instagram: React.FC<any> = ({ current }: { current?: string }) => {
     const [view, setView] = useState<string | undefined>('signin');
     const [credentials, setCredentials] = useState<any | undefined>();
-    const user = useUser();
+    const user:any = useUser();
     const [loader, setLoader]=useLoader();
-    const views = {
-        signin: <InstagramAuthenticate {...user} />,
-        // authenticating: <UiLoader height="1000px" text={`signing in: ${credentials?.username}`} />
-    };
-    const viewProps = { views, currentView: view };
-
-   
-   useEffect(() => {
-    const usersSocialServices = user?.metadata?.user?.social;
-    if(usersSocialServices?.length){
-      const igData = usersSocialServices.findLast((a:any,k:any)=>usersSocialServices[k])?.authorization_data;
-      if(igData?.username){
-        setCredentials(igData);
-        setLoader({
-            active: true,
-            body:`signing in: ${credentials?.username}`,
-            backgroundColor:"#20202090"
-        })
-        // setView("authenticating");
-      }
-    }
-   }, []);
+    
+    
+    useEffect(() => {
+        const usersSocialServices = user?.metadata?.user?.social;
+        if(usersSocialServices?.length){
+            const igData = usersSocialServices.findLast((a:any,k:any)=>usersSocialServices[k])?.authorization_data;
+            if(igData?.username){
+                setCredentials(igData);
+                // setLoader({
+                    //     active: true,
+                    //     body:`signing in: ${credentials?.username}`,
+                    //     backgroundColor:"#20202090"
+                    // })
+                    // setView("authenticating");
+                }
+            }
+        }, []);
+        const views = {
+            signin: <InstagramAuthenticate user={user} />,
+            authenticating: <UiLoader height="1000px" text={`signing in: ${credentials?.username}`} />
+        };
+        const viewProps = { views, currentView: view };
     return (
         <>
             <style jsx>{styles}</style>
-            {/* {JSON.stringify(user?.metadata?.user)} */}
+            {/* {JSON.stringify(credentials)} */}
+            {JSON.stringify(user?.email)}
             <div className='instagram'>
                 <div className='instagram--view'>
                     <UiViewLayout
