@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, createContext, useCallback, use
 import { useRouter } from "next/router";
 import Navbar from "@shared/components/Navbar/controller/Navbar";
 import styles from "./Header.scss";
-import useWindow from "@webstack/hooks/useWindow";
+import useWindow from "@webstack/hooks/window/useWindow";
 import environment from "~/src/core/environment";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { debounce, head } from "lodash";
@@ -36,7 +36,7 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         <div id="header-container" className={`header__container ${merchantName}--${pathClass}`}
         >
           <Navbar />
-          <Header />
+          {/* <Header /> */}
         </div>
         {children}
       </HeaderContext.Provider>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useWindow from "./useWindow";
+import useWindow from "./window/useWindow";
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 
 interface IuseClassWidths {

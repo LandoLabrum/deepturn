@@ -212,9 +212,9 @@ export function colorPercentage(percentage: number, colorReverse?: boolean, back
 
   return color;
 }
-export function numberToUsd(amount: number) {
-  if (!amount) return "loading"
-  const formattedAmount = (amount / 100).toFixed(2);
+export function numberToUsd(amount?: number | string) {
+  if (amount == undefined) return "loading"
+  const formattedAmount = (Number(amount) / 100).toFixed(2);
   return `$${formattedAmount}`;
 }
 export function calculateCartTotal(cart: any) {

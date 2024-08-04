@@ -123,7 +123,7 @@ const VerifyEmail: React.FC<any> = ({ token, onSuccess }: IVerifyEmail) => {
   return (
     <>
       <style jsx>{styles}</style>
-      {JSON.stringify(guest)}
+      {/* {JSON.stringify(guest)} */}
       <div className='verify-email'>
         <div className={`verify-email__content${state.status === 'verification_success' ? ' verify-email__content--success' : ''}`}>
           <div className='verify-email__content--loader'>

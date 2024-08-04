@@ -32,7 +32,7 @@ const UiMedia: React.FC<IMedia> = ({ src, variant, type, alt, loadingText, rotat
 
   const handleError = (event: any) => {
     event.preventDefault();
-    // console.log('[ ERROR ]', event)
+    console.log('[ ERROR ]', {event, imageControlProps})
     if (!imageControlProps.error) {
       setImageControlProps({ ...imageControlProps, error: <RefreshLoadingText />});
     }

@@ -21,6 +21,7 @@ const {customers, refresh, hasMore}=useAdminCustomers()
         <div className='admin-customer-list__table'>
           <AdapTable
             // page={1}
+            variant="mini"
             // limit={5}
             // total={Number(Object(customers)?.length)}
             // setPage={console.log}

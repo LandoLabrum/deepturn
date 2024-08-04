@@ -31,6 +31,7 @@ const AdminCustomers: React.FC = () => {
     add: <AdminCustomerAdd />,
   };
 
+useEffect(() => {}, [query]);
 
   return (
     <>

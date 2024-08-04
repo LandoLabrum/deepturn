@@ -22,7 +22,7 @@ const Admin = () => {
     sales: <AdminSales/>,
     operations: <h1>Operations</h1>,
     finance: <h1>Finance and Accounting</h1>,
-    marketing: <h1>Marketing</h1>,
+    marketing: <AdminMarketing/>,
     humanResources: <h1>Human Resources</h1>,
     customerService: <h1>Customer Service</h1>,
     infoTechnology: <h1>Information Technology</h1>,

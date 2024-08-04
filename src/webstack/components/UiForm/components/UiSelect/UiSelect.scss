@@ -86,14 +86,14 @@ $el_gap: 7px;
     z-index: 3;
     min-width: 100%;
     width: max-content;
-    // &.nav-item__active {
-    //   right: 0;
-    //   @media (max-width: 900px) {
-    //     z-index: 3;
-    //     margin-top: 0;
-    //     outline: none;
-    //   }
-    // }
+    &.nav-item--active {
+      right: 0;
+      @media (max-width: 900px) {
+        z-index: 3;
+        margin-top: 0;
+        outline: none;
+      }
+    }
   }
 }
 

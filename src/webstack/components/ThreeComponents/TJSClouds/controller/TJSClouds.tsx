@@ -2,7 +2,7 @@ import { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, extend } from '@react-three/fiber';
 import { Shape, ShapeGeometry, MeshBasicMaterial, Mesh, Vector2 } from 'three';
 import { OrbitControls } from '@react-three/drei';
-import useWindow from '@webstack/hooks/useWindow';
+import useWindow from '@webstack/hooks/window/useWindow';
 
 extend({ OrbitControls });
 

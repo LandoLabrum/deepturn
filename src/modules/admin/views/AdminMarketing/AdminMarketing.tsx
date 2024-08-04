@@ -1,25 +1,47 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './AdminMarketing.scss'; // Ensure the filename is correct
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import environment from '~/src/core/environment';
 import CreatePDF from '@webstack/components/CreatePDF/controller/CreatePDF';
+import UiButton from '@webstack/components/UiButton/UiButton';
+import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import UserMethods from '~/src/modules/profile/views/UserMethods/controller/UserMethods';
 
 const AdminMarketing: React.FC = () => {
+  const [view, setView] = useState('start')
   const pdfRef = useRef<HTMLDivElement>(null); // Correctly typed useRef
-// useEffect(()=>{},[]);
+  // useEffect(()=>{},[]);
+  const AdminMarketingProgram = (props: any) => {
+    return <>
+      <style jsx>{styles}</style>
+
+      <div className='marketing-program-card'>
+        <UiIcon icon={`fa-${props.name}`} />
+        <p>{props.name} Marketing</p>
+
+        <UiButton variant='dark' onClick={() => setView('method')}>${props?.cost || "41"} / lead</UiButton>
+        <UiButton variant='flat'>more info</UiButton>
+      </div>
+    </>
+  }
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='admin-messenger'>
-        <div className='admin-messenger__header'>
-          <div className='admin-messenger__header--icon'>
-            <UiIcon icon={`${environment.merchant.name}-logo`} />
+      <div className='admin-marketing'>
+        {view == 'start' && <>
+          <div className='admin-marketing__header'>
+            <h1>Sign up for marketing lists</h1>
+            <p>Target your audience using informed media buying across states and the whole country by using Deepturn data analytics and audience groups to identify the people who will be most receptive to your message, create tailored content, and deliver impactful and cost effective campaigns across DMAs.</p>
           </div>
-          <div className='nirvana-promo-1' ref={pdfRef}>
-            hello world
-          </div>
-          <CreatePDF pdfRef={pdfRef} preview/>
-        </div>
+          <AdaptGrid gapY={20} xs={1} md={3} gap={10} variant='card'>
+            <AdminMarketingProgram name="google" cost={100} />
+            <AdminMarketingProgram name="tiktok" />
+            <AdminMarketingProgram name="instagram" />
+          </AdaptGrid>
+        </>}
+        {view == 'method' && <>
+          <UserMethods />
+        </>}
       </div>
     </>
   );

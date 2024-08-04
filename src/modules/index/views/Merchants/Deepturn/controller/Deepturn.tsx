@@ -2,15 +2,25 @@ import React, { useEffect, useState } from 'react';
 import styles from './Deepturn.scss';
 // import UiMap from '../../../../../webstack/components/ThreeComponents/UiMap/controller/UiMap';
 // import { IVessel } from '@webstack/components/ThreeComponents/UiMap/models/IMapVessel';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import environment from '~/src/core/environment';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 import { capitalizeAll } from '@webstack/helpers/Capitalize';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { TJSCube } from '@webstack/components/ThreeComponents/TJSCube/controller/test';
-import useWindow from '@webstack/hooks/useWindow';
+import useWindow from '@webstack/hooks/window/useWindow';
+import { encryptString } from '@webstack/helpers/Encryption';
+
+
+
+
+
+
+
 const Deepturn = () => {
+  const router = useRouter();
+
   const { width } = useWindow();
   // const [currentVessel, setCurrentVessel] = useState<IVessel | false | undefined>();
   // const closeVessel = () => currentVessel && setCurrentVessel(false);
@@ -45,27 +55,9 @@ const Deepturn = () => {
   const DeepturnCommercial = () => {
 
   }
-  const ComingSoon = () => {
-    return <>
-      <style jsx>{styles}</style>
-      <div className='deepturn__coming-soon'>
-        <div className='deepturn__coming-soon--title'>
-          Coming Soon
-        </div>
-        <div>
-          <pre className='deepturn__coming-soon--body'>
-            Digital marketing is the vehicle to take the insights from our Behavioral Microtargeting program and deliver the right messages to the right individuals in meaningful ways online.
-          </pre>
-
-          <pre className='deepturn__coming-soon--body'>
-            Our full-service in-house marketing operation gives you access to a powerful collaboration of behavioral insight and industry-leading advertising technology, with a transparent pricing structure driven solely by your success.
-          </pre>
-        </div>
-      </div>
-    </>
-  }
   const DeepturnEntitySelect = () => {
-    const BusinessSelectMarquee = ({ btnText, title, description, onClick }: { btnText: string, title?: string, description: string, onClick?: (e: any) => void }) => <>
+
+    const EntityChoiceMarquee = ({ btnText, serviceType, description, onClick }: { btnText: string, serviceType?: string, description: string, onClick?: (e: any) => void }) => <>
       <style jsx>{styles}</style>
       <div className='business-select--marquee'>
         <div className='-deepturn__'>Beta</div>
@@ -82,7 +74,14 @@ const Deepturn = () => {
             beforeIcon: `${environment.merchant.name}-logo`
           }}
           size='xxl'
-          onClick={() => setView('coming-soon')}
+          onClick={() => {
+            if (serviceType == 'marketing') {
+              router.push(`/services?sid=${serviceType}`)
+            }
+            else if (serviceType == 'campaigns') {
+              setView("coming-soon")
+            }
+          }}
         // FUTURE USAGE
         // onClick={()=>setView(btnText)}
         >visit {capitalizeAll(btnText)}</UiButton>
@@ -91,22 +90,47 @@ const Deepturn = () => {
       <style jsx>{styles}</style>
 
       <div className='deepturn__business-select'>
-        <BusinessSelectMarquee
+        <EntityChoiceMarquee
           btnText="commercial"
-          title="Data-driven marketing"
+          serviceType="marketing"
           description="We measurably improve your brand's marketing effectiveness by changing consumer behavior."
         />
-        <BusinessSelectMarquee
+        <EntityChoiceMarquee
           btnText="political"
-          title="Data-driven campaigns"
+          serviceType="campaigns"
           description="By knowing your electorate better, we achieve greater influence while lowering overall costs."
         />
       </div>
     </>
   }
+  const ComingSoon = () => {
+    return <>
+      <style jsx>{styles}</style>
+      <div className='deepturn__coming-soon'>
+        <div className='deepturn__coming-soon--title'>
+          <UiButton
+            variant='link'
+            onClick={() => setView('enter')}
+          > {`${"< "}`}back</UiButton>
+          Coming Soon
+        </div>
+        <div>
+          <pre className='deepturn__coming-soon--body'>
+            Digital marketing is the vehicle to take the insights from our Behavioral Microtargeting program and deliver the right messages to the right individuals in meaningful ways online.
+          </pre>
+
+          <pre className='deepturn__coming-soon--body'>
+            Our full-service in-house marketing operation gives you access to a powerful collaboration of behavioral insight and industry-leading advertising technology, with a transparent pricing structure driven solely by your success.
+          </pre>
+        </div>
+      </div>
+    </>
+  }
+
+
   const views = {
-    enter: <div><UiButton variant='dark' size='xxl' onClick={() => setView('businessSelect')}>&zwnj; &zwnj; &zwnj; enter &zwnj; &zwnj; &zwnj; </UiButton></div>,
-    businessSelect: <DeepturnEntitySelect />,
+    enter: <div><UiButton variant='dark' size='xxl' onClick={() => setView('entityChoice')}>&zwnj; &zwnj; &zwnj; enter &zwnj; &zwnj; &zwnj; </UiButton></div>,
+    entityChoice: <DeepturnEntitySelect />,
     "coming-soon": <ComingSoon />
   }
   return (
@@ -114,7 +138,7 @@ const Deepturn = () => {
       <style jsx>{styles}</style>
       {/* <div className='dev'>{JSON.stringify(userData, null, 2)}</div> */}
       <div className='deepturn'>
-          <img className='deepturn__bg' src="/assets/backgrounds/contour_bg.gif" />
+        <img className='deepturn__bg' src="/assets/backgrounds/contour_bg.gif" />
         <div className='component--terrain'>
           <TJSCube
 

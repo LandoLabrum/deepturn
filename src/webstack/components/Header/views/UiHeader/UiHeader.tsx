@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './UiHeader.scss';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import environment from '~/src/core/environment';
-import useWindow from '@webstack/hooks/useWindow';
+import useWindow from '@webstack/hooks/window/useWindow';
 
 interface IUiHeader {
     title?: any;

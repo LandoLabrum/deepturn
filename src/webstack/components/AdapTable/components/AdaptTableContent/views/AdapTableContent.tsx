@@ -115,7 +115,7 @@ export const AdapTableContent = ({
       window.removeEventListener("mousemove", handleResize);
       window.removeEventListener("mouseup", handleResizeEnd);
     };
-  }, [isResizing]);
+  }, [isResizing, handleResize]);
 
   const handleRowClick = (e: any, item: any) => {
     if (!["svg", "path"].includes(e.target.tagName)) {
@@ -140,8 +140,7 @@ export const AdapTableContent = ({
           <thead className={hideHeader && 'hide-header' || ''}>
             <tr >
               {index !== 0 && <th className="index">#</th>}
-              {data &&
-                data[0] &&
+              { data?.[0] &&
                 Object.keys(data[0]).map((key, columnIndex) => {
                   const columnKey = keyStringConverter(key);
                   return (
@@ -167,8 +166,7 @@ export const AdapTableContent = ({
             </tr>
           </thead>}
           <tbody>
-            {data &&
-              data[0] &&
+            { data?.[0] &&
               data.map((item: ItemType, i_: number) => {
                 if (item) return <tr
                   className={`${variant ? variant : ""}`}

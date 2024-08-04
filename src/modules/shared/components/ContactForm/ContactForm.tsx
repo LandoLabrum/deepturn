@@ -4,7 +4,7 @@ import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import IAuthenticatedUser from "~/src/models/ICustomer";
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
-import useWindow from '@webstack/hooks/useWindow';
+import useWindow from '@webstack/hooks/window/useWindow';
 
 interface IContactFormProps {
   submit?: {

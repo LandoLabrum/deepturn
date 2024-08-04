@@ -72,34 +72,45 @@ const UiForm = ({
             const val = () => {
                 let newPillVal = Number(field.value);
                 if (direction == 'minus') {
-                    if (field.min && newPillVal <= field.min) newPillVal = field.min;
-                    else newPillVal = newPillVal - 1;
+                    newPillVal = Math.max(field.min ?? newPillVal - 1, newPillVal - 1);
                 } else {
-                    if (field.max && newPillVal >= field.max) newPillVal = field.max;
-                    else newPillVal += 1;
+                    newPillVal = Math.min(field.max ?? newPillVal + 1, newPillVal + 1);
                 }
                 return newPillVal;
             };
             const target = { target: { name: field.name, value: val() } };
             return onChange(target);
         }
+    
         let { name, value } = e.target;
         if (value && String(value).charAt(0) == '0') value = value.slice(1, value.length);
-        if (field?.min && Number(value) <= field?.min) value = String(field.min);
-        if (field?.max && Number(value) >= field?.max) value = String(field.max);
-        return handleInputChange({ target: { name: name, value: value } });
+        value = Number(value);
+        if (field?.min !== undefined && value < field.min) value = field.min;
+        if (field?.max !== undefined && value > field.max) value = field.max;
+        return handleInputChange({ target: { name, value: String(value) } });
     };
     
+    
     const fieldsCanPopulate = Array(fields)?.length;
+    const fieldType = (field:any)=>{
+        const isText = getFieldType(field?.value) == 'text';
+        if(isText && field.type !== 'select' && field.name !== 'address')return 'text';
+        else if(field.name == 'address')return 'address';
+        else if(getFieldType(field?.value) == 'checkbox')return 'checkbox';
+        else if(field?.type == 'select' && field?.options !== undefined)return 'select';
+        else if(field.type == 'pill'|| typeof field.value == 'number')return 'pill';
+        return false;
+    }
     useEffect(() => {
-        handleComplete();
-    }, [fields, disabled, loading, title]);
+        handleComplete();},[]);
+    // }, [fields, disabled, loading, title, fieldType]);
 
     if (!fields) return <div className='error'>No form fields</div>;
 
     return (
         <>
             <style jsx>{styles}</style>
+            {fields && fields?.[0]?.value}
             {title && <div className='form__title'>{title}</div>}
             <div className={`form${variant && ` form--${variant}` || ''}`}>
                 {fieldsCanPopulate &&
@@ -124,20 +135,7 @@ const UiForm = ({
                         className={`form-field`}
                         style={typeof field?.width == 'string' ? { width: `calc(${field.width} - 6px)` } : {}}
                     >
-                        {field.name == 'address' && (
-                            <div className='s-w-100'>
-                                <AutocompleteAddressInput
-                                    variant={
-                                        Boolean(field?.error) ? 'invalid' : variant || field?.variant
-                                    }
-                                    label='address'
-                                    address={field.value}
-                                    error={field?.error}
-                                    setAddress={e => handleInputChange(e, field.constraints)}
-                                />
-                            </div>
-                        )}
-                        {getFieldType(field?.value) == 'text' && field.name !== 'address' && <>
+                        { fieldType(field)=='text' && <>
                             <UiInput
                                 autoComplete={field.autoComplete}
                                 label={field.label}
@@ -155,15 +153,29 @@ const UiForm = ({
                                 onChange={e => handleInputChange(e, field.constraints)}
                             />
                         </>}
-                        {getFieldType(field?.value) == 'checkbox' && (
-                            <ToggleSwitch
+                        {field?.type}
+                        {fieldType(field) =='address'&&(
+                            <div className='s-w-100'>
+                                <AutocompleteAddressInput
+                                    variant={
+                                        Boolean(field?.error) ? 'invalid' : variant || field?.variant
+                                    }
+                                    label='address'
+                                    address={field.value}
+                                    error={field?.error}
+                                    setAddress={e => handleInputChange(e, field.constraints)}
+                                />
+                            </div>
+                        )}
+                        {fieldType(field) =='checkbox'&& (
+                            <ToggleSwitch 
                                 label={field.label}
                                 name={field.name}
                                 disabled={field?.disabled}
                                 onChange={e => handleInputChange(e, field?.constraints)}
                                 value={Boolean(field?.value)} />
                         )}
-                        {field?.type == 'select' && field?.options !== undefined && (
+                        {fieldType(field) =='select'&& (
                             <UiSelect
                                 variant={field?.variant}
                                 traits={field.traits}
@@ -173,7 +185,7 @@ const UiForm = ({
                                 onSelect={e => handleInputChange({ target: { name: field.name, value: e } }, field.constraints)}
                             />
                         )}
-                        {field.type == 'pill' && (
+                        {fieldType(field) =='pill'&& (
                             <FormControl
                                 label={field?.error ? `${field.label} *${field.error}*` : field.label}
                                 variant={field.error && 'invalid' || Boolean(field?.min && field.value == field.min || field.max && field.value == field.max) && 'bump pill' || 'pill'}

@@ -1,6 +1,6 @@
 import styles from './MapVesselDetails.scss';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import useWindow from '@webstack/hooks/useWindow';
+import useWindow from '@webstack/hooks/window/useWindow';
 import { IVessel } from '@webstack/components/ThreeComponents/UiMap/models/IMapVessel';
 import UiHeader from '@webstack/components/Header/views/UiHeader/UiHeader';
 

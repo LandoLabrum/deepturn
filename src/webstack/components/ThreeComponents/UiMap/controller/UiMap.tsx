@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import mapboxgl, { Map as MapboxMap } from "mapbox-gl";
 import styles from "./UiMap.scss";
 import token from "../data/token";
-import useWindow from "@webstack/hooks/useWindow";
+import useWindow from "@webstack/hooks/window/useWindow";
 import { useLoader } from "@webstack/components/Loader/Loader";
 import { IVessel, IVesselActions } from "../models/IMapVessel";
 import useProfile from "~/src/core/authentication/hooks/useProfile";

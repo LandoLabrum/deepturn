@@ -21,6 +21,7 @@ const useAdminCustomers = () => {
     // getCustomerList()
   }
   const getCustomerList = async () => {
+    if(customers !== undefined)return;
     let customerList = await adminService.listCustomers();
     if (customerList?.object === 'list') {
       setHasMore(customerList.has_more)
@@ -69,8 +70,8 @@ const useAdminCustomers = () => {
   };
 
   useEffect(() => {
-    if (!customers) getCustomerList();
-  }, [refresh]);
+    getCustomerList();
+  }, [getCustomerList]);
 
   return {
     customers,

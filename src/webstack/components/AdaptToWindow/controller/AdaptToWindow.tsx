@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './AdaptToWindow.scss';
 import { IAdaptToWindow, windowLoc } from '../models/IAdaptToWindow';
 import AdaptWindowBackground from '../views/AdaptWindowBackground/AdaptWindowBackground';
-import useWindow from '@webstack/hooks/useWindow';
+import useWindow from '@webstack/hooks/window/useWindow';
 
 // Remember to create a sibling SCSS file with the same name as this component
 

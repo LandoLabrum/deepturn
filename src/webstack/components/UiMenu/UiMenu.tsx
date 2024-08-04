@@ -10,6 +10,7 @@ export type IMenuOption = {
   secondary?: string;
   icon?: string;
   active?: boolean;
+  selected?: boolean;
 };
 
 export interface IMenu extends IFormControl {
@@ -57,7 +58,7 @@ const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearc
       <div className='menu-container'>
         {onClose && (
           <div className="menu__close">
-            <UiButton size='sm' variant='flat' traits={{ afterIcon: 'fa-xmark' }} onClick={onClose}>close</UiButton>
+            <UiButton size='sm' variant={variant?variant:'flat'} traits={{ afterIcon: 'fa-xmark' }} onClick={onClose}>close</UiButton>
           </div>
         )}
         <div className={`menu ${variant ? `menu__${variant}` : ""}${size ? ` menu-${size}` : ''}`} style={traits && traits?.height ? { ...traits, overflowY: "auto" } : traits ? traits : {}}>
@@ -73,10 +74,10 @@ const UiMenu: FC<IMenu> = ({ options, variant, onSelect, value, search, setSearc
               {filteredOptions?.map((option, index) => (
                 <div
                   key={index}
-                  className={`menu__option ${option?.active === false ? "disabled" : ""}${selectedOption === option.value ? ' active' : ''}${size ? ` menu__option-${size}` : ''}`}
+                  className={`menu__option ${variant?variant:'flat'} ${option?.active === false ? "disabled" : ""}${selectedOption === option.value || option.selected? ' active' : ''}${size ? ` menu__option-${size}` : ''}`}
                   onClick={() => handleSelect(option)}
                 >
-                  <UiButton variant='flat' size={size} traits={{ beforeIcon: option.icon, afterIcon: selectedOption === option.value ? { icon: 'fa-check' } : '' }}>
+                  <UiButton variant={variant?variant:'flat'}  size={size} traits={{ beforeIcon: option.icon, afterIcon: selectedOption === option.value ? { icon: 'fa-check' } : '' }}>
                     <div className='d-flex-col'>
                       <span className="menu__option-secondary">{option.label}</span>
                       {option.secondary && <span className="menu__option-secondary">{option.secondary}</span>}

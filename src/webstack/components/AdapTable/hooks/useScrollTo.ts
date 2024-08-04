@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import useWindow from '@webstack/hooks/useWindow';
+import useWindow from '@webstack/hooks/window/useWindow';
 
 
 interface UseScrollToProps {

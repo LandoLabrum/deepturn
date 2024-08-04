@@ -13,6 +13,7 @@ export type OForm = {
 
 export type IFormField = {
     name: string;
+    id?: string;
     error?: string;
     options?: (string | IRoute | number)[] | React.ReactElement[];
     width?: string;
@@ -23,6 +24,7 @@ export type IFormField = {
     max?: number;
     placeholder?: string;
     type?: string;
+    // type?: 'button' | 'textarea' | 'color' |'text' | 'email' | 'datetime-local' | 'tel' | 'email' | 'checkbox' | 'radio' | 'month' | 'address' | 'file' | 'range' | 'date' | 'pill' | 'select';
     traits?: ITraits;
     variant?: IFormControlVariant;
     required?: boolean;

@@ -14,6 +14,7 @@
     @extend .d-flex;
     flex-direction: column;
     width: 100%;
+    overflow-x: hidden;
     &.start{
         & > *.back-btn{
             display: none;
