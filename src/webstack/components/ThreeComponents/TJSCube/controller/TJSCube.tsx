@@ -1,10 +1,11 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls } from '@react-three/drei';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
 import IconHelper from "@webstack/helpers/IconHelper";
 import styles from "./TJSCube.scss";
+import { useThreeInteraction } from '../hooks/useThreeInteractions';
 
 interface ITJSCubeBevel {
   curveSegments?: number;
@@ -33,20 +34,16 @@ interface ITJSCubeContent {
 }
 
 const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
-  const meshRef = useRef<any>(null);
-  const particlesRef = useRef<any>(null);
+  const meshRef = useRef<THREE.Mesh|any>(null);
+  const particlesRef = useRef<THREE.Points|any>(null);
   const { scene, camera } = useThree();
-  const { size } = icon;
 
-  const applyTexture = (material: any, texturePath: string) => {
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.load(texturePath, (texture) => {
-      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-      texture.repeat.set(0.01, 0.01);
-      material.map = texture;
-      material.needsUpdate = true;
-    });
-  };
+  useThreeInteraction(meshRef, {
+    styles: { opacity: icon.opacity },
+    className: 'tjscube-mesh',
+    onClick: (event) => console.log('Mesh clicked', event),
+    onHover: (hovered) => console.log('Mesh hovered:', hovered),
+  });
 
   useEffect(() => {
     const lightExists = scene.children.some(child => child instanceof THREE.AmbientLight);
@@ -67,7 +64,15 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
       opacity: icon.opacity || 1,
       transparent: Boolean(icon?.opacity && icon.opacity < 1) || false,
     };
-
+    const applyTexture = (material:any, texturePath:string) => {
+      const textureLoader = new THREE.TextureLoader();
+      textureLoader.load(texturePath, (texture) => {
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(0.01, 0.01);
+        material.map = texture;
+        material.needsUpdate = true;
+      });
+    };
     if (!meshRef.current) {
       const iconObj = IconHelper.getIcon(icon.icon);
       if (!iconObj || !iconObj.html) return;
@@ -98,7 +103,7 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
       mesh.rotation.x = -Math.PI;
       scene.add(mesh);
       meshRef.current = mesh;
-      const maxDimension = Math.max(size?.x || 0, size?.y || 0, size?.z || 0);
+      const maxDimension = Math.max(icon.size?.x || 0, icon.size?.y || 0, icon.size?.z || 0);
       camera.position.set(0, 0, maxDimension);
 
       // Add particles
@@ -111,9 +116,9 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
       const particles = [];
       for (let i = 0; i < 1000; i++) {
         particles.push(
-          (Math.random() - 0.5) * 2 * size.x,
-          (Math.random() - 0.5) * 2 * size.y,
-          (Math.random() - 0.5) * 2 * size.z
+          (Math.random() - 0.5) * 2 * icon.size.x,
+          (Math.random() - 0.5) * 2 * icon.size.y,
+          (Math.random() - 0.5) * 2 * icon.size.z
         );
       }
       particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particles, 3));
@@ -144,12 +149,14 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
   return null;
 };
 
-export const TJSCube: any = (props: ITJSCubeContent) => {
-  const instanceRef: any = useRef();
+export const TJSCube: React.FC<ITJSCubeContent> = (props) => {
+  const instanceRef = useRef<HTMLDivElement>(null);
   const bg = String(props?.icon?.backgroundColor) || undefined;
+
   useEffect(() => {
-    if (instanceRef?.current && bg) instanceRef.current.style.backgroundColor = bg;
+    if (instanceRef.current && bg) instanceRef.current.style.backgroundColor = bg;
   }, [instanceRef, bg]);
+
   return <>
     <style jsx>{styles}</style>
     <div className='tjscube' ref={instanceRef}>

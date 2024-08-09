@@ -117,7 +117,7 @@ const TJSCubeContent = ({ icon }: ITJSCubeContent) => {
   return null;
 };
 
-export const TJSCube = (props: ITJSCubeContent) => (
+export const TJSCubeTest = (props: ITJSCubeContent) => (
   <div style={{ width: '100%', height: '100%' }}>
     <Canvas>
       <OrbitControls />

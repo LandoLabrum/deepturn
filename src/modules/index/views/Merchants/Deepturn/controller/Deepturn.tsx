@@ -8,9 +8,9 @@ import environment from '~/src/core/environment';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 import { capitalizeAll } from '@webstack/helpers/Capitalize';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import { TJSCube } from '@webstack/components/ThreeComponents/TJSCube/controller/test';
 import useWindow from '@webstack/hooks/window/useWindow';
 import { encryptString } from '@webstack/helpers/Encryption';
+import { TJSCube } from '@webstack/components/ThreeComponents/TJSCube/controller/TJSCube';
 
 
 
@@ -158,7 +158,7 @@ const Deepturn = () => {
               icon: "deepturn-logo",
               // texture: "/assets/backgrounds/lava1.jpeg",
               // bumpMap:"/assets/textures/texture-leaves.jpeg",
-              texture: "/assets/backgrounds/contour_bg.gif",
+              texture: "/assets/globe-textures/clouds-large.jpg",
               size: width > 1100 ? { x: 100, y: 100, z: 9 } : { x: 70, y: 70, z: 9 },
               animate: { rotate: { y: -2, x: 1, speed: .0007 } }
             }}

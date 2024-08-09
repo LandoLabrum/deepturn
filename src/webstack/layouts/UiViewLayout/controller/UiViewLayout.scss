@@ -29,8 +29,7 @@
     &--anchor{
         user-select: none;
         width:max-content;
-        height:max-content;
-
+        min-height: max-content;
     }
     &__actions {
         justify-content: flex-end;
