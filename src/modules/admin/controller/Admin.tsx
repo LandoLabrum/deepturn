@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Admin.scss';
 import UiSettingsLayout from '@webstack/layouts/UiSettingsLayout/controller/UiSettingsLayout';
-import AdminCustomers from '../views/AdminCustomers/controller/AdminCustomers';
 import AdminProducts from '../views/AdminProducts/controller/AdminProducts';
 import AdminListDocuments from '../views/AdminDocuments/controller/AdminListDocuments';
 import AdminSystem from '../views/AdminSystem/AdminSystem';
@@ -11,14 +10,16 @@ import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import AdminMarketing from '../views/AdminMarketing/AdminMarketing';
 import { useRouter } from 'next/router';
 import AdminDashboard from '../views/AdminDashboard/controller/AdminDashboard';
-import AdminMgmt from '../views/AdminMgmt/controller/AdminMgmt';
 import AdminSales from '../views/AdminSales/controller/AdminSales';
+import AdminCustomers from '../views/AdminCustomers/views/AdminCustomersList/controller/AdminCustomersList';
+// import AdminCustomers from '../views/AdminCustomers/views/AdminCustomersList/controller/AdminCustomersList';
 
 
 
 const Admin = () => {
   const initialViews = {
-    management: <AdminMgmt/>,
+    customers: <AdminCustomers/>,
+    products: <AdminProducts/>,
     sales: <AdminSales/>,
     operations: <h1>Operations</h1>,
     finance: <h1>Finance and Accounting</h1>,

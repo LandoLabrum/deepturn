@@ -110,7 +110,7 @@ const UiForm = ({
     return (
         <>
             <style jsx>{styles}</style>
-            {fields && fields?.[0]?.value}
+            {/* {fields && fields?.[0]?.value} */}
             {title && <div className='form__title'>{title}</div>}
             <div className={`form${variant && ` form--${variant}` || ''}`}>
                 {fieldsCanPopulate &&

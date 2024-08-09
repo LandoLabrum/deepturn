@@ -26,7 +26,7 @@ const ModalOverlay: React.FC<any> = () => {
     <>
       <style jsx>{styles}</style>
       {/* {children && <div className='dev'>{JSON.stringify(modalContent)}</div>} */}
-      <div onClick={closeModal} className={classMaker("modal__overlay")} />
+      <div onClick={closeModal} id='modal-main' className={classMaker("modal__overlay")} />
       {(Boolean(children) || Boolean(confirm)) && (
         <div ref={modalRef} className={classMaker("modal")}>
           <div className={classMaker("modal__header")}>

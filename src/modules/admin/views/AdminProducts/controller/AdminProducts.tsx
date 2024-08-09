@@ -52,6 +52,7 @@ async function getProducts() {
       return context;
     })
     setProducts(formattedProducts);
+    console.log({formattedProducts})
   } catch (e: any) {
     console.log('[ ADMIN PRODUCTS ( ERROR ) ]', e)
   }

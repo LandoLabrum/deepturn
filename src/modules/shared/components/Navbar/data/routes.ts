@@ -84,7 +84,7 @@ export const routes: IRoute[] = [
     icon: 'fal-circle-user',
     clearance: 1,
     items: [
-      { href: "/admin?vid=management", label: "admin", clearance: 10},
+      { href: "/admin?vid=customers", label: "admin", clearance: 10},
       { href: "/profile", label: "profile" , clearance: 1},
       { href: "/authentication/signout", label: "logout", clearance: 1 },
     ],

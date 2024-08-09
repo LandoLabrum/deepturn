@@ -1,70 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import styles from './AdminCustomers.scss'; // Changed to .css import
-import AdminCustomerAdd from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerAdd/AdminCustomerAdd';
-import AdminCustomerList from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerList/AdminCustomerList';
-import AdminCustomerDetails from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerDetail/controller/AdminCustomerDetail';
-import UiButton from '@webstack/components/UiButton/UiButton';
-import IAuthenticatedUser from "~/src/models/ICustomer";
-import { useRouter } from 'next/router';
-import UiHeader from '@webstack/components/Header/views/UiHeader/UiHeader';
-import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 
+import React from 'react';
+import styles from "./AdminCustomers.scss"
+import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import { NaCell } from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
+// import AdminCustomersList from '../views/AdminCustomersList/controller/AdminCustomersList';
 
-const AdminCustomers: React.FC = () => {
-  const router = useRouter();
-  const query = router?.query;
-  const updateViewUrl = (newView?: string, customer?: IAuthenticatedUser) => {
-    router.push({ 
-      query: { ...query, cid: customer?.id || newView}},
-      undefined,
-      { shallow: true }
-    );
-  };
-  const views = {
-    modify: <AdminCustomerDetails
-      id={query.cid}
-      setView={(e: any) => {
-        updateViewUrl(e);
-      }}
-    />,
-    list: <AdminCustomerList onSelect={(customer: IAuthenticatedUser) => updateViewUrl('modify', customer)} />,
-    add: <AdminCustomerAdd />,
-  };
-
-useEffect(() => {}, [query]);
-
+// Remember to create a sibling SCSS file with the same name as this component
+const data:any = [
+  { count: 10, date: '2023-01-01' },
+  { count: 20, date: '2023-01-02' },
+  { count: 5, date: '2023-01-03' },
+  { count: -15, date: '2023-01-04' },
+  { count: 8, date: '2023-01-05' },
+];
+const AdminCustomers = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='admin-customer'>
-        <div className='admin-customer__header-container'>
-          {/* <UiHeader title='Customer' subTitle={query.cid && String(query.cid)} /> */}
-          <div className='actions'>
-            {query.cid !== 'add' && (
-              <UiButton
-                traits={{ afterIcon: 'fa-user-plus' }}
-                variant='dark'
-                onClick={() => updateViewUrl('add')}
-              >
-                Add
-              </UiButton>
-            )}
-            {query.cid !== 'list' && (
-              <UiButton
-                variant='dark'
-                traits={{ afterIcon: 'fa-user-group' }}
-                onClick={() => updateViewUrl('list')}
-              >
-                Customers
-              </UiButton>
-            )}
-          </div>
+      <div className='admin-mgmt'>
+        <div className='admin-mgmt__header'>
         </div>
-        <UiViewLayout currentView={
-          Boolean(query.cid && query.cid?.includes("cus_")) ?
-            'modify' : query?.cid ? String(query.cid) : 'list'
-        } views={views} />
-
+        <div className='admin-mgmt__body'>
+          <AdaptGrid xs={2} md={4} variant='card' gap={10} >
+            <div className='admin-mgmt__card'>
+              <div className='admin-mgmt__card-header'>new customers</div>
+              <div className='admin-mgmt__card-body'>5</div>
+            </div>
+            <div className='admin-mgmt__card'>
+              <div className='admin-mgmt__card-header'>products sold</div>
+              <div className='admin-mgmt__card-body'>12</div>
+            </div>
+            <div className='admin-mgmt__card'>
+              <div className='admin-mgmt__card-header'>d</div>
+              <div className='admin-mgmt__card-body'>10</div>
+            </div>
+            <div className='admin-mgmt__card'>
+              <div className='admin-mgmt__card-header'>f</div>
+              <div className='admin-mgmt__card-body'><NaCell/></div>
+            </div>
+          </AdaptGrid>
+          {/* <AdminCustomersList/> */}
+            {/* <UiBarGraph title="customer signup" data={data}/> */}
+        </div>
       </div>
     </>
   );
