@@ -26,7 +26,12 @@
     &__actions {
         @extend .d-flex;
     }
-    
+    &--anchor{
+        user-select: none;
+        width:max-content;
+        height:max-content;
+
+    }
     &__actions {
         justify-content: flex-end;
         @extend .d-flex;

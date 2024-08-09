@@ -153,7 +153,6 @@ const UiForm = ({
                                 onChange={e => handleInputChange(e, field.constraints)}
                             />
                         </>}
-                        {field?.type}
                         {fieldType(field) =='address'&&(
                             <div className='s-w-100'>
                                 <AutocompleteAddressInput

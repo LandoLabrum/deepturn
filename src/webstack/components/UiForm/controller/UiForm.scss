@@ -12,7 +12,8 @@
 
 .form {
   @extend .d-flex;
-  overflow: visible !important;
+  overflow-y: visible;
+  overflow-x: hidden;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;

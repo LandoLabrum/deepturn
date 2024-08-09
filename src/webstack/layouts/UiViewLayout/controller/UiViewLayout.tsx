@@ -10,14 +10,14 @@ export type IView = {
 
 export interface IViewLayout {
     views?: IView;
-    view?:React.ReactElement | string;
+    view?: React.ReactElement | string;
     currentView?: string;
     backBtn?: boolean;
     title?: string;
-    actions?: boolean | string[]; // Can be a boolean or an array of strings
+    actions?: any; // Can be a boolean or an array of strings
     showTitle?: boolean;
-    onChange?:(e:any)=>void;
-    variant?:"anchor"
+    onChange?: (e: any) => void;
+    variant?: "anchor"
 }
 
 const UiViewLayout: React.FC<IViewLayout> = ({
@@ -38,25 +38,31 @@ const UiViewLayout: React.FC<IViewLayout> = ({
         onChange?.(newView);
     };
 
-    
-    if (!views || !_view ) return <UiLoader position='fixed' />;
-    
+
+    if (!views || !_view) return <UiLoader position='fixed' />;
+
     return (
         <>
             <style jsx>{styles}</style>
-            <div className={`ui-view-layout ${variant?`ui-view-layout--${variant}`:''}`}>{currentView == 'loading' && <UiLoader position='fixed' />}
-                {Boolean(backBtn && last !== 'start' )&&(
+            <div className={`ui-view-layout ${variant ? `ui-view-layout--${variant}` : ''}`}>{currentView == 'loading' && <UiLoader position='fixed' />}
+                {Boolean(backBtn && last !== 'start') && (
                     <div className='back-btn'>
                         <div>
-                            <UiButton traits={{beforeIcon:"fa-chevron-left"}} variant='flat' onClick={goBack}>Back</UiButton>
+                            <UiButton traits={{ beforeIcon: "fa-chevron-left" }} variant='flat' onClick={goBack}>Back</UiButton>
                         </div>
                     </div>
                 )}
-                {showTitle  && last !== 'start'&& (
+                {showTitle && last !== 'start' && (
                     <div className='ui-view-layout__header'>
                         <div className='ui-view-layout__header-title'>{title}</div>
                     </div>
                 )}
+                {actions && <div className='d-flex justify-end g-10 s-10' >
+                    {Object.values(actions).map((action: any, i: number) => <div key={i}>
+                        <UiButton onClick={()=>action.onClick(action.label)} >{action.label}</UiButton>
+                    </div>)}
+                </div>
+                }
                 <div data-view={currentView} className='ui-view-layout__view'>
                     {view || _view || <div>View not found</div>}
                 </div>

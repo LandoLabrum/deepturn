@@ -5,6 +5,7 @@ import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import environment from '~/src/core/environment';
 import { IProduct } from '~/src/models/Shopping/IProduct';
+import { findField, updateField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 
 
 interface IAdminProduct {
@@ -26,8 +27,12 @@ const AdminProduct: React.FC<IAdminProduct> = ({ product }) => {
     let request = {
       mid: mid,
     }
+    console.log(fields,request)
   }
-
+const onChange = (e:any)=>{
+  if(!fields)return;
+  setFields( updateField(fields, e.target.name,{value:e.target.value}))
+}
   const handleFields = () => {
     if (!product) setFields(initialFields);
     else if (product && !fields) {
@@ -53,13 +58,16 @@ const AdminProduct: React.FC<IAdminProduct> = ({ product }) => {
       // AdminAddProduct.tsx:35 {name: 'livemode', value: {…}}
     }
   }
-  useEffect(() => {handleFields()}, [handleFields]);
+  useEffect(() => {handleFields()}, []);
   return (
     <>
       <style jsx>{styles}</style>
       <div className='add-product'>
         <UiForm
           fields={fields}
+          onChange={onChange}
+          onSubmit={onSubmit}
+          disabled={false}
         />
       </div>
     </>

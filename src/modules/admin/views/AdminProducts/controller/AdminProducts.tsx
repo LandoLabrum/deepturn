@@ -10,6 +10,7 @@ import AdminProduct from '../views/AdminAddProduct/AdminAddProduct';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 import { IProduct } from '~/src/models/Shopping/IProduct';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
+import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 
 const AdminProducts: React.FC = () => {
   const {openModal, closeModal}=useModal();
@@ -30,7 +31,9 @@ const AdminProducts: React.FC = () => {
     add: <AdminProduct/>,
     product: <AdminProduct setView={()=>setView('list')} product={product}/>
   }
-
+const onClick = (e:any)=>{
+  setView(e)
+}
 const ProductService = getService<IProductService>('IProductService');
 
 async function getProducts() {
@@ -52,28 +55,31 @@ async function getProducts() {
       return context;
     })
     setProducts(formattedProducts);
-    console.log({formattedProducts})
   } catch (e: any) {
     console.log('[ ADMIN PRODUCTS ( ERROR ) ]', e)
   }
 }
 
-useEffect(() => {getProducts()}, [getProducts, setProduct]);
+useEffect(() => {getProducts()}, [products ]);
 
-return (
+if(products)return (
   <>
     <style jsx>{styles}</style>
     <div className='admin-products'>
       <UiViewLayout
         views={views}
         currentView={view}
-        actions={['list', 'add']}
+        actions={[
+          {label:'list',name:'list',onClick},
+          {label:'add',name:'add',onClick},
+        ]}
         showTitle={true}
         title="Admin Products"
       />
     </div>
   </>
 );
+return <UiLoader/>
 };
 
 export default AdminProducts;
