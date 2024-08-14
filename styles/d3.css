@@ -35,6 +35,12 @@
   fill:var(--gray-80);
   color:var(--green-50);
 }
+.d3-node--name {
+  white-space: nowrap;
+  max-width: 100px;
+  text-overflow: ellipsis;
+  display: block;
+}
 .d3-node--key {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -44,6 +50,7 @@
   width: max-content;
   padding: 0 var(--s-10);
   border-radius: var(--s-11);
+
   background-color: var(--gray-50-o);
   border: solid 2px var(--blue-70);
   /* line-height: 1;
@@ -52,7 +59,7 @@
   flex-direction: column;
   justify-content: center; */
 }
-.d3-node--key:hover{
+.d3-node--key:hover, .d3-node--name:hover{
 filter: brightness(2)
 }
 /* .d3-node__foreign{
