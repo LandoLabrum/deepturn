@@ -7,6 +7,11 @@
   font-style: normal;
 }
 @font-face {
+  font-family: Nabla;
+  src: url("/fonts/Nabla/Nabla-Regular.ttf") format("opentype");
+  font-style: normal;
+}
+@font-face {
   font-family: Eros;
   src: url("/fonts/eros/erosyt.ttf") format("opentype");
   font-style: normal;
