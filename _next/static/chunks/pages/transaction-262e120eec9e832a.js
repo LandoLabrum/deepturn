@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[2352],{71478:function(n,u,t){"use strict";t.r(u);var _=t(91633);u.default=_.Z},88510:function(n,u,t){(window.__NEXT_P=window.__NEXT_P||[]).push(["/transaction",function(){return t(71478)}])}},function(n){n.O(0,[5443,7847,3412,1633,2888,9774,179],function(){return n(n.s=88510)}),_N_E=n.O()}]);
