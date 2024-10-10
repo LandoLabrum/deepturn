@@ -122,13 +122,17 @@
   --blue-70: #13487A;
   --blue-90: #031d40;
 
-
-  --purple-50: #9b59b6;
+  
   --purple-10: #d0a1e2;
+  --purple-10-o: #d0a1e270;
   --purple-30: #b97acc;
-  --purple-70: #7d3a98;
-  --purple-90: #5d2975;
+  --purple-30-o: #b97acc70;
+  --purple-50: #9b59b6;
   --purple-50-o: #9b59b670;
+  --purple-70: #7d3a98;
+  --purple-70-o: #7d3a9870;
+  --purple-90: #5d2975;
+  --purple-90-o: #5d297570;
   
   --pink: #e91e63;
   --pink-10: #ff80ab;
