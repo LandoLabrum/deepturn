@@ -344,9 +344,10 @@ body {
   font-weight: 300;
 
   -webkit-overflow-scrolling: touch;
-  overflow-y: visible;
+  overflow-y: auto;
   overflow-x: hidden;
   #__next {
+
     margin: 0;
     padding: 0;
     height: 100%;
