@@ -1,64 +1,32 @@
-
-/* Flex */
-.flex-center {
+hr{
+  width: 100%;
+  border-color: var(--gray-70);
+}
+/* HEIARCHY */
+.heiarchy{
+  font-size: var(--s-9);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  /* gap:var(--s-11); */
+  padding:var(--s-11) var(--s-10);
+  border-radius: var(--s-11);
+  border:solid 1px var(--green);
+  width: max-content;
+  background-color: var(--black);
 }
-
-.flex {
+.heiarchy-item{
   display: flex;
-  align-items: center;
+  gap:var(--s-11);
+  /* min-height: var(--s-5); */
+  overflow:hidden;
 }
-
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.heiarchy-item > div{
+  padding:var(--s-11) 0;
+  height: 100%;
 }
-
-.flex-grow,
-.flex-grow-1 {
-  flex-grow: 1;
+.heiarchy-item > div:first-child{
+  color: var(--green);
 }
-
-.flex-shrink-0 {
-  flex-shrink: 0;
-}
-
-/* Text */
-.m-text-align-center {
-  text-align: center;
-}
-
-/* Links */
-
-a.g-textlink {
-  color: #4f96ff;
-  text-decoration: none;
-  cursor: pointer;
-}
-a.g-textlink:hover {
-  text-decoration: underline;
-}
-
-.m-disabled {
-  user-select: none;
-  pointer-events: none;
-  opacity: 0.75;
-  transition: opacity 500ms;
-}
-
-/* Column Sizing */
-body {
-  --full-width: 950px;
-  /* --col-width-4: 230px; */ /* width of single column when there are 4 columns (not including gaps) */
-  /* --gap: 10px; */
-}
-
-@media (min-width: 1050px) {
-  body {
-    --full-width: 1280px;
-    /* --col-width-4: 245px; */
-  }
+.heiarchy-item > div:first-child:after{
+  content:": "
 }
