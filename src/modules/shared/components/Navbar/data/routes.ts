@@ -37,6 +37,11 @@ export const routes: IRoute[] = [
     hide: true,
   },
   {
+    href:"/location",
+    hide: true,
+    mid: "mb1",
+  },
+  {
     href:"/verify",
     hide: true,
   },
@@ -56,22 +61,23 @@ export const routes: IRoute[] = [
   { label: "products", href: "/product", icon: "fa-tags", active: true },
   // { label: "portfolio", href: "/portfolio", icon: "fa-tags", active: true },
   {
-    label: "Social",
-    icon: "fa-biohazard",
-    href: '/social',
-    clearance: 10,
-    items: [
-      { label: "instagram", href: "/social?platform=instagram", icon: "fa-instagram", active: true },
-    ],
+    label: "Services",
+    icon: "fa-handshake",
+    href: '/services',
+    hide: true,
+    // items: [
+    //   // { label: "social", href: "/social", icon: "fa-instagram", active: true },
+    // ],
   },
   {
     label: "Home",
     icon: "fa-home",
     href:"/home",
-    clearance: 6,
+    clearance: 10,
     items: [
       { label: "surveillance",  href: "home?vid=surveillance", icon: "fa-camera-security", active: true },
       { label: "lights", href: "home?vid=light", icon: "fa-lightbulb-on", active: true},
+      { label: "spotify", href: "home?vid=spotify", icon: "fa-music", active: true},
     ],
   },
   {
@@ -79,7 +85,7 @@ export const routes: IRoute[] = [
     icon: 'fal-circle-user',
     clearance: 1,
     items: [
-      { href: "/admin", label: "admin", clearance: 10},
+      { href: "/admin?vid=customers", label: "admin", clearance: 10},
       { href: "/profile", label: "profile" , clearance: 1},
       { href: "/authentication/signout", label: "logout", clearance: 1 },
     ],
@@ -147,7 +153,8 @@ export const pruneRoutes = (pruneLabels: string[]) => {
       pruned.push(...item.items);
     } else {
       if (item.label === undefined) pruned.push(item);
-      if (item.label && !pruneLabels.includes(item.label)) pruned.push(item);
+      // else if (item.mid === environment.merchant.mid) pruned.push(item);
+      else if (item.label && !pruneLabels.includes(item.label)) pruned.push(item);
     }
   });
   return pruned;

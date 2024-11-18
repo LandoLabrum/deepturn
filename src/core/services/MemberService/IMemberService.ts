@@ -1,6 +1,6 @@
-import UserContext, { GuestContext, UserAddress } from "~/src/models/UserContext";
+import IAuthenticatedUser, { GuestContext, UserAddress } from "~/src/models/ICustomer";
 import { EventEmitter } from "@webstack/helpers/EventEmitter";
-import { IPaymentMethod } from "~/src/modules/user/model/IMethod";
+import { IPaymentMethod } from "~/src/modules/profile/model/IMethod";
 import { ICustomer } from "~/src/models/CustomerContext";
 export interface IEncryptJWT{
   tokenData: object,
@@ -10,7 +10,8 @@ export interface IEncryptJWT{
 export interface IDecryptJWT{
   token: string,
   secret: string,
-  algorithm:'HS256'
+  algorithm:'HS256',
+  verify?: boolean,
 }
 export interface IEncryptMetadataJWT{
   encryptionData:object;
@@ -51,16 +52,16 @@ export default interface IMemberService {
   // IMemberService
   processTransaction(sessionData:ISessionData): Promise<any>;
   resetPassword({email,user_agent}:IResetPassword): Promise<OResetPassword>;
-  getCurrentUser(): UserContext | undefined;
-  getCurrentGuest(): UserContext | undefined;
+  getCurrentUser(): IAuthenticatedUser | undefined;
+  getCurrentGuest(): IAuthenticatedUser | undefined;
   getSetupIntent(client_secret: string): any;
-  updateCurrentUser(user: UserContext): void;
+  updateCurrentUser(user: IAuthenticatedUser): void;
   
   getMethods(customerId?: string): Promise<any>;
   deleteMethod(id: string): Promise<any>;
   createSetupIntent(customer_id: string, method?: IPaymentMethod ): any;
 
-  userChanged: EventEmitter<UserContext | undefined>;
+  userChanged: EventEmitter<IAuthenticatedUser | undefined>;
   guestChanged: EventEmitter<GuestContext | undefined>;
 
   verifyEmail(token: string):Promise<any>;

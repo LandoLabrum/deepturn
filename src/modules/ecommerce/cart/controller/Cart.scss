@@ -27,7 +27,8 @@
 
 .cart {
     @extend .d-flex-col;
-    width: 100%;
+    width: var(--s-9-width);
+    padding:var(--s-9);
     margin-top: var(--s-nav-height);
     z-index: 1;
     gap:var(--s-5);

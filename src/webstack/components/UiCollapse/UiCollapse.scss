@@ -1,6 +1,6 @@
 // Variables
 $button_height: calc(var(--s-element) - 2px);
-$actColorClose: var(--gray-30);
+$actColorClose: var(--gray-60);
 
 // Mixins
 @mixin flexCenter {
@@ -13,7 +13,6 @@ $pad: 4px;
 $wid: calc(100%);
 
 @mixin actionAnimation($startColor, $midColor, $endColor) {
-
     0%,
     100% {
         color: $startColor;
@@ -34,11 +33,6 @@ $wid: calc(100%);
     0% {
         height: $button_height;
     }
-
-    20% {
-        height: 50%;
-    }
-
     100% {
         height: max-content;
     }
@@ -48,11 +42,9 @@ $wid: calc(100%);
     0% {
         height: max-content;
     }
-
     20% {
         height: 50%;
     }
-    
     100% {
         height: $button_height;
     }
@@ -126,7 +118,7 @@ $wid: calc(100%);
     }
 
     &__action {
-        background-color: var(--gray-70);
+        background-color: var(--gray-90);
         position: absolute;
         top: 0;
         left: 0;
@@ -148,9 +140,9 @@ $wid: calc(100%);
         cursor: pointer;
         justify-content: space-between;
         line-height: 1;
-
+        overflow: hidden;
         &:hover {
-            background-color: var(--gray-80);
+            filter:brightness(1.1)
         }
         &__opened {
             color: var(--gray-40);
@@ -198,7 +190,7 @@ $wid: calc(100%);
                 background-color: var(--gray-80);
             }
             &__open, &__opened {
-                background-color: var(--primary);
+                background-color: var(--primary-50);
             }
         }
         
@@ -215,10 +207,9 @@ $wid: calc(100%);
 
 .collapse__body {
     width: calc(100% - var(--s-4));
-    height: var(--s-element);
+    height: auto;
     padding: var(--s-4) 0;
     &__open {
-
         animation: openBody 1s forwards;
     }
     &__opened {

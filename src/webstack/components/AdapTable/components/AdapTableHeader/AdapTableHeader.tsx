@@ -1,10 +1,10 @@
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
 import { useEffect } from "react";
 import styles from "./AdapTableHeader.scss";
-import UiInput from "@webstack/components/UiInput/UiInput";
+import UiInput from "@webstack/components/UiForm/components/UiInput/UiInput";
 import { TableFunctionProps } from "../AdaptTableContent/views/AdapTableContent";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
-import UiSelect from "@webstack/components/UiSelect/UiSelect";
+import UiSelect from "@webstack/components/UiForm/components/UiSelect/UiSelect";
 import { TableOptions } from "../../views/AdapTable";
 import environment from "~/src/core/environment";
 
@@ -24,10 +24,8 @@ export default function AdapTableHeader({
 }: TableHeaderProps) {
   const busy = loading && search !== "";
 
-  useEffect(() => {
 
-  }, [search, loading, traits]);
-  if (!traits?.hide?.includes("header")) return <>
+  if (!traits?.hide?.includes("header") && traits?.tableTitle) return <>
     <style jsx>{styles}</style>
     <div className='adaptable-header'>
       <div className='adaptable-header__table-title'>

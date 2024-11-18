@@ -69,8 +69,18 @@ export const ModalProvider: React.FC<Props> = ({ children }) => {
 };
 
 export const useModal = () => {
+  let document:any;
+
   const context = useContext(ModalContext);
-  
+// console.log({context})
+const next = document?.getElementById('__next');
+if(next){
+  if(context?.isModalOpen){
+    next.style.maxHeight='100vh';
+  }else{
+    next.style.maxHeight='';
+  }
+}
   useEffect(() => {}, [ModalContext]);
   if (context === undefined) {
     throw new Error('useModal must be used within a ModalProvider');

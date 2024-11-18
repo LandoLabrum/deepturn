@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import styles from "./UiDiv.scss";
-import useWindow from "@webstack/hooks/useWindow";
+import useWindow from "@webstack/hooks/window/useWindow";
 
 // Define specific types for props
 interface IDiv {

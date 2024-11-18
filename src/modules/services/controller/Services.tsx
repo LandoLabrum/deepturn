@@ -3,34 +3,52 @@ import React, { useEffect, useState } from 'react';
 import styles from './Services.scss';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import UiButton from '@webstack/components/UiButton/UiButton';
+import { useRouter } from 'next/router';
+import MarketingDetails from '../views/MarketingDetails/MarketingDetails';
+import MarketingList from '../views/MarketingList/MarketingList';
 
 
 const Services: React.FC = () => {
-  const [currentView, setCurrentView] = useState('a');
+  const [view, _setView] = useState<string | undefined>();
+  const [details, _setDetails] = useState<any | undefined>();
+  const setDetails = (deetz: any)=>{
+    console.log({deetz})
+    // Object.keys(views).includes(newView) && _setView(newView)
+  };
+    
+  const { query } = useRouter();
   const views = {
-    a: <div style={{ height: '500px', aspectRatio: '1', background: "#0f0" }}>hello world a</div>,
-    b: <div style={{ height: '500px', aspectRatio: '1', background: "#f00" }}>hello world b</div>
+    data: <>
+      data acquisition
+    </>,
+    marketing: <MarketingList setDetails={setDetails}/>,
+    "marketing-details": (
+      <MarketingDetails 
+        setView={setDetails}
+      />
+    ),
   }
 
-  useEffect(() => { }, [setCurrentView]);
+  const sid: string | undefined = query?.sid && String(query.sid);
+  useEffect(() => { if(sid && !view) _setView(sid) }, [query,details!=undefined]);
   return (
     <>
       <style jsx>{styles}</style>
       <div className='services'>
-        <AdaptGrid
-          xs={1}
-          md={3}
-          variant='card'
-        >
-          {Object.keys(views)}
-        </AdaptGrid>
+        {/* <div className='dev'>
+          {view}
+        </div> */}
         <UiViewLayout
-          // showActions={['a','b','c']}
-          currentView={currentView}
-          onChange={(newView) => setCurrentView(newView)}
+          currentView={view}
           views={views}
         />
 
+        {view == 'method' && <>
+
+          {/* <UserMethods /> */}
+        </>}
       </div>
     </>
   );

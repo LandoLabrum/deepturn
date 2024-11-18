@@ -1,5 +1,5 @@
 import { useState, useEffect, RefObject } from "react";
-import useWindow from "@webstack/hooks/useWindow"; // Import the useWindow hook
+import useWindow from "@webstack/hooks/window/useWindow"; // Import the useWindow hook
 
 const useNavMobile = (
   navRef: RefObject<HTMLElement>, 

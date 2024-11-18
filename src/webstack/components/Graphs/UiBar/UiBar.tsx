@@ -30,7 +30,7 @@ const UiBar = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const debouncedOnChange = useRef(
-    debounce((newPercentage) => {
+    debounce((newPercentage:any) => {
       if (onChange) {
         onChange(newPercentage);
       }

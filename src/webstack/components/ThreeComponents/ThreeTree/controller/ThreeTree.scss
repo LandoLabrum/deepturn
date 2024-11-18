@@ -1,0 +1,11 @@
+.d-flex {
+    display: flex;
+}
+
+.three-tree {
+    border-radius: var(--border-radius);
+    @media(max-width: 1100px){
+        // aspect-ratio: 1;
+    }
+    position: relative;
+} 

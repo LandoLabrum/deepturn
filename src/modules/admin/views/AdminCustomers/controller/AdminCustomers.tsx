@@ -1,80 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import styles from './AdminCustomers.scss'; // Changed to .css import
-import AdminCustomerAdd from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerAdd/AdminCustomerAdd';
-import AdminCustomerList from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerList/AdminCustomerList';
-import AdminCustomerDetails from '~/src/modules/admin/views/AdminCustomers/views/AdminCustomerDetail/controller/AdminCustomerDetail';
-import UiButton from '@webstack/components/UiButton/UiButton';
-import UserContext from '~/src/models/UserContext';
-import { useRouter } from 'next/router';
 
+import React from 'react';
+import styles from "./AdminCustomers.scss"
+import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import { NaCell } from '@webstack/components/AdapTable/components/AdaptTableContent/components/AdaptTableCell/AdaptTableCell';
+// import AdminCustomersList from '../views/AdminCustomersList/controller/AdminCustomersList';
 
-const AdminCustomers: React.FC = () => {
-  const router = useRouter();
-  const [view, setView] = useState<string>();
-  const cid = router?.query?.cid;
-  const vid = router?.query?.vid;
-  
-  const updateViewUrl = (newView?: string, customer?: UserContext) => {
-    if (!newView && !view) {
-      setView(cid ? 'modify' : 'list');
-    } else if (newView) {
-      setView(newView);
-      const query = { ...router.query };
-      if (newView === 'modify' && customer) {
-        query.cid = customer.id;
-        query.vid = vid; // Keep existing vid if present
-      } else {
-        delete query.cid;
-        delete query.vid;
-      }
-      router.push({ query });
-    }
-  };
-  
-  useEffect(() => {
-    updateViewUrl();
-  }, [cid, vid]); // Update on cid or vid change
-  
+// Remember to create a sibling SCSS file with the same name as this component
+const data:any = [
+  { count: 10, date: '2023-01-01' },
+  { count: 20, date: '2023-01-02' },
+  { count: 5, date: '2023-01-03' },
+  { count: -15, date: '2023-01-04' },
+  { count: 8, date: '2023-01-05' },
+];
+const AdminCustomers = () => {
   return (
     <>
       <style jsx>{styles}</style>
-      <div className='admin-customer'>
-        <div className='admin-customer__header-container'>
-          <div className='header'>
-            <div className='header--title'>Customer</div>
-            <div className='header--subtitle'>{view}</div>
-          </div>
-          <div className='actions'>
-            {view !== 'add' && (
-              <UiButton
-                traits={{ afterIcon: 'fa-user-plus' }}
-                onClick={() => updateViewUrl('add')}
-              >
-                Add
-              </UiButton>
-            )}
-            {view !== 'list' && (
-              <UiButton
-                traits={{ afterIcon: 'fa-user-group' }}
-                onClick={() => updateViewUrl('list')}
-              >
-                Customers
-              </UiButton>
-            )}
-          </div>
+      <div className='admin-mgmt'>
+        <div className='admin-mgmt__header'>
         </div>
-        {view === 'list' && (
-          <AdminCustomerList onSelect={(customer: UserContext) => updateViewUrl('modify', customer)} />
-        )}
-        {view === 'modify' && (
-          <AdminCustomerDetails
-            id={cid}
-            setView={(e: any) => {
-              updateViewUrl(e);
-            }}
-          />
-        )}
-        {view === 'add' && <AdminCustomerAdd />}
+        <div className='admin-mgmt__body'>
+          <AdaptGrid xs={2} md={4} variant='card' gap={10} >
+            <div className='admin-mgmt__card'>
+              <div className='admin-mgmt__card-header'>new customers</div>
+              <div className='admin-mgmt__card-body'>5</div>
+            </div>
+            <div className='admin-mgmt__card'>
+              <div className='admin-mgmt__card-header'>products sold</div>
+              <div className='admin-mgmt__card-body'>12</div>
+            </div>
+            <div className='admin-mgmt__card'>
+              <div className='admin-mgmt__card-header'>d</div>
+              <div className='admin-mgmt__card-body'>10</div>
+            </div>
+            <div className='admin-mgmt__card'>
+              <div className='admin-mgmt__card-header'>f</div>
+              <div className='admin-mgmt__card-body'><NaCell/></div>
+            </div>
+          </AdaptGrid>
+          {/* <AdminCustomersList/> */}
+            {/* <UiBarGraph title="customer signup" data={data}/> */}
+        </div>
       </div>
     </>
   );

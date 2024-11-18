@@ -1,7 +1,7 @@
 import { IRoute } from "@shared/components/Navbar/data/routes";
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
-import { ITraits } from "@webstack/components/FormControl/FormControl";
-import { UserAddress } from "~/src/models/UserContext";
+import { ITraits } from "@webstack/components/UiForm/components/FormControl/FormControl";
+import { UserAddress } from "~/src/models/ICustomer";
 
 export type IFormMinMax = {
     value?: number;
@@ -13,16 +13,18 @@ export type OForm = {
 
 export type IFormField = {
     name: string;
+    id?: string;
     error?: string;
     options?: (string | IRoute | number)[] | React.ReactElement[];
     width?: string;
     value?: string | boolean | UserAddress | number;
-    label?: string;
+    label?: any;
     autoComplete?: 'on' | 'off';
     min?: number;
     max?: number;
     placeholder?: string;
     type?: string;
+    // type?: 'button' | 'textarea' | 'color' |'text' | 'email' | 'datetime-local' | 'tel' | 'email' | 'checkbox' | 'radio' | 'month' | 'address' | 'file' | 'range' | 'date' | 'pill' | 'select';
     traits?: ITraits;
     variant?: IFormControlVariant;
     required?: boolean;

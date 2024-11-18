@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./PlaceGrid.scss";
-import useWindow from "@webstack/hooks/useWindow";
+import useWindow from "@webstack/hooks/window/useWindow";
 
 type BreakPointProps = {
   xs: number;

@@ -1,136 +1,145 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ContactForm.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
-import { phoneFormat } from '@webstack/helpers/userExperienceFormats';
-import { useUser } from '~/src/core/authentication/hooks/useUser';
-import UserContext from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
-import { mockDateTime } from '@webstack/helpers/MockData';
+import useWindow from '@webstack/hooks/window/useWindow';
 
 interface IContactFormProps {
   submit?: {
-    text?:string;
+    text?: string;
   }
   onSubmit: (contactData: any) => void;
   user?: any;
-  payment?: any
+  fieldErrors?: any;
+  payment?: any;
   title?: string | React.ReactElement | boolean;
 }
 
-const ContactForm: React.FC<IContactFormProps> = ({ onSubmit, user, submit, title='contact'}) => {
-  const initialContactFields = [
-    { name: 'firstName', label: 'First Name', width: "50%", type: 'text', placeholder: 'First Name', required: true, 
-    // value:"Test"
-  },
-    { name: 'lastName', label: 'Last Name', width: "50%",  type: 'text', placeholder: 'Last Name', required: true
-    // , value:`${mockDateTime()} ${mockDateTime(true)}`
-  },
-    { name: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com', required: true
-    // , value:'larzrandana@gmail.com'
-  },
-    { name: 'phone', label: 'Phone', type: 'tel', placeholder: '1 (555) 555-5555', required: true, 
-    // value:'4344343433'
-  },
-    { name: 'address', label: 'Address', type: 'text', placeholder: 'Your Address', required: true },
+const ContactForm: React.FC<IContactFormProps> = (props) => {
+  const { onSubmit, user, submit, title = 'contact', fieldErrors } = props;
+  const windowSize = useWindow();
+
+  const getWidth = (): string => windowSize.width >= 900 ? "33%" : "100%";
+  const width = getWidth();
+
+  const defaultContactFields: IFormField[] = [
+    { name: 'name', label: "name", type: 'text', placeholder: 'Herbie Hancock', required: true },
+    { name: 'email', label: 'email', type: 'email', placeholder: 'your@email.com', required: true, width },
+    { name: 'phone', value: '1 (435) 200 - 3006', label: 'phone', type: 'tel', placeholder: '1 (000) 000-0000', required: true, width },
+    { name: 'address', label: 'address', type: 'text', placeholder: 'Your Address', required: true, width },
   ];
 
-  const loggedInUser = useUser();
-  const [fields, setFields] = useState<IFormField[]>(initialContactFields);
-  const [initialFields, setInitialFields]=useState<IFormField[] | undefined>();
+  const [fields, setFields] = useState<IFormField[]>(defaultContactFields);
   const [disabled, setDisabled] = useState<boolean>(true);
-  // const selectedUser:  = user || loggedInUser;
 
+  const handleDisabled = (updatedFields: IFormField[]) => {
+    const isFormComplete = updatedFields.every(field => !field.required || (field.value && !field.error));
+    setDisabled(!isFormComplete);
+  };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    let fieldsRef = fields.map((field:IFormField,i)=>{
-      if(field.name === name)field.value = value;
-      return field;
-    })
-    setFields(fieldsRef); // Update the state with the modified fields
-    handleDisabled(fieldsRef); // Update the disabled state based on the new fields
-  };
-  
-
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault;
-    const formData = fields.reduce((acc: any, field: any) => {
-      const fieldName = field.name;
-      if (['firstName', 'lastName'].includes(fieldName)) {
-        acc[fieldName] = field.value;
-      } else {
-        acc[fieldName] = field.value;
+    let fieldsRef = fields.map((field: IFormField) => {
+      if (field.name === name) {
+        field.value = value;
+        return validateField(field);
       }
-      return acc;
-    }, {}); 
+      return field;
+    });
+    setFields(fieldsRef);
+    handleDisabled(fieldsRef);
+  };
 
-    formData.name = `${formData.firstName} ${formData.lastName}`; // Combining firstName and lastName
-    delete formData.firstName; // Remove firstName
-    delete formData.lastName; // Remove lastName
+  const validateField = (field: IFormField): IFormField => {
+    let text: string = findField(defaultContactFields, field.name)?.name || "* ";
+    let color: string | undefined = undefined;
+    const errorColor = "var(--orange-50)";
+    const hasNumbers = /\d/;
+
+    if (field.required && !field.value) {
+      color = "var(--gray-50)";
+    } else if (field.name === 'email') {
+      const validEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if (typeof field.value === 'string' && !validEmailRegex.test(field.value)) {
+        text += ' *Invalid email address*';
+        color = errorColor;
+      }
+    } else if (field.name === 'phone') {
+      if (typeof field.value === 'string' && String(field.value).length < 20) {
+        text += ' *not long enough*';
+        color = errorColor;
+      }
+    } else if (field.name === 'name') {
+      if (typeof field.value === 'string' && field.value.length < 3) {
+        text += ' *First Name, too short*';
+        color = errorColor;
+      } else if (typeof field.value === 'string' && !field.value.includes(' ')) {
+        text += ' *Full name must include a space*';
+        color = errorColor;
+      } else if (typeof field.value === 'string' && field.value.includes(' ') && field.value.split(' ')[1].length < 3) {
+        text += ' *Last name, too short*';
+        color = errorColor;
+      } else if (typeof field.value === 'string' && hasNumbers.test(field.value)) {
+        text += ' *Name must not include numbers*';
+        color = errorColor;
+      }
+    }
+
+    const hasError = findField(fieldErrors, field.name);
+    if (fieldErrors && hasError && field.name == text) {
+      delete field.error;
+    }
+    const context = { ...field, label: { text, color } };
+    return context;
+  };
+
+  const handleFormSubmit = () => {
+    const formData = fields.reduce((acc: any, field: any) => {
+      acc[field.name] = field.value;
+      return acc;
+    }, {});
     onSubmit(formData);
   };
 
-
-  const handleDisabled = async (updatedFields: IFormField[]) => {
-    if (!Array.isArray(updatedFields)) {
-      // console.error('updatedFields is not an array', updatedFields);
-      return; // Exit the function or handle this case as appropriate
-    }
-    const isComplete = updatedFields.map((field: IFormField) => {
-      const initialValue = initialFields && findField(initialFields, field.name)?.value;
-      const isInitialValue = field?.value === initialValue;
-      const isEmptyValue = !['', undefined, null, {}].includes(field.value);
-      return Boolean(isInitialValue && isEmptyValue);
-    });
-    const shouldDisable = isComplete.filter(f => f === false)?.length === 0;
-    if(shouldDisable !== disabled)setDisabled(shouldDisable);
-    return;
-  };
-
-
-const handleUser = async () => {
-  // Check if a user has been selected and update fields accordingly
-  const userToUse = user || loggedInUser;
-  if (userToUse) {
-    const updatedFields = fields.map((field) => {
-      switch (field.name) {
-        case 'firstName':
-          return { ...field, value: userToUse.name ? userToUse.name.split(' ')[0] : field.value, width: "50%" };
-        case 'lastName':
-          return { ...field, value: userToUse.name ? userToUse.name.split(' ')[1] : field.value, width: "50%" };
-        case 'email':
-          return { ...field, value: userToUse.email || field.value };
-        case 'phone':
-          return { ...field, value: userToUse.phone ? phoneFormat(userToUse.phone, 'US', true) : field.value };
-        case 'address':
-          return { ...field, value: userToUse.address || field.value };
-        default:
-          return field;
-      }
-    });
-
-    if(!fields) setFields(updatedFields);
-    if (!initialFields) setInitialFields(updatedFields);
-  }
-};
-  const init = async () => {
-    handleUser().then(
-      (updatedFields: any) => handleDisabled(updatedFields)
-    ) 
-  }
   useEffect(() => {
-    init()
-  }, [init, handleUser, user]);
+    if (fieldErrors) {
+      const updatedFields = fields.map((field: IFormField) => {
+        const errorField = findField(fieldErrors, field.name);
+        if (errorField) return { ...field, error: errorField.error };
+        return field;
+      });
+      setFields(updatedFields);
+    }
+  }, [fieldErrors]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const newWidth = getWidth();
+      setFields(prevFields => prevFields.map(field => ({
+        ...field,
+        width: field.name !== 'name' ? newWidth : field.width
+      })));
+    };
+
+    handleResize(); // Call it once to set initial widths
+  }, [windowSize.width]);
 
   return (
     <>
       <style jsx>{styles}</style>
       <div className='contact-form'>
-        {/* {JSON.stringify(fields)} */}
         {title && <div className='contact-form__title'>{title}</div>}
+        {fieldErrors && (
+          <ul>
+            {Object.entries(fieldErrors).map(([index, field]: any) => (
+              <li key={index}>
+                <strong>{field?.name}: </strong>{field?.error}
+              </li>
+            ))}
+          </ul>
+        )}
         <UiForm
           fields={fields}
           disabled={disabled}

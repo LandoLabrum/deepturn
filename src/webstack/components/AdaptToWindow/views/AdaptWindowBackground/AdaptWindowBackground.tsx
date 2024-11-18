@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IAdaptToWindow, IAdaptWinBg } from "../../models/IAdaptToWindow";
 import styles from './AdaptWindowBackground.scss';
-import { IWindow } from "@webstack/hooks/useWindow";
+import { IWindow } from "@webstack/hooks/window/useWindow";
 
 interface IAdaptWindowBackground{
   background: IAdaptWinBg;

@@ -25,6 +25,7 @@ export interface TableContentProps extends TableFunctionProps {
   variant?: IFormControlVariant;
   onRowClick?: (e: any) => void;
   hideHeader?: boolean;
+  onSelect?: (e:any)=>void;
 }
 export interface TableFunctionProps {
   data?: any;
@@ -48,6 +49,7 @@ export const AdapTableContent = ({
   onRowClick,
   hideHeader,
   options,
+  onSelect,
 }: TableContentProps) => {
   const index = options?.index ? options.index + 1 : 0;
 
@@ -115,17 +117,27 @@ export const AdapTableContent = ({
       window.removeEventListener("mousemove", handleResize);
       window.removeEventListener("mouseup", handleResizeEnd);
     };
-  }, [isResizing]);
-
+  }, [isResizing, handleResize]);
   const handleRowClick = (e: any, item: any) => {
     if (!["svg", "path"].includes(e.target.tagName)) {
       onRowClick?.(item);
     }
   };
+  
+  const handleSelect = (item: any) => {
+    onSelect?.(item);
+  };
+  
+
   const internalHiddenKeys = (key: string) => ['image', 'keywords'].includes(key);
   const handleScrollToTop = () => {
     scrollToPosition(undefined, 0, 'top');
   };
+
+  
+  useEffect(() => {
+    // This is where you can log and check for updates
+  }, [data]);
   return (
     <>
       <style jsx>{tableStyles}</style>
@@ -140,8 +152,12 @@ export const AdapTableContent = ({
           <thead className={hideHeader && 'hide-header' || ''}>
             <tr >
               {index !== 0 && <th className="index">#</th>}
-              {data &&
-                data[0] &&
+              {onSelect && (
+                    <th data-key="onSelect" className="edit">
+                      edit
+                    </th>
+                  )}
+              { data?.[0] &&
                 Object.keys(data[0]).map((key, columnIndex) => {
                   const columnKey = keyStringConverter(key);
                   return (
@@ -167,8 +183,7 @@ export const AdapTableContent = ({
             </tr>
           </thead>}
           <tbody>
-            {data &&
-              data[0] &&
+            { data?.[0] &&
               data.map((item: ItemType, i_: number) => {
                 if (item) return <tr
                   className={`${variant ? variant : ""}`}
@@ -181,6 +196,12 @@ export const AdapTableContent = ({
                   {index !== 0 && (
                     <td data-key="#" className="index">
                       {index + i_}
+                    </td>
+                  )}
+                  {onSelect && (
+                    <td data-key="onSelect" className="index" onClick={()=>handleSelect(item)}>
+                      {/* {index + i_} */}
+                      <UiIcon icon={item?.selected?'fa-check':'fa-square'} />
                     </td>
                   )}
                   {Object.entries(item).map(

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import styles from "./AdaptGrid.scss";
-import useWindow from "@webstack/hooks/useWindow";
+import useWindow from "@webstack/hooks/window/useWindow";
 
 type FindClosestProps = {
   id: string;

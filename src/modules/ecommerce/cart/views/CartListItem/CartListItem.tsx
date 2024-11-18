@@ -6,7 +6,7 @@ import environment from '~/src/core/environment';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import ProductBuyNow from '../../../Products/views/ProductDescription/views/ProductBuyNow/ProductBuyNow';
-import { ITraits } from '@webstack/components/FormControl/FormControl';
+import { ITraits } from '@webstack/components/UiForm/components/FormControl/FormControl';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useRouter } from 'next/router';
 
@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 const CartListItem: React.FC<any> = ({item, traits, variant,adjustable}:{item:any, traits:ITraits, variant?:string,adjustable?:boolean}) => {
     const router = useRouter();
     const handleClick = () =>{
-        console.log(item)
+        // console.log(item)
         router.push(`/product?id=${item?.id}&pri=${item?.price?.id}`)
     }
     useEffect(() => {}, [item]);
@@ -41,6 +41,7 @@ const CartListItem: React.FC<any> = ({item, traits, variant,adjustable}:{item:an
                     <div className={`cart-list-item-body`}>
                         <div className="cart-list-item-name">
                             {item?.name}
+                            {/* {item?.id} */}
                         </div>
                         <div className="cart-list-item-description">
                             {item?.description}

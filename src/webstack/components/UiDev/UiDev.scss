@@ -38,11 +38,11 @@
 
         .dev-key{
             @extend .d-flex;
-            color:var(--orange);
+            color:var(--orange-50);
         }
         .dev-value{
             @extend .d-flex;
-            color:var(--green-10);
+            color:var(--green-20-10);
         }
         display: flex;
         // justify-content: space-between;

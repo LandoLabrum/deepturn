@@ -10,14 +10,7 @@
 
 # Build outputs
 /build
-
-# Testing
-/coverage
-
-# Next.js
-/.next/
-
-
+/.next
 /out
 
 # Production
@@ -44,11 +37,18 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 
-# Lando's
+# Lando's specific
 /bin
 /.vscode
 /lib
 /env
 .env
-# /.git/
-# *.git
+
+# Git directory (should be ignored, but it's usually redundant)
+.git/
+
+# Ignore large files by file extension
+*.pack
+*.node
+*.git.DS_Store
+.DS_Store

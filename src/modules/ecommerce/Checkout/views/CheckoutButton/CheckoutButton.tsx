@@ -5,7 +5,7 @@ import UiButton from '@webstack/components/UiButton/UiButton';
 import { calculateCartTotal } from '@webstack/helpers/userExperienceFormats';
 import { useRouter } from 'next/router';
 import Checkout from '~/src/pages/checkout';
-import { ITraits } from '@webstack/components/FormControl/FormControl';
+import { ITraits } from '@webstack/components/UiForm/components/FormControl/FormControl';
 import { getService } from '@webstack/common';
 import IMemberService, { ISessionData } from '~/src/core/services/MemberService/IMemberService';
 import { encryptString } from '@webstack/helpers/Encryption';
@@ -67,8 +67,6 @@ const CheckoutButton: React.FC<ICheckoutButton> = (props) => {
     return <>
         <style jsx>{styles}</style>
         {error && "[ CheckoutButton REsp( ERROR) ]: " + JSON.stringify(error)}
-        {/* SESSION: {JSON.stringify(sessionData)}<hr/>
-        {cart} */}
         <div className='checkout-button'>
             <UiButton variant="glow" traits={traits} onClick={handleCheckout} >{`${label} ${calculateCartTotal(cart)}`}</UiButton>
         </div>
@@ -76,7 +74,3 @@ const CheckoutButton: React.FC<ICheckoutButton> = (props) => {
 };
 
 export default CheckoutButton;
-
-
-
-// const mockCartItems = [{"id":"prod_KaJjdc2gSx8W3j","object":"product","active":true,"attributes":[],"created":1636759458,"default_price":null,"description":"Custom Email Routed with Google and Includes Additional Google Apps (Drive, Team Mgmt, Sheets, Docs, etc. )","features":[],"images":[],"livemode":true,"metadata":{"mid":"nirv1"},"name":"Custom Email","package_dimensions":null,"shippable":null,"statement_descriptor":null,"tax_code":null,"type":"service","unit_label":null,"updated":1709091566,"url":null,"price":{"id":"price_1OnsnJIodeKZRLDVBrgLJClc","object":"price","active":true,"billing_scheme":"per_unit","created":1708910149,"currency":"usd","custom_unit_amount":null,"livemode":true,"lookup_key":null,"metadata":{"mid":"nirv1"},"nickname":null,"product":"prod_KaJjdc2gSx8W3j","recurring":null,"tax_behavior":"exclusive","tiers_mode":null,"transform_quantity":null,"type":"one_time","unit_amount":100,"unit_amount_decimal":"100","qty":1}}]

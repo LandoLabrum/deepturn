@@ -58,7 +58,7 @@ const Authentication: React.FC<any> = (props: any) => {
         break;
       default: break;
     }
-    setNotification({ active: true, list: [{ 'label': label, message: "Sign in to continue." }] });
+    setNotification({ active: true, list: [{ 'label': label, message: "Please wait a few minutes before logging in" }] });
     setView('sign-in');
     setNewCustomerEmail(response.email)
   }
@@ -122,8 +122,10 @@ const Authentication: React.FC<any> = (props: any) => {
         {view == 'sign-up' && <SignUp onSuccess={handleSignup} />}
         <div className="authentication__view-action">
           <div className="authentication__view-label">
+          <div className="authentication__view-label--text">
             {view == 'sign-in' && "no account?"}
             {view == 'sign-up' && "already have an account?"}
+          </div>
           </div>
 
           <UiButton

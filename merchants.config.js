@@ -18,7 +18,15 @@ module.exports = {
         mid: "nirv1",
         name: "nirvana-energy",
         url: "https://nirvanaenergy.net",
-        stripeId:"acct_1OWy0fE8XAGZDdpK"
+        stripeId:"acct_1OWy0fE8XAGZDdpK",
+        settings:{
+         ecommerce:{
+          productListing:{
+            layoutStyle:'grid',
+            size: 'xl'
+          }
+         }
+        }
       },
     },
   };

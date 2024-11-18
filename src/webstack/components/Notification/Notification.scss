@@ -32,12 +32,30 @@
   z-index: 1004;
   width: 100vw;
   cursor: pointer;
-  color: var(--secondary);
+  color: var(--secondary-50);
   animation: dropIn 1s forwards ease-out;
   @media(max-width:900px){
     height: 100%;
     width: 100%;
 
+  }
+  &__api-errors{
+    width: 100%;
+    @extend .d-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap:var(--s-9);
+    .error-message{
+      font-size: var(--s-4);
+      color:var(--red-50);
+    }
+    .error-detail{
+      @extend .d-flex;
+      flex-direction: column;
+      gap:var(--s-9);
+
+    }
   }
   &__confirm{
     @extend .d-flex;
@@ -102,7 +120,7 @@
           top: var(--s-10);
           line-height: 1;
           font-style: normal;
-          color: var(--orange);
+          color: var(--orange-50);
         @media(max-width: 900px){
           align-items: flex-start;
           flex-direction: column;

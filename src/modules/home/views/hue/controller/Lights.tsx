@@ -6,15 +6,15 @@ import IHomeService, { ILight } from '~/src/core/services/HomeService/IHomeServi
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import UiBar from '@webstack/components/Graphs/UiBar/UiBar';
-import ToggleSwitch from '@webstack/components/UiToggle/UiToggle';
+import ToggleSwitch from '@webstack/components/UiForm/components/UiToggle/UiToggle';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import UiInput from '@webstack/components/UiInput/UiInput';
+import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
 import UiMediaSlider from '@webstack/components/UiMedia/views/UiMediaSlider/UiMediaSlider';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { calculateHexFromHueSatBri } from '../functions/LightHelpers';
 import { reverseString } from '@webstack/helpers/Strings/reverseString';
 import ColorPicker from '@webstack/components/ColorPicker/ColorPicker';
-import UiKnob from '@webstack/components/UiKnob/UiKnob';
+import UiKnob from '@webstack/components/UiForm/components/UiKnob/UiKnob';
 
 interface ILightDisplay extends ILight {
   view?: string;
@@ -73,7 +73,7 @@ const LightsList = () => {
     };
   });
   const hueList = async (hue_object?: string) => {
-    setLoader({ active: true, body: `loading ${hue_object}`, animation: true });
+    setLoader({ active: true, body: `loading ${hue_object}` });
     try {
       const response = await homeService.hue_list(hue_object);
       setHueData(response);
@@ -94,7 +94,7 @@ const LightsList = () => {
   const multiHomeService = async (action: string, data?: any) => {
     // console.log('[ CHATGPT HELP! ]',JSON.stringify({action, data, group}));
     const handleLoader = (active: boolean, action?: string, name?: string) => {
-      setLoader({ active: active, body: `${action}, ${name} `, animation: true });
+      setLoader({ active: active, body: `${action}, ${name} ` });
     };
 
     handleLoader(true, action, data?.name);
@@ -156,21 +156,7 @@ const LightsList = () => {
     <>
       <style jsx>{styles}</style>
       <div className='lights'>
-
-        {/* <AdaptGrid xs={2} lg={3} gap={15}>
-          <UiButton variant={go && 'primary'} onClick={() => getHueList(oppoView)}>{oppoView}</UiButton>
-          <UiButton variant={go && 'primary'} onClick={() => setGo(!go)}>start animation</UiButton>
-          <UiButton variant={go && 'primary'} onClick={() => isAll == false ? setIsAll({ ...onLights[0], id_: 'all-lights' }) : false}>
-            Set All
-          </UiButton>
-        </AdaptGrid>
-        <UiMediaSlider
-          backgroundColors={['#ff3300']}
-          atPoints={atPoints}
-          duration={10000}
-          start={go}
-        /> */}
-        <UiKnob percent={10} />
+        {/* <UiKnob percent={10} setPercent={console.log}/> */}
         {hueData && !isAll && <AdaptGrid xs={1} sm={3} gap={15}>
           {Object.entries(hueData).map(([key, light]: any, index: number) =>
             <div

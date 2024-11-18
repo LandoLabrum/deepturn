@@ -11,6 +11,8 @@ import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { getService } from '@webstack/common';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import VerifyEmail from '../views/VerifyEmail/VerifyEmail';
+import UiDev from '@webstack/components/UiDev/UiDev';
+const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION?.trim();
 
 interface IVerifyErrorView {
   view?: string;
@@ -34,7 +36,7 @@ const VerifyErrorView = (props: IVerifyErrorView) => {
       <style jsx>{styles}</style>
       <div className='verify__error' id={props.view}>
         <h3>¡Error!</h3>
-        <div className='verify__error-header'>Verify: <span className="c-error">{props?.name && keyStringConverter(props?.name, false)}</span>
+        <div className='verify__error-header'>Verify: <span className="c-error">{props?.name && keyStringConverter(props?.name)}</span>
         </div>
         <p className=''>{props?.message}</p>
         <span className='error--more-info'>If you think you are seeing this message as an error, please contact your admin.</span>
@@ -42,7 +44,7 @@ const VerifyErrorView = (props: IVerifyErrorView) => {
     </>
   );
 };
-
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQmVubnkgSGFuc2VuIiwic2VjdXJpdHkiOnsidHlwZSI6ImdwcyIsIm1vZGVsIjoiYWlydGFnIn0sImNvbnRhY3RzIjpbeyJuYW1lIjoiVmFzaHRpIiwidGVsIjoiKzEyMDg5MzY4MTk5IiwiYWRkcmVzcyI6eyJjaXR5IjoiY2l0eSIsImNvdW50cnkiOiJVUyIsImxpbmUxIjoibGluZSAxIiwibGluZTIiOiJsaW5lIDIiLCJwb3N0YWxfY29kZSI6IjkwMjEwIiwic3RhdGUiOiJDQSJ9fV19.sTZD6PkNzJa606xCkkhvnt2lwHNfGVfMjt8-n4d3duM
 const Verify = () => {
   const { pathname, query } = useRouter();
   const [view, setView] = useState('');
@@ -52,7 +54,7 @@ const Verify = () => {
   const MemberService = getService<IMemberService>("IMemberService");
 
   const vid = query?.vid;
-  const token = query?.token;
+  const token = query?.token && String(query.token);
 
   const handleVerify = async () => {
     if (!token) {
@@ -66,6 +68,7 @@ const Verify = () => {
       if (verifiedResponse) setContext(verifiedResponse);
     } catch (e: any) {
       console.error('[ HANDLE VERIFY ]', e)
+      if(e?.fields)console.log({e:e.fields})
     }
   }
   const views: any = {
@@ -89,7 +92,7 @@ const Verify = () => {
     if(meetsQuerys)return vid;
     // if (typeof query.token == 'string') setToken(query.token);
   };
-  const initView = (view?:string|string[])=>{
+  const initView = async (view?:string|string[])=>{
     if(context)return;
     else if(!vid && !token)return;
     if(!view && !vid)setContext({
@@ -104,12 +107,28 @@ const Verify = () => {
       error: true,
       message: 'No Token Type Specified'
     });
-    setContext({view:view});
+    const handleVerify = async () => {
+      if(!ENCRYPTION_KEY)return;
+      if (!token) {
+          setContext({ ...context,status: 'no_token_present' });
+          return;
+      }
+      const verifiedResponse = await MemberService.decryptJWT({
+          token: token,
+          secret: ENCRYPTION_KEY,
+          algorithm: 'HS256',
+          verify:false
+      });
+      console.log({verifiedResponse})
+      if (verifiedResponse) setContext(verifiedResponse);
+  }
+  await handleVerify()
+    // setContext({view:view});
   }
   useEffect(() => {
     
     intLayout().then((a)=>initView(a));
-    console.log('initview:',view)
+    // console.log('initview:',view)
 
     // if (newCustomerEmail) {
     //   setView('sign-in');
@@ -120,6 +139,7 @@ const Verify = () => {
     <>
       <style jsx>{styles}</style>
       <div className='verify'>
+        <UiDev data={{token,view,context}}/>
         {views[context?.view]}
       </div>
     </>

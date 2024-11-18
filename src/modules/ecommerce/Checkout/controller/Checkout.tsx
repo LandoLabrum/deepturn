@@ -8,7 +8,7 @@ import SignUp from '~/src/modules/authentication/views/SignUp/SignUp';
 import { useGuest } from '~/src/core/authentication/hooks/useGuest';
 
 import Login from '~/src/modules/authentication/views/Login/controller/Login';
-import UserContext from '~/src/models/UserContext';
+import IAuthenticatedUser from "~/src/models/ICustomer";
 import Collect from '../views/Collect/controller/Collect';
 import CartList from '../../cart/views/CartList/CartList';
 import { useNotification } from '@webstack/components/Notification/Notification';
@@ -20,14 +20,14 @@ const Checkout = (): React.JSX.Element => {
     const user = useUser();
     const [view, setView] = useState<any>();
     const [_cart, setCart] = useState<any>();
-    const [selectedUser, setUser] = useState<UserContext | { email: string } | undefined>();
+    const [selectedUser, setUser] = useState<IAuthenticatedUser | { email: string } | undefined>();
     const { cart } = useCart();
     const guest = useGuest();
     const handleSignUp = (res: any) => {
         const selectedUser = res?.id && res || guest;
-        console.log('[handleSignUp ]', res)
+        // console.log('[handleSignUp ]', res)
         if (['guest', 'created'].includes(res?.status)) {
-            console.log("[ RES ]", res)
+            // console.log("[ RES ]", res)
             handleUser()
             setView('collect');
             handleNotifictaion(res);
@@ -36,21 +36,21 @@ const Checkout = (): React.JSX.Element => {
             setUser({ email: res.email });
             setView('existing');
         }
-        else {
-            console.log('[ CHECKOUT (HANDLE SIGNUP)[ERROR] ]', res);
-        }
+        // else {
+        //     // console.log('[ CHECKOUT (HANDLE SIGNUP)[ERROR] ]', res);
+        // }
     }
     const [notification, setNotification] = useNotification();
     type InotificationContext = { data: string, email: string, status: "existing" | "created" | "success" }
     const handleNotifictaion = (notificationContext: InotificationContext) => {
-        console.log('[ handleNotification ]', notificationContext)
+        // console.log('[ handleNotification ]', notificationContext)
         const status = notificationContext.status;
         if (status) setNotification({
             active: true,
             persistence: 3000,
-            list: [{ name: `email ${status}, sign in to continue` }]
+            list: [{ name: `email ${status}` }]
         });
-        console.log('[ NOTIFICIATION ]', { notification, notificationContent: notificationContext })
+        // console.log('[ NOTIFICIATION ]', { notification, notificationContent: notificationContext })
     }
     const views: IView = {
         'sign-up': (
@@ -72,7 +72,7 @@ const Checkout = (): React.JSX.Element => {
     }
     const handleUser = () => {
         if (selectedUser) return;
-        console.log('[ USER ]', { user, guest })
+        // console.log('[ USER ]', { user, guest })
         if (user || guest) {
             setView('collect');
             setUser(user || guest);

@@ -1,64 +1,133 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './UiMedia.scss';
-import ImageControl, { IImageMediaType, IImageVariant } from '@webstack/components/ImageControl/ImageControl';
+import ImageControl,{IImageMediaType,IImageVariant} from '../ImageControl/ImageControl';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 
 export interface IMedia {
   src: string;
   alt?: string;
   variant?: IImageVariant;
+  onLoad?: (e: any) => void;
   type?: IImageMediaType;
   loadingText?: string;
-  rotate?: number; // Added rotate prop for rotation degree
+  rotate?: number;
+  autoplay?: boolean;
+  controls?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  poster?: string;
+  preload?: 'auto' | 'metadata' | 'none';
+  width?: number;
+  height?: number;
+  playbackSpeed?: number;
 }
 
-const UiMedia: React.FC<IMedia> = ({ src, variant, type, alt, loadingText, rotate }: IMedia) => {
+const UiMedia: React.FC<IMedia> = ({
+  src,
+  variant,
+  type = 'image',
+  alt,
+  loadingText,
+  rotate,
+  onLoad,
+  autoplay,
+  controls,
+  loop,
+  muted,
+  poster,
+  preload = 'auto',
+  width,
+  height,
+  playbackSpeed = 1,
+}) => {
   const [imageControlProps, setImageControlProps] = useState<any>({ variant, type });
-  const [reloadTrigger, setReloadTrigger] = useState(0); // state to trigger reload
-  const imgRef = useRef<any>();
+  const [reloadTrigger, setReloadTrigger] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null);
+
   const handleReload = () => {
-    setImageControlProps({ ...imageControlProps, error: null }); // Reset error state
-    setReloadTrigger(prev => prev + 1); // Increment reload trigger to re-render the image
+    setImageControlProps({ ...imageControlProps, error: null });
+    setReloadTrigger((prev) => prev + 1);
   };
 
-  const RefreshLoadingText = () => {
-    return <>
-        <div style={{color: "#f90"}}>{loadingText}, Failed</div>
-        <div>
-          <UiIcon icon='fa-arrows-rotate' onClick={handleReload} />
-        </div>
+  const RefreshLoadingText = () => (
+    <>
+      <div style={{ color: "#f90" }}>{loadingText}, Failed</div>
+      <div>
+        <UiIcon icon="fa-arrows-rotate" onClick={handleReload} />
+      </div>
     </>
-  }
+  );
 
-  const handleError = (event: any) => {
-    event.preventDefault();
-    // console.log('[ ERROR ]', event)
-    if (!imageControlProps.error) {
-      setImageControlProps({ ...imageControlProps, error: <RefreshLoadingText />});
+  const handleLoad = () => {
+    setIsLoading(false);
+    if (onLoad) {
+      onLoad(imageControlProps);
     }
   };
 
-  // Apply rotation if the rotate prop is provided
-  const imageStyle = {
-    transform: `rotate(${rotate}deg)`
+  const handleError = (event: any) => {
+    event.preventDefault();
+    setIsLoading(false);
+    if (!imageControlProps.error) {
+      setImageControlProps({ ...imageControlProps, error: <RefreshLoadingText /> });
+    }
   };
 
-  imageControlProps.loadingText = loadingText;
-  useEffect(() => {
-    // Effect logic here if needed
-    if(rotate && imgRef?.current){
-      imgRef.current.style.transform = `rotate(${rotate}deg)`
-    }else if(!rotate && imgRef?.current?.style.transform)delete imgRef.current.style
+  const imageStyle = {
+    transform: `rotate(${rotate}deg)`,
+  };
 
-  }, [handleError, imageControlProps,handleReload,  imgRef?.current]); // 
+  useEffect(() => {
+    if (type === 'video' && mediaRef.current && playbackSpeed) {
+      (mediaRef.current as HTMLVideoElement).playbackRate = playbackSpeed;
+    }
+  }, [playbackSpeed, type]);
+
+  useEffect(() => {
+    if (rotate && mediaRef.current) {
+      mediaRef.current.style.transform = `rotate(${rotate}deg)`;
+    } else if (mediaRef.current && mediaRef.current.style.transform) {
+      mediaRef.current.style.transform = '';
+    }
+  }, [rotate,]);
 
   return (
     <>
       <style jsx>{styles}</style>
-      <ImageControl {...imageControlProps}>
-        {!imageControlProps.error &&
-          <img ref={imgRef} src={src} alt={alt} onError={handleError} key={reloadTrigger} /> // Apply rotation style here
-        }
+      <ImageControl {...imageControlProps} onComplete={handleLoad}>
+        {isLoading && <div className="loading">{loadingText || "Loading..."}</div>}
+        {!imageControlProps.error && (
+          type === 'video' ? (
+            <video
+              ref={mediaRef as React.Ref<HTMLVideoElement>}
+              src={src}
+              autoPlay={autoplay}
+              controls={controls}
+              loop={loop}
+              muted={muted}
+              poster={poster}
+              preload={preload}
+              width={width}
+              height={height}
+              onLoadStart={() => setIsLoading(true)}
+              onCanPlayThrough={handleLoad}
+              onError={handleError}
+              key={reloadTrigger}
+              style={imageStyle}
+            />
+          ) : (
+            <img
+              ref={mediaRef as React.Ref<HTMLImageElement>}
+              src={src}
+              alt={alt}
+              onLoad={handleLoad}
+              onError={handleError}
+              key={reloadTrigger}
+              style={imageStyle}
+            />
+          )
+        )}
       </ImageControl>
     </>
   );

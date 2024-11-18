@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './ColorPicker.scss'; // Importing the SCSS file
 import { debounce } from 'lodash';
-import UiInput from '../UiInput/UiInput';
+import UiInput from '../UiForm/components/UiInput/UiInput';
 
 interface IColorPicker {
   hex?: string;
@@ -35,7 +35,7 @@ const ColorPicker = ({ hex, onChange }: IColorPicker) => {
   }, []);
 
   const debouncedOnChange = useCallback(
-    debounce((pickedColor) => {
+    debounce((pickedColor:any) => {
       if (onChange) {
         onChange(pickedColor);
       }

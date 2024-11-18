@@ -22,13 +22,24 @@ const MainLayout = (props: IProps) => {
     // }
 
     // Dynamically load the merchant-specific stylesheet
+    const existingTheme = document.querySelector(`link[href*="theme.css"]`);
     const existingLink = document.querySelector(`link[href*="${mid}.css"]`);
-    if (!existingLink) {
+    if (!existingTheme) {
+      // <link rel="stylesheet" href="./styles/theme.css" />
+      const theme = document.createElement('link');
+      theme.rel = 'stylesheet';
+      theme.href = `/styles/theme.css`;
+      document.head.appendChild(theme);
+      
+    }
+    if(!existingLink){
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = `/styles/merchants/${mid}.css`;
       document.head.appendChild(link);
     }
+    
+
   };
 
   useEffect(() => {

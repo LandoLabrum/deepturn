@@ -12,7 +12,10 @@
 
 .form {
   @extend .d-flex;
+  overflow-y: visible;
+  overflow-x: hidden;
   justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
   height: auto;
   flex-wrap: wrap;
@@ -51,7 +54,9 @@
     margin: 0 0 var(--s-4);
     @extend .d-flex-col;
     align-items: flex-start;
-
+    &.error{
+      color: var(--orange-50) !important;
+    }
   }
 
   .form-field__readonly {
@@ -102,7 +107,7 @@
           @extend .d-flex;
           align-items: flex-start;
           justify-content: flex-start;
-          color: var(--green);
+          color: var(--green-20);
           &--key{color: var(--gray-30)}
           // &--value{color: var(--gray-50)}
         }

@@ -1,18 +1,19 @@
 import styles from './CreatePDF.scss'; // Corrected the import statement
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import UiInput from '@webstack/components/UiInput/UiInput';
-import UiSelect from '@webstack/components/UiSelect/UiSelect';
+import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
+import UiSelect from '@webstack/components/UiForm/components/UiSelect/UiSelect';
 import UiButton from '@webstack/components/UiButton/UiButton';
 
 interface ICreatePDF {
-    pdfRef: React.RefObject<HTMLDivElement>;
+    pdfRef?: React.RefObject<HTMLDivElement>;
     preview?: boolean;
     downloadable?: boolean;
+    name?: string;
 }
-const CreatePDF: FC<ICreatePDF> = ({ pdfRef, preview, downloadable }) => {
+const CreatePDF: FC<ICreatePDF> = ({ pdfRef, preview, downloadable, name }) => {
     const { openModal } = useModal();
     const initialOutputSize = { width: 8.27, height: 11.69 };
     const [previewImage, setPreviewImage] = useState<string | null>(null); // State for preview image
@@ -54,13 +55,13 @@ const CreatePDF: FC<ICreatePDF> = ({ pdfRef, preview, downloadable }) => {
                     <div className='pdf-preview__options'>
                         <div className='pdf-preview__options--actions'>
                             <div>
-                                <UiSelect
+                                {/* <UiSelect
                                     options={['in', 'px']}
                                     onSelect={(unit) => setUnit(unit)}
                                     variant='lite'
                                     label='units'
                                     value={unit}
-                                />
+                                /> */}
                             </div>
                             <div>
                                 <UiInput
@@ -69,7 +70,7 @@ const CreatePDF: FC<ICreatePDF> = ({ pdfRef, preview, downloadable }) => {
                                     name='width'
                                     type="tel"
                                     onChange={handleOutputSize}
-                          
+
                                 />
                             </div>
                             <div>
@@ -100,13 +101,13 @@ const CreatePDF: FC<ICreatePDF> = ({ pdfRef, preview, downloadable }) => {
         }
     };
     let { initHeight, initWidth }: { initHeight: number, initWidth: number } = { initHeight: 100, initWidth: 100 };
-    if (pdfRef.current) {
+    if (pdfRef?.current) {
         initHeight = pdfRef.current.offsetHeight;
         initWidth = pdfRef.current.offsetWidth;
     }
     const renderPdf = async (download: boolean) => {
-        if (pdfRef.current) {
-            const canvas = await html2canvas(pdfRef.current);
+        if (pdfRef?.current) {
+            const canvas = await html2canvas(pdfRef?.current);
             const imgData = canvas.toDataURL('image/png');
             const orientation = initWidth > initHeight ? 'l' : 'p'; // Determine orientation based on width and height
 
@@ -121,7 +122,7 @@ const CreatePDF: FC<ICreatePDF> = ({ pdfRef, preview, downloadable }) => {
                     ]
                 });
                 pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
-                pdf.save('download.pdf');
+                pdf.save(name?`${name}.pdf`:'download.pdf');
             } else {
                 setPreviewImage(imgData); // Set the preview image
                 openModal(<PreviewContent imgData={imgData} />);
@@ -144,6 +145,9 @@ const CreatePDF: FC<ICreatePDF> = ({ pdfRef, preview, downloadable }) => {
 
     const downloadPdf = () => renderPdf(true);
     const handlePreview = () => renderPdf(false);
+    
+    useEffect(() => {}, [pdfRef]);
+    if (!pdfRef) return <>No pdf</>;
 
     return (
         <>
@@ -151,10 +155,10 @@ const CreatePDF: FC<ICreatePDF> = ({ pdfRef, preview, downloadable }) => {
             <div className='create-pdf'>
                 {preview && (
                     <div className={styles.preview}>
-                        <button onClick={handlePreview}>Preview Content</button>
+                        <UiButton onClick={handlePreview}>Preview Content</UiButton>
                     </div>
                 )}
-                {downloadable && <button onClick={downloadPdf}>Download as PDF</button>}
+                {downloadable && <UiButton variant='primary' onClick={downloadPdf}>Download as PDF</UiButton>}
             </div>
 
         </>
