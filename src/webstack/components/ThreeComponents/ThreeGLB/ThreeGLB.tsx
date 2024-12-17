@@ -24,6 +24,7 @@ const GLBViewer: React.FC<GLBViewerProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ width: 100, height: 100 });
+  const [modelExists, setModelExists] = useState(true);
 
   const updateContainerSize = () => {
     if (containerRef.current) {
@@ -38,10 +39,25 @@ const GLBViewer: React.FC<GLBViewerProps> = ({
     return () => window.removeEventListener('resize', updateContainerSize);
   }, []);
 
+  const checkModelPath = async (path: string) => {
+    try {
+      const response = await fetch(path, { method: 'HEAD' });
+      if (!response.ok) {
+        throw new Error('Model not found');
+      }
+    } catch (error) {
+      setModelExists(false);
+    }
+  };
+
+  useEffect(() => {
+    checkModelPath(modelPath);
+  }, [modelPath]);
+
   const Model = () => {
     const gltf = useGLTF(modelPath);
     const modelRef = useRef<THREE.Group>(null);
-    const { camera, size } = useThree();
+    const { camera } = useThree();
 
     useEffect(() => {
       if (modelRef.current && camera) {
@@ -55,7 +71,6 @@ const GLBViewer: React.FC<GLBViewerProps> = ({
 
         const maxDimension = Math.max(size.x, size.y, size.z);
         const aspectRatio = containerSize.width / containerSize.height;
-        // camera.aspect = aspectRatio;
         camera.updateProjectionMatrix();
 
         const cameraDistance = maxDimension / (2 * Math.tan((fov * Math.PI) / 180 / 2));
@@ -104,16 +119,20 @@ const GLBViewer: React.FC<GLBViewerProps> = ({
       <style jsx>{styles}</style>
       <div ref={containerRef} className="three-glb">
         <div className="three-glb--content">
-          <Canvas>
-            <Environment preset="sunset" />
-            <ambientLight intensity={0.5} />
-            <directionalLight position={[5, 5, 20]} intensity={0.7} />
+          {modelExists ? (
+            <Canvas>
+              <Environment preset="sunset" />
+              <ambientLight intensity={0.5} />
+              <directionalLight position={[5, 5, 20]} intensity={0.7} />
 
-            <Suspense fallback={null}>
-              <Model />
-            </Suspense>
-            <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={fov} />
-          </Canvas>
+              <Suspense fallback={null}>
+                <Model />
+              </Suspense>
+              <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={fov} />
+            </Canvas>
+          ) : (
+            <div className="no-glb">No GLB model found at the provided path.</div>
+          )}
         </div>
       </div>
     </>

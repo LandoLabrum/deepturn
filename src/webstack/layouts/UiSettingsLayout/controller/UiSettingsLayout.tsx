@@ -75,12 +75,12 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
       <style jsx>{containerStyles}</style>
       <div id="settings" className={`${classes.primary}`}>
         <div className={`${classes.header}`}>
-          {!title && isView && <UiHeader title={titleContent} subTitle={subTitle} /> || title}
+          {!title && title!==undefined && isView && <UiHeader title={titleContent} subTitle={subTitle} /> || title}
         </div>
         <div className={classes.content}>
-          <div className={classes.nav}>
+        {!customMenu &&  <div className={classes.nav}>
             <div className={classes.navContent}>
-              {!customMenu && Object.keys(views)?.map((vue) => (
+     {         Object.keys(views)?.map((vue) => (
                 <span key={vue} className='s-w-100'>
                   <UiButton
                     traits={view === vue ? { afterIcon: 'fa-check' } : {}}
@@ -92,6 +92,7 @@ const UiSettingsLayout: React.FC<ISettingsLayout> = ({
               {customMenu}
             </div>
           </div>
+            }
           <div className={classes.view}>
             <div className={classes.content}>
               {views[view]}

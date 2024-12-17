@@ -74,9 +74,6 @@ const UiMedia: React.FC<IMedia> = ({
     }
   };
 
-  const imageStyle = {
-    transform: `rotate(${rotate}deg)`,
-  };
 
   useEffect(() => {
     if (type === 'video' && mediaRef.current && playbackSpeed) {
@@ -85,12 +82,16 @@ const UiMedia: React.FC<IMedia> = ({
   }, [playbackSpeed, type]);
 
   useEffect(() => {
+
     if (rotate && mediaRef.current) {
       mediaRef.current.style.transform = `rotate(${rotate}deg)`;
     } else if (mediaRef.current && mediaRef.current.style.transform) {
       mediaRef.current.style.transform = '';
     }
-  }, [rotate,]);
+    if(height && mediaRef?.current){
+      mediaRef.current.style.height = `${height}px`
+    }
+  }, [rotate, ]);
 
   return (
     <>
@@ -102,6 +103,7 @@ const UiMedia: React.FC<IMedia> = ({
             <video
               ref={mediaRef as React.Ref<HTMLVideoElement>}
               src={src}
+              className={`${variant?`ui-media--${variant}`:''}`}
               autoPlay={autoplay}
               controls={controls}
               loop={loop}
@@ -114,17 +116,17 @@ const UiMedia: React.FC<IMedia> = ({
               onCanPlayThrough={handleLoad}
               onError={handleError}
               key={reloadTrigger}
-              style={imageStyle}
-            />
-          ) : (
-            <img
+              ><h1>loading</h1></video>
+            ) : (
+              <img
               ref={mediaRef as React.Ref<HTMLImageElement>}
               src={src}
+              className={`${variant?`ui-media--${variant}`:''}`}
               alt={alt}
               onLoad={handleLoad}
               onError={handleError}
               key={reloadTrigger}
-              style={imageStyle}
+              
             />
           )
         )}

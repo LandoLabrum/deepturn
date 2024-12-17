@@ -91,7 +91,7 @@ export default class HomeService extends ApiService implements IHomeService {
   }
 
   public async spotifyPause(): Promise<any> {
-    console.log('HELLO PAUSE')
+    // console.log('HELLO PAUSE')
     return await this.put<any, any>("/api/stream/spotify/pause", {});
   }
 

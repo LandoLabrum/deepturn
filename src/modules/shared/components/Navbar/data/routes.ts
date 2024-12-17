@@ -50,6 +50,10 @@ export const routes: IRoute[] = [
     hide: true,
   },
   {
+    href:"/build",
+    hide: true,
+  },
+  {
     label: keyStringConverter(merchantName),
     icon: `${merchantName}-logo`,
     href:"/",
@@ -104,7 +108,7 @@ export const routes: IRoute[] = [
     icon: 'fa-circle-user',
     clearance: 0,
   },
-  { label: "about", href: "/about", icon: "fal-circle-info" , active: true },
+  // { label: "about", href: "/about", icon: "fal-circle-info" , active: true },
   { label: "", href: "/cart", icon: "fal-bag-shopping" },
   { label: "", href: "/checkout", hide: true},
 ];

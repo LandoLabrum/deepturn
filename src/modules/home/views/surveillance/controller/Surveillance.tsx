@@ -1,17 +1,12 @@
-// Relative Path: ./Surveillance.tsx
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import styles from './Surveillance.scss';
-import UiMedia from '@webstack/components/UiMedia/controller/UiMedia';
-import environment from '~/src/core/environment';
 import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
-import { useEffect } from 'react';
 import { getService } from '@webstack/common';
 import IHomeService from '~/src/core/services/HomeService/IHomeService';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import { dateFormat } from '@webstack/helpers/userExperienceFormats';
 import SurveillanceItem from '../views/SurveillanceItem/SurveillanceItem';
-import UiDev from '@webstack/components/UiDev/UiDev';
 import SurveillanceDetails from '../views/SurveillanceDetails/SurveillanceDetails';
+import { useRouter } from 'next/router';
+
 interface ICameraInfo {
   apartalarmParm: {
     heightY: string;
@@ -120,64 +115,78 @@ interface ISurveillanceCam {
   total: number;
 }
 
-
-
-
 const Surveillance: React.FC = () => {
+  const {query, push, pathname} = useRouter();
+  const queryId = query?.id
   const homeService = getService<IHomeService>("IHomeService");
-  const [camData, setCamData] = useState<any>();
-  const [main, setMain] = useState<string| undefined>();
+  const [camData, setCamData] = useState<any | null>(null);
+  const [main, setMain] = useState<string | undefined>();
+
   const handleMain = (id: string) => {
     const camName = id.toLowerCase();
-    if(camData.cameras?.[camName] && !main) return setMain(camName);
-    setMain(undefined);
-    // if (!main)
-    // 
-  }
-  const getCameras = async () => {
-    if (camData) return;
-    const response: any = await homeService.wbListCameras();
-    try {
-      setCamData(response)
-    } catch (error) {
-      console.error('[ SURVEILLANCE ]', error)
+    if(id !== main)push({pathname:`${pathname}`, query: {...query, id}}, );
+    if (Object.values(camData?.cameras).find((camera:any) => camera.name_uri === camName) && !main) {
+      return setMain(camName);
     }
+    setMain(undefined);
+  };
+
+  const getCameras = useCallback(async () => {
+    if(camData)return;
+    try {
+      const response:any = await homeService.wbListCameras();
+      setCamData(response);
+    } catch (error) {
+      console.error('[ SURVEILLANCE ]', error);
+    }
+  }, [homeService]);
+
+  useEffect(() => {
+    !main && !camData && getCameras();
+ 
+    const interval = setInterval(() => {
+      !main && !camData && getCameras();
+    }, 30000); // Refresh every 30 seconds
+    return () => clearInterval(interval); // Clear the interval on component unmount
+  }, [getCameras,main]);
+
+useEffect(() => {
+  if(!queryId){
+    setMain(undefined);
+  }else if(queryId && !main){
+    setMain(String(queryId))
   }
+}, [getCameras]);
+// camData?.cameras && Object.values(camData.cameras).map((cam:any)=>console.log({camId:cam}))
+// console.log(camData?.cameras)
+  if (main) return <SurveillanceDetails id={main} />;
 
-  useEffect(() => { getCameras();
-
-  }, [camData]);
-  if(main)return <SurveillanceDetails id={main}/>;
   return (
     <>
       <style jsx>{styles}</style>
-      
-      <div className='surveillance'>
-        {camData?.available && (<>
-          {/* <small><h4>CamData: </h4>{JSON.stringify(Object.keys(camData))}</small> */}
-          <div className='surveillance__header'>
-            <AdaptGrid xs={2} md={3} variant='card' gap={10}>
-              {['available', 'enabled', 'total'].map((d: any) =>
-                <div key={d}>
-                  {d}: {camData[d]}
+      <div className="surveillance">
+        {camData?.cameras ? (
+          <>
+            <div className="surveillance__header">
+              <AdaptGrid xs={2} md={3} variant="card" gap={10}>
+                {['available', 'enabled', 'total'].map((d: any) => (
+                  <div key={d}>
+                    {d}: {camData[d as keyof ISurveillanceCam]}
+                  </div>
+                ))}
+              </AdaptGrid>
+            </div>
+            <AdaptGrid xs={1} md={3} variant="card" gap={10}>
+              {Object.values(camData.cameras).map((cameraData: any, idx: number) => (
+                <div key={idx} className="s-w-100">
+                  <SurveillanceItem camera={cameraData} onSelect={handleMain} />
                 </div>
-              )}
+              ))}
             </AdaptGrid>
-          </div>
-        </>
-
-        )||"still loading..."
-        }
-        {camData?.cameras && <AdaptGrid xs={2} md={3} variant='card' gap={10}>
-          {Object.values(camData.cameras).map(
-            (cameraData: any, idx: number) => {
-              return <div key={idx} className='s-w-100'>
-                {/* {JSON.stringify(cameraData)}<hr/> */}
-                <SurveillanceItem camera={cameraData} onSelect={handleMain} />
-              </div>
-            })}
-        </AdaptGrid>
-        }
+          </>
+        ) : (
+          "still loading..."
+        )}
       </div>
     </>
   );

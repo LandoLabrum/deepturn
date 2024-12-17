@@ -131,7 +131,7 @@ const SignUp = ({ hasPassword = true, btnText, onSuccess, title }: ISignUp): Rea
         }
       } catch (e: any) {
         if (e?.detail?.fields) {
-          console.log("[ e.detail.fields ]",e.detail.fields)
+          // console.log("[ e.detail.fields ]",e.detail.fields)
           e.detail.fields.forEach((field: any) => {
             changeField(field.name, 'error', field.message);
           });

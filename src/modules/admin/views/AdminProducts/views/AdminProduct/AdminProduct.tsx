@@ -4,14 +4,15 @@ import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 import environment from '~/src/core/environment';
 import { IProduct } from '~/src/models/Shopping/IProduct';
-import { updateField } from '@webstack/components/UiForm/functions/formFieldFunctions';
-import { dateFormat } from '@webstack/helpers/userExperienceFormats';
+import { findField, updateField } from '@webstack/components/UiForm/functions/formFieldFunctions';
+import { dateFormat, numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import UiButton from '@webstack/components/UiButton/UiButton';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 import { getService } from '@webstack/common';
 import IAdminService from '~/src/core/services/AdminService/IAdminService';
 import { useRouter } from 'next/router';
 import useDeleteProduct from '../../hooks/useDeleteProduct';
+import stringNum from '@webstack/helpers/stringNumber';
 
 interface IAdminProduct {
   product?: IProduct;
@@ -46,10 +47,10 @@ const AdminProduct: React.FC<IAdminProduct> = ({ product }) => {
 
   const onSubmit = async () => {
     let request: any = {
-      metadata: { mid },
+      metadata: { mid:mid == 'mb1'&&fields?findField(fields,'merchant')?.value:mid },
       price: {}
     };
-
+console.log({fields})
     fields?.forEach((field: any) => {
       if (field.name.startsWith('metadata.')) {
         const key = field.name.split('.')[1];
@@ -58,11 +59,16 @@ const AdminProduct: React.FC<IAdminProduct> = ({ product }) => {
         field.value = dateFormat(field.value, { returnType: 'timestamp' });
       } else if (['amount', 'unit_amount'].includes(field.name)) {
         request.price[field.name] = Number(field.value);
-      } else {
+      } else if(field.name == 'price'){
+        request[field.name] = {
+          unit_amount:Number(stringNum(field.value)),
+          price_id: findField(fields, 'price_id')?.value,
+        };
+      }else{
         request[field.name] = field.value;
       }
     });
-
+// console.log({request})
     if (request) {
       try {
         const response = await adminService.createProduct(request);

@@ -26,16 +26,16 @@
 
     background-size: 100% 100%;
     background-color: var(--gray-80-o);
-    background-image: linear-gradient(var(--green-o) 1.5px, transparent 1.5px), linear-gradient(90deg, var(--green-30) 1.5px, transparent 1.5px), linear-gradient(var(--green-o) 1px, transparent 1px), linear-gradient(90deg, var(--green-o) 1px, transparent 1px);
+    background-image: linear-gradient(var(--green-o) 1.5px, transparent 1.5px), linear-gradient(90deg, var(--green-30) 1.5px, transparent 1.5px), linear-gradient(var(--green-70) 1px, transparent 1px), linear-gradient(90deg, var(--green-o) 1px, transparent 1px);
   background-position: -1.5px -1.5px, -1.5px -1.5px, -1px -1px, -1px -1px;
   background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
 }
 .component--terrain {
     // z-index: 2;
-position: fixed;
-top:0;
-right:0;
-margin:0;
+// position: fixed;
+// top:0;
+// right:0;
+// margin:0;
 left:0;
     width: 100vw;
     height: 100vh;
@@ -67,6 +67,7 @@ left:0;
         
         // animation: fadeOut 8s forwards ease-out;
         &--title{
+            
             font-size:var(--s-element);
             color:var(--gray-10);
             max-width: 80vw;
@@ -83,27 +84,29 @@ left:0;
 .deepturn__business-select {
     @extend .d-flex;
     flex-direction: column;
-    padding:  var(--s-element);
-    gap: var(--s-element);
+    justify-content: flex-start;
+    padding:  var(--s-element) var(--s-1);
+    gap: var(--s-1);
     // box-shadow: var(--s-12) var(--s-10) var(--s-1) var(--s-9) var(--gray-100-o);
     background-color: var(--gray-90);
     border-radius: var(--s-9);
-    box-shadow: inset 2px 3px 2px 3px var(--gray-30), inset -2px -3px 2px 3px var(--gray-90);
-    overflow: hidden;
+    box-shadow: inset 1px 2px 2px 2px var(--gray-50), inset -1px -1px 2px 1px var(--gray-90);
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin:auto;
     @media(max-width:1100px) {
         max-width:450px;
-        // border: solid 1px var(--gray-80);
-        // background-color: var(--gray-90);
     }
+    height: max-content;
     .business-select--marquee {
+
         @extend .d-flex;
         flex-direction: column;
-        gap: var(--s-1);
+        gap: var(--s-5);
         align-items: flex-start;
         width: 100%;
         position: relative;
-        overflow: hidden;
-    
+        height: 100%;
         @media(min-width:1100px) {
            &:first-child {
                 padding-bottom: var(--s-element);
@@ -111,17 +114,18 @@ left:0;
            }
         }
         &__btn {
-            width: var(--s-9-width);
+            width: 100%;
             @extend .d-flex;
             color: var(--green);
             --ui-icon-color: var(--green);
-            margin: auto;
+            // margin: auto;
             border: solid 1px var(--green);
             position: relative;
             overflow: hidden;
             border-radius: var(--border-radius);
-            
             // Light wipe effect on hover
+            min-height: var(--s-element) !important;
+            margin: 0;
             &:hover::before {
                 content: '';
                 position: absolute;
@@ -151,6 +155,7 @@ left:0;
     
             // Apply mix-blend-mode to text during the light wipe animation
             &--content {
+
                 mix-blend-mode: screen;
                 color: var(--green); // The color will blend with the light wipe
             }
@@ -171,14 +176,19 @@ left:0;
         }
     
         &__description {
-            line-height: 2;
             font-family: Game;
             font-size: var(--s-4);
+            text-align: center;
+            color:var(--gray-50)
         }
     }
     
 }
-
+.beta{
+    color:var(--primary-70);
+    font-style: italic;
+    text-transform: uppercase;
+}
 .deepturn {
     pre {
         text-wrap: wrap;

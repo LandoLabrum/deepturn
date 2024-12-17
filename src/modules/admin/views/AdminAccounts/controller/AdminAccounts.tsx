@@ -52,7 +52,7 @@ const AdminAccounts = () => {
       response?.data && setaccounts(response.data);
       formatAccounts(response.data)
     } catch (e: any) {
-      console.log('[ ADMIN ACCONTS get Account Err ]', e)
+      console.error('[ ADMIN ACCONTS get Account Err ]', e)
     }
   }
   useEffect(() => {

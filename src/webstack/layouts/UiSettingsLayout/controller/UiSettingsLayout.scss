@@ -182,10 +182,10 @@
         height: 100%;
         /* Ensure it takes full height */
         align-items: flex-start;
-        padding: var(--s-9) var(--s-9) var(--s-1);
-        border-radius: var(--border-radius);
-        background-color: var(--gray-80);
-        width: var(--s-9-width);
+        // padding: var(--s-9) var(--s-9) var(--s-1);
+        // border-radius: var(--border-radius);
+        // background-color: var(--gray-80);
+        // width: var(--s-9-width);
         @media(max-width:1100px){
         }
         &--full-width{

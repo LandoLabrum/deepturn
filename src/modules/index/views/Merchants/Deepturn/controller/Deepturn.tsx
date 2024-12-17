@@ -13,6 +13,7 @@ import ThreeDLayout from '@webstack/components/ThreeComponents/ThreeLayout/Three
 import useWindow from '@webstack/hooks/window/useWindow';
 import MBWaterMark from '../../../MindBurner/views/WaterMark/MBWaterMark';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
+import GLBViewer from '@webstack/components/ThreeComponents/ThreeGLB/ThreeGLB';
 
 
 
@@ -41,7 +42,8 @@ const Deepturn = () => {
   const { pathname } = useRouter()
 
   const [loaded, setLoaded] = useState<boolean>(false);
-  const [view, setView] = useState<string>('entityChoice');
+  const [view, setView] = useState<string>('BallView');
+  // const [view, setView] = useState<string>('entityChoice');
   const handleLoad = () => {
     if (!loaded && pathname == '/') setLoaded(true);
   }
@@ -63,8 +65,8 @@ const Deepturn = () => {
     const EntityChoiceMarquee = ({ btnText, serviceType, description, onClick }: { btnText: string, serviceType?: string, description: string, onClick?: (e: any) => void }) => <>
       <style jsx>{styles}</style>
       <div className='business-select--marquee'>
-        <div className='-deepturn__'>Beta</div>
 
+        <div className='beta'>Beta</div>
         <div className='business-select--marquee__title'>
           <UiIcon icon={`${environment.merchant.name}-logo`} /> {capitalizeAll(btnText)}
         </div>
@@ -73,30 +75,30 @@ const Deepturn = () => {
         </div>
 
         <div className='business-select--marquee__btn'>
-        <div className='business-select--marquee__btn--content'>
-        <UiButton
-          variant="inherit"
-          traits={{
-            // width:"100%",
-            // outline:"solid 1px var(--green-30)",
-            beforeIcon: `${environment.merchant.name}-logo`
-          }}
-          size='xxl'
-          onClick={() => {
-            if (serviceType == 'marketing') {
-              router.push(`/services?sid=${serviceType}`)
-            }
-            else if (serviceType == 'campaigns') {
-              setView("coming-soon")
-            }
-          }}
-        // FUTURE USAGE
-        // onClick={()=>setView(btnText)}
-        >visit {capitalizeAll(btnText)}</UiButton>
+          <div className='business-select--marquee__btn--content'>
+            <UiButton
+              variant="inherit"
+              traits={{
+                // width:"100%",
+                // outline:"solid 1px var(--green-30)",
+                beforeIcon: `${environment.merchant.name}-logo`
+              }}
+              size='xxl'
+              onClick={() => {
+                if (serviceType == 'marketing') {
+                  router.push(`/services?sid=${serviceType}`)
+                }
+                else if (serviceType == 'campaigns') {
+                  setView("coming-soon")
+                }
+              }}
+            // FUTURE USAGE
+            // onClick={()=>setView(btnText)}
+            >visit {capitalizeAll(btnText)}</UiButton>
+          </div>
+        </div>
       </div>
-      </div>
-      </div>
-      </>
+    </>
     return <>
       <style jsx>{styles}</style>
 
@@ -114,6 +116,11 @@ const Deepturn = () => {
       </div>
     </>
   }
+  const BallView = () => <GLBViewer
+  width={width > 1100 ? "400px" : "90vw"}
+  height={width > 1100 ? "500px" : "90vw"}
+  modelPath='/merchant/nirv1/3dModels/products/prod_P5lI35r2EWTAxi.glb'
+/>
   const ComingSoon = () => {
     return <>
       <style jsx>{styles}</style>
@@ -138,81 +145,85 @@ const Deepturn = () => {
     </>
   }
 
-const {width, height}=useWindow();
+  const { width, height } = useWindow();
   const views = {
     // "ENTER": <div><UiButton  size='xxl' onClick={() => setView('entityChoice')}>&zwnj; &zwnj; &zwnj; enter &zwnj; &zwnj; &zwnj; </UiButton></div>,
     entityChoice: <DeepturnEntitySelect />,
+    BallView:<BallView/>,
     "coming-soon": <ComingSoon />
   }
-const genLayouts = () =>{
-  function getPos(i:number) {
-    const values = [-1,0,1,];
-    // return 0
-    return [
-      values[Math.floor(Math.random() * values.length)],
-      values[Math.floor(Math.random() * values.length)],
-      i+1
-    ]
-  }
-  const layoutViews = ['one','two','three'];
-  const layouts = layoutViews.map((f, i) => {
-    const position = getPos(i);
-    return {
-      element: (
-        <div key={i} className={f}>
-          {f}: <span>{position.toString()}</span> {/* Avoid direct text */}
-        </div>
-      ),
-      position
-    };
-  });
-  
-  return layouts
-}
+  const genLayouts = () => {
+    function getPos(i: number) {
+      const values = [-1, 0, 1,];
+      // return 0
+      return [
+        values[Math.floor(Math.random() * values.length)],
+        values[Math.floor(Math.random() * values.length)],
+        i + 1
+      ]
+    }
+    const layoutViews = ['one', 'two', 'three'];
+    const layouts = layoutViews.map((f, i) => {
+      const position = getPos(i);
+      return {
+        element: (
+          <div key={i} className={f}>
+            {f}: <span>{position.toString()}</span> {/* Avoid direct text */}
+          </div>
+        ),
+        position
+      };
+    });
 
-if(width)  return (
+    return layouts
+  }
+
+  if (width) return (
     <>
       <style jsx>{styles}</style>
       <div className='deepturn'>
-      <div className='component--terrain'>
-        {/* {width&&width} */}
-        <ThreeDLayout
-        layers={[
-          {element: <div className='front'>
+        {/* <div className='component--terrain'>
+          <ThreeDLayout
+            layers={[
+              {
+                element: <div className='front'>
 
-          </div>, position:[0,0,90]},
-          {element: <div className='s-w-100 d-flex'>
-{/* <UiViewLayout variant='anchor' views={views} currentView={view} />  */}
-          </div>, position:[0,0,50]},
-          {element: <div className='middle'>grid</div>, position:[0,0,50]},
-          {element: <div className='middle'>
-            <UiLoader />
-          </div>, position:[0,0,50]},
-          {element: <div className='back'>back</div>, position:[0,0,30]},
-        ]}
-        settings={{
-          camera: {
-            position: { x: 0, y: 0, z: 100 },
-            focalLength: 50,
-          },
-          scene: {
-            // size: [800, 600, 400], // Optional scene size
-          },
-        }}
-        followMouse={{
-          responsiveness: 1,
-          invert: false,
-          disable: { x: false, y: false, z: true },
-        }}
-      />
-        {/* <BrowserInteraction/> */}
-        
-        </div>
+                </div>, position: [0, 0, 90]
+              },
+              {
+                element: <div className='s-w-100 d-flex'>
+                </div>, position: [0, 0, 50]
+              },
+              { element: <div className='middle'>grid</div>, position: [0, 0, 50] },
+              {
+                element: <div className='middle'>
+                  <UiLoader />
+                </div>, position: [0, 0, 50]
+              },
+              { element: <div className='back'>back</div>, position: [0, 0, 30] },
+            ]}
+            settings={{
+              camera: {
+                position: { x: 0, y: 0, z: 100 },
+                focalLength: 50,
+              },
+              scene: {
+              },
+            }}
+            followMouse={{
+              responsiveness: 1,
+              invert: false,
+              disable: { x: false, y: false, z: true },
+            }}
+          />
+        </div> */}
+          {/* <BrowserInteraction/> */}
+
         <UiViewLayout variant='anchor' views={views} currentView={view} />
       </div>
-        <MBWaterMark/>
+      <MBWaterMark />
     </>
   );
-  return<>...loading</>;
+  return <>...loading</>;
 };
 export default Deepturn;

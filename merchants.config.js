@@ -1,19 +1,25 @@
 // merchants.config.js
 module.exports = {
-    deploy:"mb1",
+    deploy:"nirv1",
     merchants: {
       mb1: {
         mid: "mb1",
         name: "deepturn",
         url: "https://deepturn.com",
-        stripeId:"acct_1G38IXIodeKZRLDV"
+        stripeId:"acct_1G38IXIodeKZRLDV",
+        settings:{
+         about:{
+          title:'',
+          description:'',
+         }
+        }
       },
-      ah1: {
-        mid: "ah1",
-        name: "aire-hotel",
-        url: "https://airehotel.com",
-        stripeId:""
-      },
+      // ah1: {
+      //   mid: "ah1",
+      //   name: "aire-hotel",
+      //   url: "https://airehotel.com",
+      //   stripeId:""
+      // },
       nirv1: {
         mid: "nirv1",
         name: "nirvana-energy",
@@ -25,7 +31,7 @@ module.exports = {
             layoutStyle:'grid',
             size: 'xl'
           }
-         }
+         },
         }
       },
     },

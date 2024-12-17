@@ -17,7 +17,7 @@ interface IQuoteForm {
 
 const QuoteForm: React.FC<IQuoteForm> = ({ handleView, title, quote, setQuote }: IQuoteForm) => {
   const selectedRef = useRef<any | undefined>();
-  const { openModal, closeModal } = useModal();
+  const { replaceModal, closeModal } = useModal();
   const [form, setForm] = useState<IProductQuoteField[]>([]);
 
   useEffect(() => {
@@ -31,10 +31,11 @@ const QuoteForm: React.FC<IQuoteForm> = ({ handleView, title, quote, setQuote }:
   const clearAllSelected = () => setForm(form.map(item => ({ ...item, selected: false })));
 
   const handleFeature = (choice: IProductQuoteField) => {
-    const addCustom = async (choice: any) => handleFeature(choice);
+    // const addCustom = async (choice: any) => handleFeature(choice);
     const isOther = !Boolean(form.find((f: IFormField) => f.name === choice.name));
     if (choice.name === 'other' && !isOther) {
-      return openModal({
+      return replaceModal({
+        variant:'fullscreen',
         children: <QuoteChoiceOther
           title={title}
           choice={choice}
@@ -91,7 +92,7 @@ const QuoteForm: React.FC<IQuoteForm> = ({ handleView, title, quote, setQuote }:
               </div>
             )}
           </div>
-          <AdaptGrid xs={2} sm={4} lg={3} gap={10}>
+          <AdaptGrid xs={1} sm={4} lg={3} gap={10}>
             {form.map((item, index) => (
               <div
                 key={index}

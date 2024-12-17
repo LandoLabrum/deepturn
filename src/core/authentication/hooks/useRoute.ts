@@ -63,6 +63,7 @@ const useRoute = (): ORoute => {
       } else if (router.asPath !== '/authentication/signout') {
         let currentPath: string = router.asPath;
         if (currentPath.includes('/404?')) {
+          // STOPS LOOPED 404 Results
           router.push('/');
         } else {
           router.push(`/404?loc=${currentPath}`);

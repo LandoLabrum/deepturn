@@ -1,6 +1,8 @@
 img, video{
     width: 100%;
-    height: max-content;
+    // fix Nirv1 home background image to inherit
+    // height: max-content;
+    height: inherit;
     z-index: 1;
     position: relative;
     .d-flex{
@@ -8,11 +10,35 @@ img, video{
      justify-content: center;
      align-items: center;
     }
-
     @extend .d-flex;
 }
 .d-flex{
  display: flex;
  justify-content: center;
  align-items: center;
+}
+.ui-media{
+    min-height: 100%;
+    &--background{
+        height: 100%;
+        @extend .d-flex;
+        justify-content: flex-start;
+        // -webkit-background-size: cover;
+        // -moz-background-size: cover;
+        // -o-background-size: cover;
+        // background-size: cover;
+        // min-width: 1024px;
+        /* Set up proportionate scaling */
+        min-width: 100%;
+        width: 140vw;
+        /* Set up positioning */
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        @media(max-width:1100px){
+            width: auto;
+        }
+                  
+    }
 }

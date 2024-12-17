@@ -84,7 +84,7 @@ const formDefaultCustomerAdd = useCustomerAddForm()
     const handleSubmit = async () => {
       try {
         const createCustomerResponse = await adminService.createCustomer(customerData);
-        console.log({createCustomerResponse})
+        // console.log({createCustomerResponse})
        if(createCustomerResponse)return createCustomerResponse;
       } catch (e: any) { console.log('[ Create Customer ERROR ]', e); return e }
     }
@@ -108,7 +108,7 @@ const formDefaultCustomerAdd = useCustomerAddForm()
       </>
     }
     handleSubmit().then((a) => {
-      console.log("[ handleSubmit().then((a) ]",{a})
+      // console.log("[ handleSubmit().then((a) ]",{a})
       openModal({
         title: `${a.status}`,
         children:ModalBody(a)

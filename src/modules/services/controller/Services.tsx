@@ -13,9 +13,9 @@ import MarketingList from '../views/MarketingList/MarketingList';
 const Services: React.FC = () => {
   const [view, _setView] = useState<string | undefined>();
   const [details, _setDetails] = useState<any | undefined>();
-  const setDetails = (deetz: any)=>{
-    console.log({deetz})
-    // Object.keys(views).includes(newView) && _setView(newView)
+  const setDetails = (newView: any)=>{
+    // console.log({deetz})
+    Object.keys(views).includes(newView) && _setView(newView)
   };
     
   const { query } = useRouter();

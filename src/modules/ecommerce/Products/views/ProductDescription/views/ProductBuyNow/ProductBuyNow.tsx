@@ -13,9 +13,10 @@ export interface IProductBuyNow {
     traits?: ITraits;
     btnText?: string;
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    goToCart?:boolean;
 }
 
-const ProductBuyNow: React.FC<IProductBuyNow> = ({ product, traits, size, btnText = 'Add' }) => {
+const ProductBuyNow: React.FC<IProductBuyNow> = ({ product, traits, size, btnText = 'Add', goToCart=false }) => {
     // Hooks are called unconditionally at the top level
     const { addCartItem, cart } = useCart();
     const [label, setLabel] = useState<string>('add');
@@ -43,6 +44,7 @@ const ProductBuyNow: React.FC<IProductBuyNow> = ({ product, traits, size, btnTex
 
     const handleCart = (newQty?: number) => {
         addCartItem({...product, price: {...product.price, qty: Number(newQty)}}); 
+        if(goToCart && newQty)openModal({title:`${product.name}, added to cart`, confirm:{statements:[{label:'go to cart', href:'/cart'}, {label:'back', onClick:()=>closeModal()}]}})
     };
 
     return (

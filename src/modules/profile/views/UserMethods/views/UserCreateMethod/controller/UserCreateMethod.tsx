@@ -39,14 +39,16 @@ const UserCreateMethod = ({ onSuccess, user, success_url }: IStripePaymentForm) 
       <div>Loading User Methods</div>
     </div>
   </>
-  return (
+  return (<>
+  stripePromise
     <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
       <CreateMethodStripeForm
         user={user}
         success_url={success_url}
         onSuccess={onSuccess}
-      />
+        />
     </Elements>
+        </>
   );
 };
 export default UserCreateMethod;  

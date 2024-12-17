@@ -306,7 +306,7 @@ export default class MemberService
     if (!props.email) {
       throw new ApiError("Email is required", 400, "MS.SI.01");
     }
-    console.log("[ SIGNUP PROPS ]", props)
+    // console.log("[ SIGNUP PROPS ]", props)
     const encryptedSignUp = encryptString(JSON.stringify(props), ENCRYPTION_KEY);
     const res = await this.post<{}, any>(
       "usage/auth/sign-up",
@@ -396,7 +396,7 @@ export default class MemberService
           `api/customer/`,
           { data: encryptedSignUp },
         );
-        console.log("[ MODIFY RES ]",{res})
+        // console.log("[ MODIFY RES ]",{res})
         let memberJwt: any = null;
         if (res && res?.data) memberJwt = res?.data;
         this.saveMemberToken(memberJwt);

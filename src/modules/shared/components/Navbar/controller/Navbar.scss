@@ -18,7 +18,7 @@
     }
   }
 
-  // background-color: var(--black);
+  background-color: var(--black);
   width: 100%;
 
   .navbar {
@@ -113,6 +113,9 @@
         @media(max-width:1100px) { position: inherit; }
       }
       &.no-cart { padding-right: 0; }
+      &--login, &--profile{
+        margin-left:auto;
+      }
       &--cart {
         cursor: pointer;
         height: var(--s-element);
@@ -122,6 +125,7 @@
         --ui-icon-width: 100%;
         --ui-icon-height: var(--s-5);
         --ui-icon-color: var(--gray-50);
+
       }
 
       &:hover {

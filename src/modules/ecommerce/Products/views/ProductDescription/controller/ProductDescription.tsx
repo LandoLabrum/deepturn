@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import environment from '~/src/core/environment';
 import GLBViewer from '@webstack/components/ThreeComponents/ThreeGLB/ThreeGLB';
+import ProductImage from '../views/ProductImage/ProductImage';
 
 interface IProductDescription {
   product_id?: string,
@@ -91,10 +92,10 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
     <>
       <style jsx>{styles}</style>
       <div className="product-description">
+            <UiButton traits={{ beforeIcon: "fa-chevron-left" }} variant='link' href='/product'>back to shop</UiButton>
         <div className="product-description__header">
           <div className='product-description__header-left'>
-            {/* <UiButton traits={{ beforeIcon: "fa-chevron-left" }} variant='link' href='/product'>back to shop</UiButton> */}
-            <div className="product-description__header--title">buy {product.name}</div>
+            <div className="product-description__header--title">{`buy ${product.name}`}</div>
             </div>
           <div className='product-description__header-right'>
             {product?.offers}
@@ -108,22 +109,27 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
           gap={15}
         // variant='card'
         >
-          <div className="product-description__img-default" >
-            {product.images[0] ? (
-              <GLBViewer modelPath='/merchant/nirv1/3dModels/OffGridBox.glb'/>
-              // <Image
-              //   src={product.images[0]}
-              //   alt={product.name}
-              //   fill // Use fill to make the image fill the container
-              //   // style={{ objectFit: 'cover' }} // Adjust object-fit as needed
-              //   unoptimized={true}
-              // />
+          <div className="product-description__images" >
+            {product.images[0] ? (<>
+              <div className='product-description__images--main'>
+              <GLBViewer modelPath={`/merchant/${mid}/3dModels/products/${product.id}.glb`}/>
+              </div>
+              <div className='product-description__images--carousel'>
+              <ProductImage options={{ view: 'slider' }} image={product.images} />
+            </div>
+              </>
             ) : (<div className='img-placeholder'>
             <UiIcon icon={`${environment.merchant.name}-logo`} />
             </div>
             )}
-
-            {/* <ProductImage options={{ view: 'description' }} image={product.images} /> */}
+      
+            {/* // <Image
+            //   src={product.images[0]}
+            //   alt={product.name}
+            //   fill // Use fill to make the image fill the container
+            //   // style={{ objectFit: 'cover' }} // Adjust object-fit as needed
+            //   unoptimized={true}
+            // /> */}
           </div>
           <div className="product-description__info-panel">
             <div className="product-description__info-panel_header">
@@ -144,6 +150,7 @@ const ProductDescription = ({ product_id, price_id }: IProductDescription) => {
               )}
               <div className='product-description__buy-button'>
                 <ProductBuyNow
+                  goToCart
                   product={product}
                   btnText='select'
                 />

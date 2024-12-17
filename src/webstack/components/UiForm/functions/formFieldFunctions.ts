@@ -35,6 +35,14 @@ export const getFieldType = (value: any): string => {
         case 'boolean':
             fieldType = 'checkbox';
             break;
+        case 'string':
+            // active on admin products
+            if(value == 'true'|| value =='false'){
+                fieldType = 'checkbox';
+                break
+            }
+            fieldType = 'text';
+            break;
         default:
             break;
     }
@@ -74,7 +82,7 @@ export const createField = (newField: any) => {
             )field.value = numberToUsd(Number(field.value));
             field.type = 'tel'
         default:
-            console.log("[ UNHANDLED OBJ ]", { field,vt:valueType(field)})
+            console.error("[ UNHANDLED OBJ ]", { field,vt:valueType(field)})
             break;
     }
     return field;

@@ -1,0 +1,31 @@
+.d-flex {
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+}
+
+.product-build {
+    // position: fixed;
+    width: 100%;
+    @extend .d-flex;
+    align-items: stretch;
+    // flex-direction: column;
+    position: relative;
+    min-height: inherit;
+    height: 100%;
+    gap:var(--s-9);
+    &--content {
+        flex: 1;
+        height: 100%;
+        min-height: 500px;
+        // display: none;
+        display: flex;
+    }
+    
+    &--form {
+        flex: 1;
+        height: inherit;
+        min-height: inherit;
+        display: flex;
+    }
+}

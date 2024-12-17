@@ -25,6 +25,7 @@ export const applianceArray: IProductQuoteField[] = [
     { name: "dryer", selected: false, value: 30 },
     { name: "oven", selected: false, value: 20 },
     { name: "air conditioner", selected: false, value: 15 },
+    { name: "mini split", selected: false, value: 20 },
     { name: "vacuum cleaner", selected: false, value: 11 },
     { name: "toaster", selected: false, value: 9 },
     { name: "blender", selected: false, value: 6 },
@@ -57,11 +58,11 @@ interface IProductQuote {
 const ProductQuote: React.FC<IProductQuote> = ({
     quote = applianceArray,
     startButton,
-    title = 'Appliances to Power',
+    title = 'productForm to Power',
     view,
     setView,
     id,
-    subtitle = 'Select applicable appliances that you need power for'
+    subtitle = 'Select applicable productForm that you need power for'
 }) => {
     const memberService = getService<IMemberService>('IMemberService');
     const optionsRef = useRef<any | undefined>();
@@ -70,12 +71,12 @@ const ProductQuote: React.FC<IProductQuote> = ({
     const [user, setUser] = useState<any | undefined>();
     const [fieldErrors, setFieldErrors] = useState<any>();
     const [message, setMessage] = useState<string | null>(null);
-    const [appliances, setAppliances] = useState<IProductQuoteField[]>(quote);
+    const [productForm, setproductForm] = useState<IProductQuoteField[]>(quote);
     const device = useDevice();
-    const { scrollTo, setScrollTo } = useScrollTo();
+    // const { scrollTo, setScrollTo } = useScrollTo();
     const handleView = (newView?: any) => {
         setLastView(view);
-        setScrollTo(id);
+        // setScrollTo(id);
         setView?.(newView);
     };
 
@@ -98,7 +99,7 @@ const ProductQuote: React.FC<IProductQuote> = ({
                     merchant: environment.merchant,
                     quote: {
                         id,
-                        data: appliances.reduce((acc: any, item: any) => {
+                        data: productForm.reduce((acc: any, item: any) => {
                             if (item.selected) {
                                 acc[keyStringConverter(item.name, { dashed: true })] = item.value;
                             }
@@ -110,9 +111,9 @@ const ProductQuote: React.FC<IProductQuote> = ({
             };
 
             try {
-                console.log({ request });
+                // console.log({ request });
                 const response = await memberService.signUp(request);
-                console.log({ response });
+                // console.log({ response });
                 if (response?.email) {
                     handleView('success');
                     setMessage(response.email);
@@ -123,7 +124,7 @@ const ProductQuote: React.FC<IProductQuote> = ({
             } catch (e: any) {
                 console.error("Submission failed: ", e);
                 const errorFields = e.detail?.fields;
-                console.log({ user, errorFields });
+                // console.log({ user, errorFields });
                 if (errorFields) {
                     setFieldErrors(errorFields);
                     handleView("contact");
@@ -142,7 +143,7 @@ const ProductQuote: React.FC<IProductQuote> = ({
                 Invalid<UiIcon icon='fa-exclamation-triangle' />
             </div>
             <div className='product-quote__invalid--message'>{message || ''}</div>
-            <UiButton onClick={() => handleView('contact')}>return to contact appliances</UiButton>
+            <UiButton onClick={() => handleView('contact')}>return to contact productForm</UiButton>
         </div>,
         'contact': <div className='product-quote__contact-form'>
             <div className='product-quote__description'>
@@ -156,11 +157,11 @@ const ProductQuote: React.FC<IProductQuote> = ({
                 onSubmit={onContactSubmit}
             />
         </div>,
-        appliances: <QuoteForm
+        productForm: <QuoteForm
             title={title}
             handleView={handleView}
-            quote={appliances}
-            setQuote={setAppliances}
+            quote={productForm}
+            setQuote={setproductForm}
         />,
         success
             : <div className='product-quote__success c-success'>
@@ -181,35 +182,55 @@ const ProductQuote: React.FC<IProductQuote> = ({
     };
     const DefaultView = () => <>
         <style jsx>{styles}</style>
-        <div className='product-quote__default'>
+        <div className='product-quote'>
+            {!['loading', 'start']?.includes(view) && (<>
+                {/* <div onClick={() => handleView('start')} className='d-flex justify-end s-w-100'><UiIcon icon='fa-xmark' /></div> */}
 
-            {!['loading', 'start']?.includes(view) && (
-                <div onClick={() => handleView('start')} className='d-flex justify-end s-w-100'><UiIcon icon='fa-xmark' />
-                </div>
-
+            </>
             )}
-
             {views[view]}
         </div>
 
     </>;
-
+    const isStartView = !isModalOpen && view == 'start';
+    const isContactView = isModalOpen && lastView == 'productForm' && view == 'contact';
+    const isProductView = !isModalOpen && view == 'productForm';
     useEffect(() => {
+        console.log({ view, isModalOpen, lastView })
         if (views[view]) {
-            if (!isModalOpen) openModal({ children: <DefaultView />, dismissable: false });
-            else replaceModal({ children: <DefaultView />, dismissable: false, })
-        } else if (view == 'start' && isModalOpen) {
-            closeModal()
-        }
 
-    }, [view,]);
+            if (isStartView) openModal({ variant: 'fullscreen', children: <DefaultView /> });
+            else if (isContactView) replaceModal({ variant: 'fullscreen', children: <DefaultView /> });
+            else if (isProductView){
+                 handleView('productForm');
+                }
+            else {
+                setTimeout(() => {
+                    closeModal()
+                }, 15000);
+            }
+        }
+        return;
+        //     // START
+        //     if (!isModalOpen&&lastView=='start') {
+        //         openModal({variant:'fullscreen', children: <DefaultView /> });
+        //     }
+        //     else if(!isModalOpen)replaceModal({ variant:'fullscreen', children: <DefaultView /> })
+        // } else if (view == 'start' && isModalOpen) {
+        //     closeModal()
+        // }else if(view == 'success'){
+        //     setTimeout(() => {
+        //         closeModal()
+        //     }, 15000);
+
+    }, [handleView]);
     if (!id) return <>No ID FOR PRODUCT REQUEST</>;
     return (
         <><style jsx>{styles}</style>
             <div id='product-quote' className='product-quote' ref={optionsRef}>
                 {view == 'loading' && <UiLoader position='fixed' />}
                 {view == 'start' &&
-                    <div className='product-quote-btn-view' onClick={() => handleView('appliances')}>
+                    <div className='product-quote-btn-view' onClick={() => handleView('productForm')}>
                         {startButton}
                     </div>}
             </div>

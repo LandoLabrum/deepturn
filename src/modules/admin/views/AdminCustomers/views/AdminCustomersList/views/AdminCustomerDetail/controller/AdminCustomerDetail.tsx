@@ -32,7 +32,7 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
 
   const handleFields = useCallback((e: any) => {
     const updated = { ...field, value: e.target?.value };
-    console.log({ updated });
+    // console.log({ updated });
     updateField(updated);
     setField(updated);
   }, [field, updateField]);
@@ -55,7 +55,6 @@ const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, set
   }, []);
 
   const handleModal = () =>{
-      console.log("[ OPEN MODAL ]", field);
       if(!field?.children)openModal({children:<>
       <small className='d-flex justify-start s-w-100'>{field?.alt}</small>
       <UiForm fields={[field]} onChange={handleFields} />

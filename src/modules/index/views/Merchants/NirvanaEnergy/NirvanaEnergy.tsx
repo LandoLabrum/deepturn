@@ -9,9 +9,9 @@ import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { upperCase } from 'lodash';
 import UiMedia from '@webstack/components/UiMedia/controller/UiMedia';
 import useScroll from '@webstack/hooks/useScroll';
-import GLBViewer from '@webstack/components/ThreeComponents/ThreeGLB/ThreeGLB';
 import useWindow from '@webstack/hooks/window/useWindow';
-import { visibility } from 'html2canvas/dist/types/css/property-descriptors/visibility';
+import { useRouter } from 'next/router';
+import GLBViewer from '@webstack/components/ThreeComponents/ThreeGLB/ThreeGLB';
 
 const NirvanaEnergyIcon = () => {
   const nStyle = `.nirv{
@@ -33,8 +33,8 @@ const NirvanaEnergyIcon = () => {
 }
 // Remember to create a sibling SCSS file with the same name as this component
 const NirvanaEnergy = () => {
-  const { width } = useWindow();
-
+  const { width, height } = useWindow();
+  const { push } = useRouter();
   const [currentScrollYPosition] = useScroll();
   const [view, setView] = useState('start');
   const outputValue = (powerInKW: number) => {
@@ -91,7 +91,6 @@ const NirvanaEnergy = () => {
     } : {}
   }
 
-  useEffect(() => { }, [setView]);
   return (
     < >
       <style jsx>{styles}</style>
@@ -99,36 +98,36 @@ const NirvanaEnergy = () => {
         id='nirvana-index'
         className='nirvana-energy'
       >
-
-        <div className='nirvana-energy__bg'
+        <div className='nirvana-energy__bg-overlay'
           style={
             bgOpacity()}>
-          <div className='nirvana-energy__bg--video'>
-            {width > 1100 && <UiMedia playbackSpeed={.7} // Plays video at 1.5x speed
-            type='video' autoplay muted loop src="https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/home.webm" />}</div>
-          <div className='nirvana-energy__bg--content'>
-            <ProductQuote
+          {/* <div className='nirvana-energy__bg-overlay--media'> */}
+          {width > 1100 ? (<UiMedia playbackSpeed={.7}
+            // Plays video at 1.5x speed
+            type='video' autoplay muted loop variant='background' src="https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/home.webm" />) : (
+            <UiMedia variant='background' alt='nirv1-home' src='/merchant/nirv1/backgrounds/redrock-wall.jpeg' />
+          )}
+          {/* </div> */}
+          <div className='nirvana-energy__bg-overlay--content'>
+            <div className='nirvana-energy__bg-overlay--content__action' onClick={()=>push('/build')}>Configure your backup system</div>
+            {/* <ProductQuote
               id='product-quote'
               startButton={<>
-                <div className='configure-btn__text'>
-                  configure your back up system.
-                </div>
                 <div className='configure-btn__model'>
-                  <GLBViewer
+                  {view == 'start' && <GLBViewer
                     width={width > 1100 ? "400px" : "90vw"}
                     height={width > 1100 ? "500px" : "90vw"}
-                    modelPath='/merchant/nirv1/3dModels/products/CustomBox/prod_P5lI35r2EWTAxi.glb'
-                  />
+                    modelPath='/merchant/nirv1/3dModels/products/prod_P5lI35r2EWTAxi.glb'
+                  />}
+                </div>
+                <div className='configure-btn__text a-light-wipe'>
+                  configure your back up system.
                 </div>
               </>
-              } view={view} setView={setView} />
-
+              } view={view} setView={setView} /> */}
           </div>
         </div>
-        {/* <video controls autoPlay muted>
-  <source src="https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/1CB9037F-80AE-4FFA-8D34-2CDDA39AF929.webm" type="video/webm"/>
-  Your browser does not support the video tag.
-</video> */}
+
         <div className='nirvana-energy__content--first'>
           <div className='nirvana-energy__content--title'>
             It&apos;s Time to Create your Nirvana!

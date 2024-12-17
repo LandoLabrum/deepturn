@@ -30,7 +30,7 @@ const Cart = ({ variant, traits }: any) => {
       </>)} */}
       <div className='cart'>
         <div className='cart__header'>
-          <UiButton variant="dark" href='/product'>Keep Shopping</UiButton>
+          <UiButton variant="link" href='/product'>Keep Shopping</UiButton>
           <div className='cart__header-title'></div>
           {cart && cart.length != 0 && <CheckoutButton cart_items={cart} />}
         </div>

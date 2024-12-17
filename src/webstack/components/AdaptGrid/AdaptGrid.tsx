@@ -105,6 +105,7 @@ export default function AdaptGrid({
     reverse,
     backgroundColor,
   ]);
+  const hasChildren = children?.length;
 
   return (
     <>
@@ -115,7 +116,7 @@ export default function AdaptGrid({
       >
         {!variant && children && children}
         {variant &&
-          children.length &&
+          hasChildren &&
           children.map((child: any, key: number) => {
             return (
               <div
@@ -129,7 +130,7 @@ export default function AdaptGrid({
               </div>
             );
           })}
-        {!children.length && (
+        {!children && !hasChildren && (
           <div
             style={backgroundColor ? { backgroundColor: backgroundColor } : {}}
             className={`adaptgrid__grid-item${variant?` adaptgrid_${variant}`:''}`}
@@ -137,6 +138,7 @@ export default function AdaptGrid({
             {children}
           </div>
         )}
+        {!hasChildren && <h1>Nothing to see...</h1>}
       </div>
     </>
   );

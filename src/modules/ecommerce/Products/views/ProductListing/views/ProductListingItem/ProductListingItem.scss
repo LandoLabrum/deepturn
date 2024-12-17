@@ -50,14 +50,13 @@ small {
   border-radius: var(--border-radius);
   position: relative;
   border: solid 1px var(--gray-60-o);
-
   @media(max-width:1100px) {
     width: var(--s-border-width);
     padding: 0;
   }
-
+  
   background-color: var(--gray-80-o);
-
+  
   &:hover {
     background-color: var(--gray-50-o);
     border: solid 1px var(--gray-30);
@@ -167,13 +166,12 @@ small {
   align-self: stretch;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: inset 1px 1px 1px 0.5px var(--gray-50), inset 1px 1px 3px 3px var(--gray-40);
-  background-color: var(--gray-10-o);
-
+  box-shadow: inset 1px 1px 1px 0.5px var(--gray-80-o), inset 1px 1px 3px 3px var(--gray-60-o);
+  background-color: var(--gray-70);
+  height: calc(100% - 4px);
   &:hover {
     animation: bobble 0.3s forwards;
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
-
     &__images {
       filter: blur(1.5px);
       border-bottom: solid 1px transparent;
@@ -198,9 +196,10 @@ small {
       flex-direction: column;
       width: var(--s-border-width);
     }
+    flex: 1;
 
     &__body {
-      height: 100%;
+      // height: 100%;
       width: var(--s-9-width);
       padding: 0 var(--s-9) var(--s-9);
     }
@@ -218,6 +217,7 @@ small {
         color: var(--gray-80);
         text-transform: capitalize;
         white-space: nowrap;
+        font-weight: 900;
       }
 
       p {
@@ -249,6 +249,7 @@ small {
         flex: 1;
         width: 100%;
         aspect-ratio: 1;
+        min-width: 300px;
 
         &.main {
           max-width: unset;

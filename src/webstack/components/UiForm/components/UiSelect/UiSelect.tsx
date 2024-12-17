@@ -7,11 +7,12 @@ import { useModal } from "../../../modal/contexts/modalContext";
 import { ITraits } from "@webstack/components/UiForm/components/FormControl/FormControl";
 import { IFormControlVariant } from "../../../AdapTable/models/IVariant";
 import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+
 type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string } | string | React.ReactElement;
 
 export interface ISelect {
   label?: string;
-  options?: any,
+  options?: any[],
   onSelect?: (value: any) => void;
   openDirection?: "up" | "down" | "left" | "right";
   onToggle?: (isOpen: boolean) => void;
@@ -22,13 +23,13 @@ export interface ISelect {
   overlay?: boolean | { zIndex: number };
   value?: string;
   traits?: ITraits;
-  variant?: IFormControlVariant
+  variant?: IFormControlVariant;
   size?: any;
   clearable?: boolean;
 }
 
 const UiSelect: React.FC<ISelect> = ({
-  options,
+  options = [], // Ensure options is an array by default
   size,
   onSelect,
   openDirection = "down",
@@ -47,29 +48,31 @@ const UiSelect: React.FC<ISelect> = ({
   const [isOpen, setIsOpen] = useState<string>("closed");
   const [title_, setTitle] = useState<string | number>("");
   const { isModalOpen, openModal, closeModal } = useModal();
-  const typesBypass: any = options;
-  const hasOptions = Boolean(typesBypass?.every((element: any) => element !== undefined));
+  const hasOptions = Boolean(Array.isArray(options) && options?.every((element: any) => element !== undefined)); // Check if options is an array
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
   const anySelected = () => {
-    const currentlySelected = options.filter((option:any) => {
-      return option?.active
+    const currentlySelected = options.filter((option: any) => {
+      return option?.active;
     });
     return Boolean(currentlySelected?.length > 0);
-  }
-  anySelected()
+  };
+
   const isMobileNavOpen = Boolean(isOpen === 'open');
   const handleSelect = (value: any) => {
     setSelectedOption(value);
     onSelect && onSelect(value);
     variant !== 'disabled' && setIsOpen("closed");
-  }
+  };
+
   const handleOpen = () => {
     if (hasOptions) setIsOpen(isOpen === "closed" ? "open" : "closed");
     if (overlay) {
-      if (isOpen == 'closed') typeof overlay == "object" && overlay?.zIndex ? openModal({ zIndex: overlay?.zIndex }) : openModal(null);
+      if (isOpen === 'closed') typeof overlay === "object" && overlay?.zIndex ? openModal({ zIndex: overlay?.zIndex }) : openModal(null);
       else closeModal();
     }
   };
+
   const isTitleObject = (
     title?: TitleProps
   ): title is { text?: string | number; preIcon?: string; postIcon?: string } => {
@@ -84,17 +87,18 @@ const UiSelect: React.FC<ISelect> = ({
     if (isMobileNavOpen) {
       return "fa-xmark";
     } else {
-      return `fa-chevron-${openDirection}`
+      return `fa-chevron-${openDirection}`;
     }
-  }
+  };
+
   const handleClear = useCallback(() => {
     if (!onSelect) return;
     options.forEach((option: IMenuOption) => {
       if (option.active) {
-        onSelect({ ...option, active: false })
+        onSelect({ ...option, active: false });
       }
     });
-  }, [options])
+  }, [options]);
 
   useEffect(() => {
     if (openState !== undefined) {
@@ -108,9 +112,9 @@ const UiSelect: React.FC<ISelect> = ({
       if (typeof title === "object" && "text" in title && title.text !== undefined) setTitle(title.text);
     }
   }, [title, onSelect]);
+
   useEffect(() => {
     if (isMobileNavOpen && onToggle) onToggle(isMobileNavOpen);
-
   }, [isModalOpen]);
 
   return (
@@ -122,7 +126,6 @@ const UiSelect: React.FC<ISelect> = ({
         style={traits?.width ? { width: `${traits.width}px` } : {}}
         onClick={handleOpen}
       >
-        {/* t: {title_} | s: {selectedOption} */}
         <UiInput
           data-element='select'
           type="button"
@@ -139,9 +142,11 @@ const UiSelect: React.FC<ISelect> = ({
         {isMobileNavOpen && variant !== 'disabled' && (
           <div
             className={`select__options ${openDirection} ${variant ? " " + variant : ""}`}>
-            {clearable && anySelected() && <div className='select__clear' onClick={handleClear}>
-              {/* <UiIcon icon="fa-xmark" > */}
-            </div>}
+            {clearable && anySelected() && (
+              <div className='select__clear' onClick={handleClear}>
+                {/* <UiIcon icon="fa-xmark" /> */}
+              </div>
+            )}
             <UiMenu
               size={size}
               traits={traits}

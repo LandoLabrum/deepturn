@@ -111,7 +111,7 @@ const useAdminCustomer = ({ customer_id, level }: { customer_id?: string, level:
                   if(!displayFields[listKeyToUse]){
                     displayFields[listKeyToUse]=v
                     updateDisplayFields(listKeyToUse, k, typeof v != 'object'? v:v);
-                    console.log({lk:displayFields[listKeyToUse]})
+                    // console.log({lk:displayFields[listKeyToUse]})
                     // console.log({FOOP:[`${k}-${arrInd}`]})
                   }
                   else{

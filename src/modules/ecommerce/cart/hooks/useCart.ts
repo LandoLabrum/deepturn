@@ -22,7 +22,6 @@ const useCart = () => {
     };
 const addCartItem = (newItem: IProduct) => {
     const currentCart = getCartItems();
-    console.log({currentCart1:currentCart})
     // Find if the item already exists in the cart based on both product.id and price.id
     const existingIndex = currentCart.findIndex(item => 
         item.price.id === newItem.price.id
@@ -45,7 +44,6 @@ const addCartItem = (newItem: IProduct) => {
         }
     }
     
-    // console.log({currentCart2:currentCart})
     updateCartInCookie(currentCart);
 };
 

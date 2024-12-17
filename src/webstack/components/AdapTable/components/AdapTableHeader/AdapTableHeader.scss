@@ -8,6 +8,7 @@ $defaultPadding: 15px;
   align-items: center;
   justify-content: space-between;
   margin: 15px 10px 10px;
+  gap:var(--s-9);
 
   @media(max-width: 900px) {
     height: auto;
@@ -21,6 +22,7 @@ $defaultPadding: 15px;
   }
 
   .adaptable-header__search-input {
+    min-width: 200px;
     @media(max-width: 900px) {
       width: 100%;
     }
@@ -81,9 +83,12 @@ $defaultPadding: 15px;
 
   .adaptable-header__filters {
     display: flex;
-    width: 100%;
-    justify-content: flex-end;
-
+    align-items: center;
+    gap: var(--s-9);
+    padding: 0 var(--s-9);
+    background-color: var(--gray-80);
+    border-radius: var(--border-radius);
+    height: var(--s-element);
     .adaptable-header__filter {
       @media(max-width:900px) {
         width: 100%;

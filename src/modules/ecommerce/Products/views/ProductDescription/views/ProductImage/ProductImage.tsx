@@ -8,7 +8,7 @@ const ProductImage: React.FC<{ image?: any, options?: any }> = ({ image, options
     
     useEffect(() => {
         if(!image)setImageLoadError(true);
-    }, []);
+    }, [image]);
     return (
         <>
             <style jsx>{styles}</style>

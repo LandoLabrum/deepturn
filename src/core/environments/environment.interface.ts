@@ -16,6 +16,7 @@ export interface MerchantSettings {
   ecommerce?:{
     productListing?:MerchantSettingsLayout
   }
+  about?: any
 }
 export interface Merchant {
   url: string;

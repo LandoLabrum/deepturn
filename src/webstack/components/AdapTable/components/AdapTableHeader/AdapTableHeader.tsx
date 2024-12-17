@@ -38,14 +38,15 @@ export default function AdapTableHeader({
         {
           Object.entries(filters).map(([key, value]: any, index) => {
 
-            return <span key={index} className="adaptable-header__filter">
+            return <div key={index} className="adaptable-header__filter">
               <UiSelect
                 variant="right"
-                title={{ text: search !== "" ? search : keyStringConverter(key) }}
+                size='md'
+                title={{ text: search !== "" ? search : keyStringConverter(key,{textTransform:'capitalize'}) }}
                 options={value}
                 onSelect={setFilter}
               />
-            </span>
+            </div>
           })
         }
       </div>

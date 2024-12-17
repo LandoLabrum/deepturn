@@ -30,7 +30,7 @@ const AdminMarketing: React.FC = () => {
       <div className='admin-marketing'>
         {view == 'start' && <>
           <div className='admin-marketing__header'>
-            <h1>Sign up for marketing lists</h1>
+            <h5>Sign up for marketing lists</h5>
             <p>Target your audience using informed media buying across states and the whole country by using Deepturn data analytics and audience groups to identify the people who will be most receptive to your message, create tailored content, and deliver impactful and cost effective campaigns across DMAs.</p>
           </div>
           <AdaptGrid gapY={20} xs={1} md={3} gap={10} variant='card'>

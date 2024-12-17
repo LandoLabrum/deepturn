@@ -20,7 +20,7 @@ const useSessionStorage = () => {
         try {
           const storedValue = JSON.parse(sessionStorage.getItem(key) as string);
           const { value, expiry } = storedValue;
-          console.log({value, expiry})
+          // console.log({value, expiry})
           // Check if the item has expired
           if (expiry && Date.now() > expiry) {
             sessionStorage.removeItem(key); // Remove expired item

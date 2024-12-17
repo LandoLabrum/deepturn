@@ -5,7 +5,7 @@ import useClass from '@webstack/hooks/useClass';
 import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
 import { useModal } from '@webstack/components/modal/contexts/modalContext';
 
-export type IImageVariant = 'center' | string;
+export type IImageVariant = 'center' | string | 'background';
 export type IImageMediaType = 'image' | 'video';
 
 interface IImageControl {
@@ -39,14 +39,15 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
   useEffect(() => {
     const mediaHeight = childRef?.current?.offsetHeight;
     if (childRef.current && !loading) {
-      onComplete?.({ src: Boolean(mediaHeight && mediaHeight > 30), loading });
+      onComplete?.({ src: Boolean(mediaHeight && mediaHeight > 10), loading });
     }
   }, [childRef.current, loading, onComplete]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       const mediaHeight = childRef?.current?.offsetHeight;
-      const imageSrc = Boolean(mediaHeight && mediaHeight > 30);
+      const mediaWidth = childRef?.current?.offsetWidth;
+      const imageSrc = Boolean(mediaHeight && mediaHeight > 30 )|| Boolean(mediaWidth && mediaWidth > 10);
       if (childRef.current && imageSrc && loading === true) {
         setLoading(false);
       } else {
@@ -55,12 +56,12 @@ const ImageControl: React.FC<IImageControl> = ({ children, variant, mediaType = 
     }, refreshInterval);
 
     return () => clearInterval(interval);
-  }, [refreshInterval, loading, error]);
+  }, [refreshInterval, setLoading, error]);
 
   return (
     <>
       <style jsx>{styles}</style>
-      <div className={`image-control${loading ? ' image-control__loading' : ""}`}>
+      <div className={`image-control${loading ? ' image-control__loading' : ""}${variant?` image-control--${variant}`:''}`}>
         {loading && <UiLoader position={!fixedLoad ? 'relative' : undefined} text={error || loadingText || undefined} dots={['string', 'object'].includes(typeof error) ? false : undefined} />}
         <div id='image-control__element' className={`${clzz}`} ref={childRef}>
           {Children.map(children, child => isValidElement(child) ? cloneElement(child) : child)}

@@ -37,7 +37,7 @@
     display: flex;
     overflow-x:hidden;
     flex-direction: column;
-    background: linear-gradient(var(--gray-90),var(--gray-100));
+    background: linear-gradient(var(--dark),var(--gray-100));
     border: solid 1px var(--gray-80-o);
     outline: solid 1px var(--gray-70-o);
     box-shadow: 2px 4px 15px 5px var(--dark);
@@ -58,7 +58,7 @@
         padding-bottom:var(--s-9);
         top: var(--s-9);
         bottom: var(--s-9);
-        height: max-content;
+        // height: max-content;
     }
     &__popup {
         width: var(--s-4-width);
@@ -69,11 +69,21 @@
     }
     &__fullscreen {
         top: 0;
+        max-width: 100vw;
+        bottom: 0;
         border: none;
+        outline: none;
         border-radius: unset;
-        height: max-content;
-        width: 100%;
+        gap:0;
+        box-shadow: unset;
+        width: 100vw;
         padding: 0;
+        // background: unset;
+        @media(max-width:900px){
+            top: 90px;
+        }
+
+      
     }
 
     &__dragging {
@@ -82,12 +92,13 @@
     }
 
     &__content {
+        
         overflow: hidden;
         padding: var(--s-10) 0 var(--s-4);
-        height: 100%;
         margin: auto 0;
         backdrop-filter: blur(5px);
         color: var(--gray-30);
+        // height: 100%;
         height: max-content;
         justify-content: flex-start;
         transition: all 1s;
@@ -141,6 +152,7 @@
         position: relative;
         @media(max-width: 1100px) {
             position: relative;
+
         }
 
         cursor: default;
@@ -152,7 +164,9 @@
             cursor: pointer;
             --ui-icon-color: var(--primary-50);
         }
-   
+        .close-btn{
+            margin:var(--s-9);
+        }
         .modal-overlay__title {
             font-size: var(--s-1);
             text-transform: capitalize;
@@ -160,25 +174,19 @@
             letter-spacing: var(--s-12);
             color: var(--primary-50);
             @media(max-width: 900px) {
-                font-size: var(--s-4);
+                font-size: var(--s-2);
             }
+        
         }
      
         &__fullscreen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
             z-index: 2;
+            background: unset;
             margin: 0;
             min-height: var(--s-element);
-            border-radius: unset;
-            border: unset;
-
-            &:hover {
-                background-color: var(--gray-100);
-            }
-            top: var(--s-9);
+            border-radius: var(--border-radius);
+            padding:0;
+            // top: var(--s-9);
         }
     }
         
@@ -187,16 +195,20 @@
             @extend .d-flex;
             flex-direction: column;
             align-items: flex-start;
+            justify-content: flex-start;
             gap: var(--s-4);
             font-family: FreightSans;
             font-weight: 500;
-            height: auto;
+            height: 100%;
+            
             background: linear-gradient(var(--gray-90), var(--gray-100));
+            // background-color: #f30 !important;
             color: var(--gray-50);
             padding: var(--s-4);
-            overflow-y: auto; 
-            overflow-x: hidden; 
-            max-height: 80vh; // Set a maximum height for the modal body
+            // overflow-y: auto; 
+            
+            overflow: hidden; 
+            // max-height: 80vh; // Set a maximum height for the modal body
             padding-top: 20px; // Increase padding top for alignment
             box-sizing: border-box; // Ensure box-sizing is border-box
     
@@ -207,10 +219,13 @@
             }
     
             &__fullscreen {
-                z-index: 1;
+                // z-index: 1;
                 margin-bottom: 0;
                 padding: 0;
+                padding-top: 0;
                 width: 100%;
+                background: transparent;
+
             }
           
             &__popup {

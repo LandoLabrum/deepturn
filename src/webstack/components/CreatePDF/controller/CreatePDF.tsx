@@ -22,9 +22,9 @@ const CreatePDF: FC<ICreatePDF> = ({ pdfRef, preview, downloadable, name }) => {
         const [outputSize, setOutputSize] = useState(initialOutputSize); // Default A4 size in inches
         const handleOutputSize = (e: React.ChangeEvent<HTMLInputElement>) => {
             const { value, name } = e.target;
-            console.log({
-                name: name, value: value
-            });
+            // console.log({
+            //     name: name, value: value
+            // });
 
             if (/^\d*\.?\d*$/.test(value)) {
                 let newValue;

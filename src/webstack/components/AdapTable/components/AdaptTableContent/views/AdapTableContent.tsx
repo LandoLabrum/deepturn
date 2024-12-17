@@ -43,7 +43,7 @@ type ItemType = {
 export const AdapTableContent = ({
   loading,
   search,
-  data,
+  data: tableData,
   startIndex,
   variant,
   onRowClick,
@@ -54,7 +54,7 @@ export const AdapTableContent = ({
   const index = options?.index ? options.index + 1 : 0;
 
   const { tableRef, status } = useTable({
-    data,
+    data: tableData,
     variant,
     rowClickable: Boolean(onRowClick),
     options,
@@ -83,7 +83,7 @@ export const AdapTableContent = ({
     if (isResizing && resizeColumnIndex >= 0) {
       const deltaX = e.clientX - resizeStartX;
       const newColumnWidths: any = { ...columnWidths };
-      const currentColumnKey = Object.keys(data[0])[resizeColumnIndex];
+      const currentColumnKey = Object.keys(tableData[0])[resizeColumnIndex];
       const currentColumnWidth = newColumnWidths[currentColumnKey] || 0;
       newColumnWidths[currentColumnKey] = Math.max(currentColumnWidth + deltaX, 30); // Adjust the minimum width as needed
       setColumnWidths(newColumnWidths);
@@ -103,7 +103,7 @@ export const AdapTableContent = ({
         maxWidth = Math.max(maxWidth, row.children[columnIndex].offsetWidth);
       }
     });
-    const newColumnWidths = { ...columnWidths, [Object.keys(data[0])[columnIndex]]: maxWidth + "px" };
+    const newColumnWidths = { ...columnWidths, [Object.keys(tableData[0])[columnIndex]]: maxWidth + "px" };
     setColumnWidths(newColumnWidths);
   };
   useEffect(() => {
@@ -137,7 +137,7 @@ export const AdapTableContent = ({
   
   useEffect(() => {
     // This is where you can log and check for updates
-  }, [data]);
+  }, [tableData]);
   return (
     <>
       <style jsx>{tableStyles}</style>
@@ -157,8 +157,8 @@ export const AdapTableContent = ({
                       edit
                     </th>
                   )}
-              { data?.[0] &&
-                Object.keys(data[0]).map((key, columnIndex) => {
+              { tableData?.[0] &&
+                Object.keys(tableData[0]).map((key, columnIndex) => {
                   const columnKey = keyStringConverter(key);
                   return (
                     key !== "keywords" &&
@@ -183,8 +183,8 @@ export const AdapTableContent = ({
             </tr>
           </thead>}
           <tbody>
-            { data?.[0] &&
-              data.map((item: ItemType, i_: number) => {
+            { tableData?.[0] &&
+              tableData.map((item: ItemType, i_: number) => {
                 if (item) return <tr
                   className={`${variant ? variant : ""}`}
                   key={startIndex + i_}
@@ -207,7 +207,7 @@ export const AdapTableContent = ({
                   {Object.entries(item).map(
                     ([key, value], index) =>
 
-                      !options?.hideColumns?.includes(key) && (
+                      !options?.hideColumns?.includes(key) &&(
                         <td key={index} data-key={keyStringConverter(key)}>
                           {options?.hoverable && (
                             <div className="td-hover"> {AdaptTableCellHover(value)}</div>
@@ -216,8 +216,22 @@ export const AdapTableContent = ({
                             (<div
                               className={`${options?.hoverable && "td-content" || ""
                                 }${key == 'image' && ` td-content--${key}` || ''}`}
-                            >{!['image', 'keywords'].includes(key) ? (
-                              value
+                            >{!['image', 'keywords'].includes(key)  ? (
+                              // BOOLEAN VALUES
+                              // typeof value == 'boolean'?<UiIco icon="fa-checkmark"/> || 
+                               value !== 'true' && value !== 'false' &&  typeof value != "boolean"  ?(
+                                value
+                              ):(
+                                <UiIcon 
+                                color={
+                                  String(value) !== 'false'?'green':'red'
+                                }
+                                
+                                 icon={
+                                    String(value) !== 'false'?"fa-circle-check":"fa-xmark"
+                                 }
+                                />
+                              )
                             ) :
                               (internalHiddenKeys(key) && (
                                 value?.length ?
