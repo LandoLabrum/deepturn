@@ -3,10 +3,10 @@ import React, { useEffect, useState, useRef } from "react";
 import contentStyles from "./AdapTableContent.scss";
 import tableStyles from "./AdapTableElements.scss";
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import AdapTableAlternateView from "../components/AdapTableAlternateView/AdapTableAlternateView";
 import useScroll from "@webstack/hooks/useScroll";
-import UiButton from "@webstack/components/UiButton/UiButton";
+import UiButton from "@webstack/components/UiForm/views/UiButton/UiButton";
 import { TableOptions } from "@webstack/components/AdapTable/views/AdapTable";
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 import useTable from "../hooks/useTable";
@@ -235,7 +235,7 @@ export const AdapTableContent = ({
                             ) :
                               (internalHiddenKeys(key) && (
                                 value?.length ?
-                                  (<Image src={value[0]} fill alt={key}  />) :
+                                  (<Image priority src={value[0]} fill alt={key}  />) :
                                   (<UiIcon icon={`${environment.merchant.name}-logo`} />)
                               )
                               )}</div>)

@@ -1,6 +1,6 @@
 import { getService } from "@webstack/common";
 import { useLoader } from "@webstack/components/Loader/Loader";
-import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import { useModal } from "@webstack/components/Containers/modal/contexts/modalContext";
 import { useCallback, useState } from "react";
 import IAdminService from "~/src/core/services/AdminService/IAdminService";
 

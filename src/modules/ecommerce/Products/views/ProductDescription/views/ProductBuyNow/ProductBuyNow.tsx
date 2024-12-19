@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ProductBuyNow.scss';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import UiPill from '@webstack/components/UiForm/components/UiPill/UiPill';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 import useCart from '~/src/modules/ecommerce/cart/hooks/useCart';
 import { ITraits } from '@webstack/components/UiForm/components/FormControl/FormControl';
 import { IProduct } from '~/src/models/Shopping/IProduct';

@@ -3,11 +3,11 @@ import React, { useEffect } from 'react';
 import styles from './CartListItem.scss';
 import Image from 'next/image';
 import environment from '~/src/core/environment';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import ProductBuyNow from '../../../Products/views/ProductDescription/views/ProductBuyNow/ProductBuyNow';
 import { ITraits } from '@webstack/components/UiForm/components/FormControl/FormControl';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { useRouter } from 'next/router';
 
 // Remember to create a sibling SCSS file with the same name as this component

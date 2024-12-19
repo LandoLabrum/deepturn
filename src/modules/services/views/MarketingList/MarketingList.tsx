@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./MarketingList.scss";
-import AdaptGrid from "@webstack/components/AdaptGrid/AdaptGrid";
+import AdaptGrid from "@webstack/components/Containers/AdaptGrid/AdaptGrid";
 import { useProducts } from "~/src/modules/ecommerce/Products/hooks/useProducts";
 import ProductBuyNow from "~/src/modules/ecommerce/Products/views/ProductDescription/views/ProductBuyNow/ProductBuyNow";
 import UiLoader from "@webstack/components/UiLoader/view/UiLoader";
-import UiButton from "@webstack/components/UiButton/UiButton";
+import UiButton from "@webstack/components/UiForm/views/UiButton/UiButton";
 import capitalize from "@webstack/helpers/Capitalize";
 import environment from "~/src/core/environment";
 

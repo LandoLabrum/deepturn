@@ -6,26 +6,65 @@
 
 .product-build {
     // position: fixed;
-    width: 100%;
+
+
     @extend .d-flex;
     align-items: stretch;
-    // flex-direction: column;
+    flex-direction: column;
     position: relative;
     min-height: inherit;
     height: 100%;
-    gap:var(--s-9);
-    &--content {
-        flex: 1;
-        height: 100%;
-        min-height: 500px;
-        // display: none;
-        display: flex;
+    gap: var(--s-9);
+    width: 100%;
+    @media(max-width: 1260px) {
+        width:var(--s-9-width);
+        padding:0 var(--s-9);
     }
-    
-    &--form {
-        flex: 1;
-        height: inherit;
-        min-height: inherit;
-        display: flex;
+    @media(max-width: 900px) {
+        margin: auto;
+        width: var(--s-5-width);
+        padding: 0 var(--s-5);
+    }
+    &--header {
+        font-size: var(--s-1);
+        min-height: var(--s-1);
+        margin-top: var(--s-1);
+        color:var(--primary-30);
+    }
+
+    &__body {
+        @extend .d-flex;
+        gap: var(--s-9);
+        align-items: flex-start;
+        min-height: 50vh;
+        @media(max-width: 900px) {
+            min-height: unset;
+            height: 100%;
+            flex-direction: column-reverse;
+            align-items: center;
+        
+        }
+        &--content,
+        &--form {
+            border-radius: var(--border-radius);
+            height: 100%;
+            background-color: var(--white);
+            color:var(--black
+            );
+            flex: 1;
+            height: inherit;
+            min-height: inherit;
+            width:var(--s-9-width);
+            padding: var(--s-4) var(--s-9);
+            display: flex;
+            flex-direction: column;
+        }
+
+        &--content {
+            overflow: hidden;
+            height: max-content;
+        }
+
+        // &--form {}
     }
 }

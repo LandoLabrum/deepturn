@@ -3,10 +3,10 @@ import styles from "./UiSelect.scss";
 import UiMenu, { IMenuOption } from "../../../UiMenu/UiMenu";
 import UiInput from "../UiInput/UiInput";
 import { capitalize } from "lodash";
-import { useModal } from "../../../modal/contexts/modalContext";
+import { useModal } from "../../../Containers/modal/contexts/modalContext";
 import { ITraits } from "@webstack/components/UiForm/components/FormControl/FormControl";
 import { IFormControlVariant } from "../../../AdapTable/models/IVariant";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 
 type TitleProps = { text?: string | number; preIcon?: string; postIcon?: string } | string | React.ReactElement;
 

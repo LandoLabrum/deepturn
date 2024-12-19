@@ -2,10 +2,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styles from './SurveyForm.scss';
 import { IProductQuoteField } from '../../controller/ProductQuote';
-import UiButton from '@webstack/components/UiButton/UiButton';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import QuoteChoiceOther from '../ProductFeatureOther/SurveyChoiceOther';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
 
 interface IQuoteForm {

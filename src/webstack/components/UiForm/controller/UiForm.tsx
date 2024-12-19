@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UiInput from '../components/UiInput/UiInput';
 import styles from './UiForm.scss';
-import UiButton from '../../UiButton/UiButton';
+import UiButton from '../views/UiButton/UiButton';
 import { IForm, IFormField } from '../models/IFormModel';
 import UiSelect from '../components/UiSelect/UiSelect';
 import UiLoader from '../../UiLoader/view/UiLoader';
@@ -176,7 +176,7 @@ const UiForm = ({
                         )}
                         {fieldType(field) =='select'&& (
                             <UiSelect
-                                variant={field?.variant}
+                                variant={field?.variant||variant}
                                 traits={field.traits}
                                 options={field?.options}
                                 label={field.name}

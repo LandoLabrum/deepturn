@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import styles from './Surveillance.scss';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import { getService } from '@webstack/common';
 import IHomeService from '~/src/core/services/HomeService/IHomeService';
 import SurveillanceItem from '../views/SurveillanceItem/SurveillanceItem';

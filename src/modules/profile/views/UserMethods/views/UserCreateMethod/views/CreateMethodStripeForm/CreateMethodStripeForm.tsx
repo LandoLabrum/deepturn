@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import styles from "./CreateMethodStripeForm.scss";
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import IAuthenticatedUser from "~/src/models/ICustomer";
 import environment from '~/src/core/environment';
 import { useNotification } from '@webstack/components/Notification/Notification';

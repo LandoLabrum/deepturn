@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from "./ProductQuote.scss";
-import UiButton from '@webstack/components/UiButton/UiButton';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import { getService } from '@webstack/common';
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
 import environment from "~/src/core/environment";
@@ -11,7 +11,7 @@ import QuoteForm from '../views/SurveyForm/SurveyForm';
 import useScrollTo from '@webstack/components/AdapTable/hooks/useScrollTo';
 import useDevice from '~/src/core/authentication/hooks/useDevice';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 
 
 export const applianceArray: IProductQuoteField[] = [

@@ -5,7 +5,7 @@ import { ISessionCartItem } from "~/src/core/services/MemberService/IMemberServi
 import UserMethods from "~/src/modules/profile/views/UserMethods/controller/UserMethods";
 import { IMethod } from "~/src/modules/profile/model/IMethod";
 import UiLoader from "@webstack/components/UiLoader/view/UiLoader";
-import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import { useModal } from "@webstack/components/Containers/modal/contexts/modalContext";
 interface ICollect {
   user?: any;
   cart_items: ISessionCartItem[];

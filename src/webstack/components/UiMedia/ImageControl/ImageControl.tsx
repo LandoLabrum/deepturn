@@ -2,8 +2,8 @@ import React, { Children, cloneElement, useEffect, useRef, useState, isValidElem
 import styles from './ImageControl.scss';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import useClass from '@webstack/hooks/useClass';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 
 export type IImageVariant = 'center' | string | 'background';
 export type IImageMediaType = 'image' | 'video';

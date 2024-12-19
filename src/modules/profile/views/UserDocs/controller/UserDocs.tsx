@@ -4,7 +4,7 @@ import IAuthenticatedUser from "~/src/models/ICustomer";
 import { getService } from '@webstack/common';
 import IProductService from '~/src/core/services/ProductService/IProductService';
 import environment from '~/src/core/environment';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import capitalize, { capitalizeAll } from '@webstack/helpers/Capitalize';
 import UiCollapse from '@webstack/components/UiCollapse/UiCollapse';
 import { useLoader } from '@webstack/components/Loader/Loader';
@@ -14,8 +14,8 @@ import DocumentsNone from '../views/DocumentsNone';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import IDocumentService from '~/src/core/services/DocumentService/IDocumentService';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface IDocuments {

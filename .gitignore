@@ -43,7 +43,7 @@ yarn-error.log*
 /lib
 /env
 .env
-
+/package-lock.json
 # Git directory (should be ignored, but it's usually redundant)
 .git/
 

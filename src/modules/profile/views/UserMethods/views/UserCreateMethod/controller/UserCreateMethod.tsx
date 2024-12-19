@@ -8,7 +8,7 @@ import IAuthenticatedUser from "~/src/models/ICustomer";
 import { useEffect, useState } from "react";
 import { useLoader } from "@webstack/components/Loader/Loader";
 import UiLoader from "@webstack/components/UiLoader/view/UiLoader";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import environment from "~/src/core/environment";
 interface IStripePaymentForm {
   onSuccess?: (e: any) => void;

@@ -1,17 +1,18 @@
 // Relative Path: ./MbOne.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from "./NirvanaEnergy.scss";
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import HomeGridItem from '../../HomeGridItem/HomeGridItem';
 import ProductQuote from '~/src/modules/ecommerce/Products/views/ProductDescription/ProductQuote/Version1/controller/ProductQuote';
 import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import { upperCase } from 'lodash';
 import UiMedia from '@webstack/components/UiMedia/controller/UiMedia';
 import useScroll from '@webstack/hooks/useScroll';
 import useWindow from '@webstack/hooks/window/useWindow';
 import { useRouter } from 'next/router';
 import GLBViewer from '@webstack/components/ThreeComponents/ThreeGLB/ThreeGLB';
+import UiTextBalance from '@webstack/components/Text/UiTextBalance/UiTextBalance';
 
 const NirvanaEnergyIcon = () => {
   const nStyle = `.nirv{
@@ -37,6 +38,8 @@ const NirvanaEnergy = () => {
   const { push } = useRouter();
   const [currentScrollYPosition] = useScroll();
   const [view, setView] = useState('start');
+  const [bgLoaded, setBgLoaded] = useState(false);
+
   const outputValue = (powerInKW: number) => {
     const volts = 240;
     const powerFactor = 1;
@@ -99,26 +102,34 @@ const NirvanaEnergy = () => {
         className='nirvana-energy'
       >
         <div className='nirvana-energy__bg-overlay'
+        onClick={()=>push('/build')}
           style={
             bgOpacity()}>
           {/* <div className='nirvana-energy__bg-overlay--media'> */}
           {width > 1100 ? (<UiMedia playbackSpeed={.7}
-            // Plays video at 1.5x speed
+          onLoad={(props) => setBgLoaded(true)}
             type='video' autoplay muted loop variant='background' src="https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/home.webm" />) : (
-            <UiMedia variant='background' alt='nirv1-home' src='/merchant/nirv1/backgrounds/redrock-wall.jpeg' />
+            <UiMedia           onLoad={(props) => setBgLoaded(true)}
+             variant='background' alt='nirv1-home' src='/merchant/nirv1/backgrounds/redrock-wall.jpeg' />
           )}
           {/* </div> */}
           <div className='nirvana-energy__bg-overlay--content'>
-            <div className='nirvana-energy__bg-overlay--content__action' onClick={()=>push('/build')}>Configure your backup system</div>
+            <div className='nirvana-energy__bg-overlay--content__text' >
+              {bgLoaded && <UiTextBalance text="_Configure your backup system"/>}
+            </div>
+            {view == 'start' && 
+            <div className='nirvana-energy__bg-overlay--content__glb' >
+            <GLBViewer
+              width={width > 1100 ? "var(--s-9-width)" : `100%`} 
+              height={width > 1100 ? "var(--s-9-width)" : "100vw"}
+              modelPath='/merchant/nirv1/3dModels/products/MetalBox.glb'
+            />
+            </div>}
+
             {/* <ProductQuote
               id='product-quote'
               startButton={<>
                 <div className='configure-btn__model'>
-                  {view == 'start' && <GLBViewer
-                    width={width > 1100 ? "400px" : "90vw"}
-                    height={width > 1100 ? "500px" : "90vw"}
-                    modelPath='/merchant/nirv1/3dModels/products/prod_P5lI35r2EWTAxi.glb'
-                  />}
                 </div>
                 <div className='configure-btn__text a-light-wipe'>
                   configure your back up system.

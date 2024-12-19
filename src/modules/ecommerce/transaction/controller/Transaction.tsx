@@ -4,7 +4,7 @@ import styles from './Transaction.scss';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import CookieHelper from '@webstack/helpers/CookieHelper';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { dateFormat, numberToUsd } from '@webstack/helpers/userExperienceFormats';
 import IAuthenticatedUser from "~/src/models/ICustomer";
 import { useUser } from '~/src/core/authentication/hooks/useUser';

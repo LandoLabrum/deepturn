@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styles from './Lights.scss';
 import { getService } from '@webstack/common';
 import IHomeService, { ILight } from '~/src/core/services/HomeService/IHomeService';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import { useLoader } from '@webstack/components/Loader/Loader';
 import UiBar from '@webstack/components/Graphs/UiBar/UiBar';
 import ToggleSwitch from '@webstack/components/UiForm/components/UiToggle/UiToggle';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
 import ColorPicker from '@webstack/components/ColorPicker/ColorPicker';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { calculateHexFromHueSatBri } from '../functions/LightHelpers';
 import { reverseString } from '@webstack/helpers/Strings/reverseString';
 

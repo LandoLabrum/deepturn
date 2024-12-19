@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './UserCurrentMethod.scss';
 import { IMethod } from '~/src/modules/profile/model/IMethod';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import { getService } from '@webstack/common';
 import IMemberService from '~/src/core/services/MemberService/IMemberService';
 import { useNotification } from '@webstack/components/Notification/Notification';

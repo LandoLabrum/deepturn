@@ -10,10 +10,10 @@ import { useLoader } from '@webstack/components/Loader/Loader';
 import useCustomerAddForm from '@webstack/components/UiForm/defaults/useCustomerAddForm';
 import {ICustomer} from "~/src/models/ICustomer";
 import environment from '~/src/core/environment';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import capitalize from '@webstack/helpers/Capitalize';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { useRouter } from 'next/router';
 
 // Remember to create a sibling SCSS file with the same name as this component

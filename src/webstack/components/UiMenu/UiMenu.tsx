@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { IFormControl } from "@webstack/components/UiForm/components/FormControl/FormControl";
 import styles from "./UiMenu.scss";
 import Input from "../UiForm/components/UiInput/UiInput";
-import UiButton from "../UiButton/UiButton";
+import UiButton from "../UiForm/views/UiButton/UiButton";
 
 export type IMenuOption = {
   label: string;

@@ -1,4 +1,4 @@
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import styles from "./SurveillanceItem.scss";
 import UiMedia from "@webstack/components/UiMedia/controller/UiMedia";
 import environment from "~/src/core/environment";

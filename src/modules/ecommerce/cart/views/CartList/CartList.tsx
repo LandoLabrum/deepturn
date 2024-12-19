@@ -1,12 +1,12 @@
 import styles from './CartList.scss';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import React, { useEffect, useState } from 'react';
 import { IProduct } from '~/src/models/Shopping/IProduct';
 import CartListItem from '../CartListItem/CartListItem';
 import useCart from '../../hooks/useCart';
 // import AdapTable from '@webstack/components/AdapTable/views/AdapTable';
 // import Image from 'next/image';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
 import environment from '~/src/core/environment';
 // import { numberToUsd } from '@webstack/helpers/userExperienceFormats';
 

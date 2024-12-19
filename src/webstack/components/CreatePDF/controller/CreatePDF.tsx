@@ -2,10 +2,10 @@ import styles from './CreatePDF.scss'; // Corrected the import statement
 import React, { FC, useEffect, useState } from 'react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 import UiInput from '@webstack/components/UiForm/components/UiInput/UiInput';
 import UiSelect from '@webstack/components/UiForm/components/UiSelect/UiSelect';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 interface ICreatePDF {
     pdfRef?: React.RefObject<HTMLDivElement>;

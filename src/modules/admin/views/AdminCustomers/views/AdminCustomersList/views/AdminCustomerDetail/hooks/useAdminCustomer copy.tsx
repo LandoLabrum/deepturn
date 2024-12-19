@@ -4,7 +4,7 @@ import { findField } from "@webstack/components/UiForm/functions/formFieldFuncti
 import { IFormField } from "@webstack/components/UiForm/models/IFormModel";
 import { useCallback, useEffect, useState } from "react";
 import IAdminService from "~/src/core/services/AdminService/IAdminService";
-import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import { useModal } from "@webstack/components/Containers/modal/contexts/modalContext";
 import { useRouter } from "next/router";
 import { dateFormat } from "@webstack/helpers/userExperienceFormats";
 

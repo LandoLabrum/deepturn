@@ -4,8 +4,8 @@ import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { useRouter } from 'next/router';
 import useClass from '@webstack/hooks/useClass';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
-import UiHeader from '@webstack/components/Header/views/UiHeader/UiHeader';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiHeader from '@webstack/components/Containers/Header/views/UiHeader/UiHeader';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 
 interface ISettingsLayout {
   views: any;

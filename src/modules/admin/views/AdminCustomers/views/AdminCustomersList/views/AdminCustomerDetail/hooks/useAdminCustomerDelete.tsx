@@ -1,7 +1,7 @@
 import { getService } from "@webstack/common";
 import { useNotification } from "@webstack/components/Notification/Notification";
 import IAdminService from "~/src/core/services/AdminService/IAdminService";
-import { useModal } from "@webstack/components/modal/contexts/modalContext";
+import { useModal } from "@webstack/components/Containers/modal/contexts/modalContext";
 import { useRouter } from "next/router";
 
 const useAdminCustomerDelete = (customer_id?: string) => {

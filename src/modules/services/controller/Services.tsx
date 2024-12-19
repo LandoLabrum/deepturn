@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Services.scss';
 import UiViewLayout from '@webstack/layouts/UiViewLayout/controller/UiViewLayout';
-import AdaptGrid from '@webstack/components/AdaptGrid/AdaptGrid';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import AdaptGrid from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import { useRouter } from 'next/router';
 import MarketingDetails from '../views/MarketingDetails/MarketingDetails';
 import MarketingList from '../views/MarketingList/MarketingList';

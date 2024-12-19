@@ -1,4 +1,4 @@
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import { useEffect } from "react";
 import styles from "./AdapTableHeader.scss";
 import UiInput from "@webstack/components/UiForm/components/UiInput/UiInput";

@@ -1,4 +1,4 @@
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import styles from "./SurveillanceItem.scss";
 import UiMedia from "@webstack/components/UiMedia/controller/UiMedia";
 import environment from "~/src/core/environment";
@@ -6,7 +6,7 @@ import { dateFormat } from "@webstack/helpers/userExperienceFormats";
 import { useCallback, useEffect, useState } from "react";
 import UiJoyStick from "@webstack/components/UiForm/components/UiJoyStick/UiJoyStick";
 import SurveillanceController from "../SurveillanceController/SurveillanceController";
-import UiButton from "@webstack/components/UiButton/UiButton";
+import UiButton from "@webstack/components/UiForm/views/UiButton/UiButton";
 
 interface ISurveillanceItem {
     camera: any, onSelect?: (e: any) => void

@@ -4,7 +4,7 @@ import styles from './SurveillanceDetails.scss';
 import UiMedia from '@webstack/components/UiMedia/controller/UiMedia';
 import SurveillanceController from '../SurveillanceController/SurveillanceController';
 import { useRouter } from 'next/router';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import environment from '~/src/core/environment';
 
 // Remember to create a sibling SCSS file with the same name as this component

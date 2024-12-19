@@ -19,7 +19,8 @@
     overflow: hidden;
 
     @media(max-width: 1100px) {
-        max-height: calc(100vh - 100px);
+        max-height: max-content;
+        height: max-content;
     }
     &_light {
         color: var(--gray-70);
@@ -53,7 +54,6 @@
         @media(max-width: 1100px) {
             flex-direction: column;
             justify-content: flex-start;
-
         }
     }
 
@@ -67,7 +67,6 @@
         overflow-x: hidden;
         overflow-y: auto;
         background-color: var(--gray-80);
-
         &_light {
             color: var(--gray-70);
             background-color: var(--gray-40);
@@ -85,6 +84,7 @@
             justify-content: flex-start;
             &--full-width {
                 flex: unset;
+                
             }
         }
         
@@ -157,7 +157,6 @@
         bottom: 0;
         padding: var(--s-9);
         box-sizing: border-box;
-
         height: 100%;
 
         @media (max-width:1100px) {
@@ -174,7 +173,6 @@
     flex-direction: column;
     gap: var(--s-9);
     width: 100%;
-    overflow: hidden;
     .settings__content {
         overflow-y: auto;
         /* Enable vertical scrolling */
@@ -187,6 +185,8 @@
         // background-color: var(--gray-80);
         // width: var(--s-9-width);
         @media(max-width:1100px){
+            overflow: hidden;
+            height: max-content;
         }
         &--full-width{
             width:var(--s-border-width);

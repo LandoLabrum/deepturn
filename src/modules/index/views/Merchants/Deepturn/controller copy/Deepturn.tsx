@@ -6,7 +6,7 @@ import GLBViewer from '@webstack/components/ThreeComponents/ThreeGLB/ThreeGLB';
 // Remember to create a sibling SCSS file with the same name as this component
 
 const Deepturn: React.FC = () => {
-  const = GLBViewer
+  // const = GLBViewer
   return (
     <>
       <style jsx>{styles}</style>

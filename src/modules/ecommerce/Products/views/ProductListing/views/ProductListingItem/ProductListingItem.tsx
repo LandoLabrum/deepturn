@@ -1,7 +1,7 @@
-import UiButton from "@webstack/components/UiButton/UiButton";
+import UiButton from "@webstack/components/UiForm/views/UiButton/UiButton";
 import styles from "./ProductListingItem.scss";
 import { useEffect, useRef, useState } from "react";
-import { UiIcon } from "@webstack/components/UiIcon/UiIcon";
+import { UiIcon } from "@webstack/components/UiIcon/controller/UiIcon";
 import environment from "~/src/core/environment";
 import ProductBuyNow from "../../../ProductDescription/views/ProductBuyNow/ProductBuyNow";
 import { useRouter } from "next/router";

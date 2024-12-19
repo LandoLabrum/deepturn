@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styles from './AdminCustomerDetail.scss';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { useRouter } from 'next/router';
-import UiButton from '@webstack/components/UiButton/UiButton';
+import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import useAdminCustomer from '../hooks/useAdminCustomer';
 import UiLoader from '@webstack/components/UiLoader/view/UiLoader';
 import { findField } from '@webstack/components/UiForm/functions/formFieldFunctions';
 import { useClearance } from '~/src/core/authentication/hooks/useUser';
 import useAdminCustomerDelete from '../hooks/useAdminCustomerDelete';
 import ThreeTree from '@webstack/components/ThreeComponents/ThreeTree/controller/ThreeTree';
-import { useModal } from '@webstack/components/modal/contexts/modalContext';
+import { useModal } from '@webstack/components/Containers/modal/contexts/modalContext';
 import useWindow from '@webstack/hooks/window/useWindow';
   
 const AdminCustomerDetails: React.FC<any> = ({ id, setView }: { id?: string, setView: (e: any) => void }) => {

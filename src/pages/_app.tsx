@@ -6,10 +6,10 @@ import MainLayout from "../layouts/default/DefaultLayout";
 import ServiceContainer from "@webstack/components/ServiceContainer/ServiceContainer";
 import styles from "~/src/layouts/default/DefaultLayout.scss"
 import { OverlayProvider } from "@webstack/components/Overlay/Overlay";
-import { HeaderProvider } from "@webstack/components/Header/controller/MainHeader";
+import { HeaderProvider } from "@webstack/components/Containers/Header/controller/MainHeader";
 import { NotificationProvider } from "@webstack/components/Notification/Notification";
-import { ModalProvider } from "@webstack/components/modal/contexts/modalContext";
-import { ModalOverlay } from "@webstack/components/modal/views/modalOverlay";
+import { ModalProvider } from "@webstack/components/Containers/modal/contexts/modalContext";
+import { ModalOverlay } from "@webstack/components/Containers/modal/views/modalOverlay";
 import { LoaderProvider } from "@webstack/components/Loader/Loader";
 
 

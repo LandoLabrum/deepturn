@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './UiMedia.scss';
 import ImageControl,{IImageMediaType,IImageVariant} from '../ImageControl/ImageControl';
-import { UiIcon } from '@webstack/components/UiIcon/UiIcon';
+import { UiIcon } from '@webstack/components/UiIcon/controller/UiIcon';
+import useWindow from '@webstack/hooks/window/useWindow';
 
 export interface IMedia {
   src: string;
@@ -44,7 +45,7 @@ const UiMedia: React.FC<IMedia> = ({
   const [reloadTrigger, setReloadTrigger] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null);
-
+  const window = useWindow()
   const handleReload = () => {
     setImageControlProps({ ...imageControlProps, error: null });
     setReloadTrigger((prev) => prev + 1);
@@ -91,7 +92,16 @@ const UiMedia: React.FC<IMedia> = ({
     if(height && mediaRef?.current){
       mediaRef.current.style.height = `${height}px`
     }
-  }, [rotate, ]);
+    if(variant && mediaRef?.current){
+      mediaRef.current.classList.add(`ui-media--${variant}`);
+      if(variant === 'background'){
+        const shadowHeight = window.height - mediaRef.current.offsetHeight; 
+        // console.log({offsetHeight:mediaRef.current.offsetHeight, width:window.height, shadowHeight})
+        if(shadowHeight < 0)return;
+        mediaRef.current.style.boxShadow = `0 0 ${shadowHeight}px ${shadowHeight*.5}px var(--gray-80-o)`;
+      }
+    }
+  }, [rotate, mediaRef, window, variant]);
 
   return (
     <>
@@ -103,7 +113,6 @@ const UiMedia: React.FC<IMedia> = ({
             <video
               ref={mediaRef as React.Ref<HTMLVideoElement>}
               src={src}
-              className={`${variant?`ui-media--${variant}`:''}`}
               autoPlay={autoplay}
               controls={controls}
               loop={loop}
@@ -116,17 +125,17 @@ const UiMedia: React.FC<IMedia> = ({
               onCanPlayThrough={handleLoad}
               onError={handleError}
               key={reloadTrigger}
+              className='ui-media'
               ><h1>loading</h1></video>
             ) : (
               <img
               ref={mediaRef as React.Ref<HTMLImageElement>}
               src={src}
-              className={`${variant?`ui-media--${variant}`:''}`}
               alt={alt}
               onLoad={handleLoad}
               onError={handleError}
               key={reloadTrigger}
-              
+              className='ui-media'
             />
           )
         )}
