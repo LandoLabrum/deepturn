@@ -24,9 +24,9 @@ const ProductsListing = ({ hide, variant, onSelect, scrollX }: IProductListing) 
   const { products, loading, hasMore } = useProducts();
   const [layout, setLayout] = useState<string>(query.layout && String(query.layout) || "grid");
   const layoutList = ["grid", "list", "gridX"];  
-  // const {width}=useWindow();
+  const {width}=useWindow();
   const layouts: any = {
-    grid: { gap: 10, sm: 3, md: 3, lg: 4, xl: 5 },
+    grid: { gap: 10,  sm: 1, md: 1, lg: 4, xl: 1, variant: variant },
     gridX: { gap: 10, sm: 3, md: 3, lg: 4, xl: 5, scroll: "scroll-x" },
     list: { gap: 10, xs: 1 },
   };
@@ -39,12 +39,12 @@ const ProductsListing = ({ hide, variant, onSelect, scrollX }: IProductListing) 
 const isHideHeader = hide?.includes('header') && hide == undefined;
 
 
-useEffect(() => {if(scrollX)setLayout("gridX")}, []);
+useEffect(() => {if(scrollX)handleLayoutChange("gridX")}, [variant]);
 
   return (
     <>
       <style jsx>{styles}</style>
-      {/* {JSON.stringify({headeer:Boolean(typeof hide == 'string' && hide != 'header') })} */}
+      {/* {JSON.stringify({headeer:Boolean(typeof hide == 'string' && hide != 'header'),lay:layouts[layout],variant:variant||0 })} */}
       <div className="products-listing">
         <UiSettingsLayout
           // theme="light"

@@ -18,6 +18,13 @@
     &__body{
         height: 100%;
         width: 100%;
+        @extend .d-flex;
+        overflow: auto;
+        @media (min-width:1100px) {
+                width: inherit;
+                flex-direction: row;
+                height: inherit;
+        }
     }
     &__header {
         color: var(--primary-50);

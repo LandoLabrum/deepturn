@@ -15,7 +15,8 @@ export type IFormField = {
     name: string;
     id?: string;
     error?: string;
-    options?: (string | IRoute | number)[] | React.ReactElement[];
+    options?:any;
+    // options?: (string | IFormField | IRoute | number)[] | React.ReactElement[];
     width?: string;
     value?: string | boolean | UserAddress | number;
     label?: any;

@@ -1,5 +1,5 @@
 import keyStringConverter from "@webstack/helpers/keyStringConverter";
-import { useEffect, useMemo, useState } from "react";
+import {  useMemo } from "react";
 import { useUser } from "~/src/core/authentication/hooks/useUser";
 import environment from "~/src/core/environment";
 
@@ -30,6 +30,7 @@ export interface HandleRouteProps {
 // 1 - 5 Customer
 // 6 Tennant
 // 7 + Admin
+const {mid} = environment.merchant;
 const merchantName = environment.merchant?.name || 'deepturn';
 export const routes: IRoute[] = [
   {
@@ -62,7 +63,7 @@ export const routes: IRoute[] = [
 
   // { label: "dashboard", href: "/dashboard", icon: "fal-guage", active: true, clearance: 1 },
   // { label: "configure", href: "/configure", icon: "fa-gear", active: true },
-  { label: "products", href: "/product", icon: "fa-tags", active: true },
+  { label: "products", href: "/product", icon: "fa-tags", active: true, hide: true },
   // { label: "portfolio", href: "/portfolio", icon: "fa-tags", active: true },
   {
     label: "Services",

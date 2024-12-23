@@ -4,10 +4,12 @@ import styles from './ProductBuild.scss';
 import ProductsListing from '../../ecommerce/Products/views/ProductListing/controller/ProductsListing';
 import UiForm from '@webstack/components/UiForm/controller/UiForm';
 import { IFormField } from '@webstack/components/UiForm/models/IFormModel';
+import useWindow from '@webstack/hooks/window/useWindow';
 
 // Remember to create a sibling SCSS file with the same name as this component
 
 const ProductBuild: React.FC = () => {
+  const {width}= useWindow();
   const [view, setView] = useState<string>('loading');
   const defaultValues = {
     usageOptions: [
@@ -22,9 +24,10 @@ const ProductBuild: React.FC = () => {
   const [buildFields, setBuildFields] = useState<IFormField[]>(stepOne);
   const views: any = {
     products: <ProductsListing
-      scrollX={true}
+      scrollX={width>1100&&true}
+      // variant={width>1100&&"full-width"||undefined}
       onSelect={console.log}
-      hide={'header'}
+      // hide={'header'}
     />
   };
   const handleFormChange = (e: any) => {
@@ -54,17 +57,18 @@ const ProductBuild: React.FC = () => {
     <>
       <style jsx>{styles}</style>
       <div className='product-build'>
+        {/* {JSON.stringify(buildFields)} */}
         {/* <UiDev data={buildFields} /> */}
         <div className='product-build--header'>
           Product Build
         </div>
         <div className='product-build__body '>
+          <div className='product-build__body--form'>
+            <UiForm title='Start here, to Configure your Nirvana' fields={buildFields} variant='lite' onChange={handleFormChange} />
+          </div>
           <div className='product-build__body--content '>
             {views?.[view]}
 
-          </div>
-          <div className='product-build__body--form'>
-            <UiForm title='Start here, to Configure your Nirvana' fields={buildFields} variant='lite' onChange={handleFormChange} />
           </div>
         </div>
       </div>

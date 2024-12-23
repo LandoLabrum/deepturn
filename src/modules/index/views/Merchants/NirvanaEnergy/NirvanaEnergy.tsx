@@ -121,7 +121,7 @@ const NirvanaEnergy = () => {
             <div className='nirvana-energy__bg-overlay--content__glb' >
             <GLBViewer
               width={width > 1100 ? "var(--s-9-width)" : `100%`} 
-              height={width > 1100 ? "var(--s-9-width)" : "100vw"}
+              height={width > 1100 ? "var(--s-9-width)" : "100%"}
               modelPath='/merchant/nirv1/3dModels/products/MetalBox.glb'
             />
             </div>}
