@@ -28,7 +28,7 @@ const ProductBuild: React.FC = () => {
   const [view, setView] = useState<undefined | string>();
   const [lastView, setLasView] = useState<undefined | string>();
   const [message, setMessage] = useState<any>();
-  const { request, fields, setField, onSubmit, response, clearForm, fieldErrors } = useProductBuildForm();
+  const {  fields, setField, onSubmit, response, clearForm, fieldErrors } = useProductBuildForm();
   const [loading, setLoading] = useLoader();
 
   const user = useUser();
@@ -122,10 +122,10 @@ const ProductBuild: React.FC = () => {
     (e: any, requestPath?: string | string[]) => {
       if (!loading?.active) setLoading({ active: true });
 
-      const { name, value, checked } = e?.target || {};
+      const { name, value, checked, type } = e?.target || {};
       if (!name) return;
 console.log({name,value,checked})
-      const fieldData = { name, value, checked };
+      const fieldData = { name, value, checked, type };
 
       if (requestPath) {
         // console.log({requestPath})

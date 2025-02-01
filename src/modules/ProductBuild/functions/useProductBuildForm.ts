@@ -26,7 +26,7 @@ const useProductBuildForm = () => {
     const [request, setRequest] = useState<any | undefined>();
 
     const onSubmit = async () => {
-                console.log({ ONSUBMIT: request })
+        console.log({ ONSUBMIT: request })
 
         //         //         "metadata": {
         //         //             "build": {
@@ -55,15 +55,15 @@ const useProductBuildForm = () => {
         //    console.log({
         //     FUNC:"B$", request
         //    })
-          const calculateTotal = (items: IFormField[]) => {
+        const calculateTotal = (items: IFormField[]) => {
             return items.reduce((total, item) => {
-              if (item && item?.checked && !isNaN(Number(item.value))) {
-                return total + Number(item.value);
-              }
-              return total;
+                if (item && item?.checked && !isNaN(Number(item.value))) {
+                    return total + Number(item.value);
+                }
+                return total;
             }, 0);
-          };
-          const total =fields && calculateTotal(fields);
+        };
+        const total = fields && calculateTotal(fields);
         let preppedRequest: any = {
             ...request.user,
             metadata: {
@@ -74,7 +74,7 @@ const useProductBuildForm = () => {
                 merchant: environment.merchant,
                 build: {
                     id: `${environment.merchant.mid}-${FORMNUM}`,
-                    data: {...request?.metadata?.build?.data, total},
+                    data: { ...request?.metadata?.build?.data, total },
                     //   data:request.metadata.
                     // buildFields.reduce((acc: any, item: any) => {
                     //   if (item.selected) {
@@ -86,7 +86,7 @@ const useProductBuildForm = () => {
                 }
             }
         }
-        console.log({"FUNC": "aFTER",preppedRequest})
+        console.log({ "FUNC": "aFTER", preppedRequest })
         try {
             const _response = await memberService.signUp(preppedRequest);
             console.log({ reps: _response });
@@ -127,15 +127,16 @@ const useProductBuildForm = () => {
     const clearForm = () => {
         deleteSessionItem(buildId);
     }
-    const setField = (p0: { name: string; value: any; checked?: boolean; path?: string | string[] }) => {
-        const { name, value, checked, path } = p0;
-        let updatedFields;
-        if (checked === false) {
+    const setField = (p0: { name: string; value: any; checked?: boolean; path?: string | string[], type?: string }) => {
+        const { name, value, checked, path, type } = p0;
+        let updatedFields: any;
+        if (checked === false && type === 'checkbox') {
             updatedFields = (fields || []).filter(field => field.name !== name || field.value !== value);
+        
         } else {
-            console.log({ func:"136",name, value, checked, path })
             const fieldIndex = (fields || []).findIndex(field => field.name === name);
             updatedFields = [...(fields || [])];
+            console.log({ FUNC: 50, fieldIndex, fI:updatedFields[fieldIndex] })
             if (fieldIndex !== -1) {
                 updatedFields[fieldIndex] = { ...p0, path: p0.path || '' };
             } else {
@@ -143,7 +144,7 @@ const useProductBuildForm = () => {
             }
         }
 
-        const updatedRequest = updatedFields.reduce((acc: { [key: string]: any }, field) => {
+        const updatedRequest = updatedFields.reduce((acc: { [key: string]: any }, field: any) => {
             const paths = Array.isArray(field.path) ? field.path : [field.path];
             paths.forEach((path: any) => {
                 if (path) {
@@ -163,7 +164,6 @@ const useProductBuildForm = () => {
                         }
                     }
                 } else {
-                    console.log({ FUNC: 72, field })
                     acc[field.name] = field.value;
                 }
             });
@@ -192,7 +192,7 @@ const useProductBuildForm = () => {
         }
     }, [sessionData, buildId, clearForm]);
 
-    return { request, fields, setField, onSubmit, response, clearForm, fieldErrors };
+    return { fields, setField, onSubmit, response, clearForm, fieldErrors };
 };
 
 export default useProductBuildForm;

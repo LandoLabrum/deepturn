@@ -75,8 +75,10 @@ const UiTextBalance: React.FC<UiTextBalanceProps> = ({ text, animate = 'keyboard
         {displayedText.split(' ').map((word, index) => (
           <div
             key={index}
+            className="ui-text-balance__text"
             style={{
               fontSize: scales[index] ? `${scales[index]}px` : '10px',
+              whiteSpace: 'nowrap',
             }}
           >
             {word}
