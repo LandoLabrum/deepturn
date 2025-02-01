@@ -12,6 +12,7 @@ export type OForm = {
 } | boolean | string;
 
 export type IFormField = {
+    checked?: boolean;
     name: string;
     id?: string;
     error?: string;

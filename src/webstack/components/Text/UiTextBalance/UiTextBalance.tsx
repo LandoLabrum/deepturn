@@ -77,8 +77,6 @@ const UiTextBalance: React.FC<UiTextBalanceProps> = ({ text, animate = 'keyboard
             key={index}
             style={{
               fontSize: scales[index] ? `${scales[index]}px` : '10px',
-              whiteSpace: 'nowrap',
-              textAlign: 'center',
             }}
           >
             {word}

@@ -605,7 +605,7 @@ export default class MemberService
       const expires = parseInt(guestToken.exp as any) * 1000;
       const diff = expires - now;
       if (diff > 0) {
-        alert(1)
+        alert('expired user')
         this._timeout = setTimeout(() => {
           this._getCurrentGuest(true);
         }, diff + 1000) as any;

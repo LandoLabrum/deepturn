@@ -46,9 +46,9 @@
     min-width: 450px;
     max-width: var(--s-6-width);
     @media(max-height: 900px) {
-        top: unset;
+        top: var(--s-9);
         // top:var(--s-1);
-        // bottom:var(--s-9);
+        bottom:var(--s-9);
     }
     @media(max-width: 900px) {
         min-width: unset;
@@ -57,7 +57,7 @@
         margin: 0 auto;
         padding-bottom:var(--s-9);
         top: var(--s-9);
-        bottom: var(--s-9);
+        // bottom: var(--s-9);
         // height: max-content;
     }
     &__popup {
@@ -217,7 +217,9 @@
                 height: max-content;
                 padding: var(--s-9);
             }
-    
+            @media(max-height: 900px) {
+                overflow: visible;
+            }
             &__fullscreen {
                 // z-index: 1;
                 margin-bottom: 0;

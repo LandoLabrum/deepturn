@@ -13,15 +13,16 @@ interface IContactFormProps {
   onSubmit: (contactData: any) => void;
   user?: any;
   fieldErrors?: any;
+  onChange?: (e: any) => void;
   payment?: any;
   title?: string | React.ReactElement | boolean;
 }
 
 const ContactForm: React.FC<IContactFormProps> = (props) => {
-  const { onSubmit, user, submit, title = 'contact', fieldErrors } = props;
+  const { onSubmit, user, onChange, submit, title = 'contact', fieldErrors } = props;
   const windowSize = useWindow();
 
-  const getWidth = (): string => windowSize.width >= 900 ? "33%" : "100%";
+  const getWidth = (): string => windowSize.width >= 900 ? "50%" : "100%";
   const width = getWidth();
 
   const defaultContactFields: IFormField[] = [
@@ -39,7 +40,7 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
     setDisabled(!isFormComplete);
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let fieldsRef = fields.map((field: IFormField) => {
       if (field.name === name) {
@@ -48,6 +49,7 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
       }
       return field;
     });
+    onChange?.(e);
     setFields(fieldsRef);
     handleDisabled(fieldsRef);
   };
@@ -104,6 +106,27 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
   };
 
   useEffect(() => {
+    if (user && Array.isArray(user)) {
+      const updatedFields = fields.map(field => {
+        const userField = user.find(u => u.name === field.name);
+
+        if (userField) {
+          if (field.name === "address" && typeof userField.v === "object") {
+            // Flatten the address object into a single string (or handle it as required)
+            field.value = `${userField.v.line1}, ${userField.v.city}, ${userField.v.state}, ${userField.v.postal_code}`;
+          } else {
+            field.value = userField.v;
+          }
+        }
+        return field;
+      });
+
+      setFields(updatedFields);
+      handleDisabled(updatedFields); // Ensure the disabled state updates accordingly
+    }
+  }, []);
+
+  useEffect(() => {
     if (fieldErrors) {
       const updatedFields = fields.map((field: IFormField) => {
         const errorField = findField(fieldErrors, field.name);
@@ -117,10 +140,15 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
   useEffect(() => {
     const handleResize = () => {
       const newWidth = getWidth();
-      setFields(prevFields => prevFields.map(field => ({
-        ...field,
-        width: field.name !== 'name' ? newWidth : field.width
-      })));
+      setFields(prevFields => prevFields.map(field => (
+        // console.log(document.getElementsByName(field.name)?.[0]?.offsetWidth>200&&"050%"||newWidth),
+        {
+          ...field,
+          width: field.name !== 'name' ?
+            // Controls minWidth for name field
+            (document.getElementsByName(field.name)?.[0]?.offsetWidth > 200 && "50%" || newWidth)
+            : field.width
+        })));
     };
 
     handleResize(); // Call it once to set initial widths
@@ -130,6 +158,7 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
     <>
       <style jsx>{styles}</style>
       <div className='contact-form'>
+        {/* {JSON.stringify(user)} */}
         {title && <div className='contact-form__title'>{title}</div>}
         {fieldErrors && (
           <ul>
@@ -143,7 +172,7 @@ const ContactForm: React.FC<IContactFormProps> = (props) => {
         <UiForm
           fields={fields}
           disabled={disabled}
-          onChange={onChange}
+          onChange={handleChange}
           onSubmit={handleFormSubmit}
           submitText={submit?.text}
         />
