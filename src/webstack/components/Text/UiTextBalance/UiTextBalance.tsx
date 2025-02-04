@@ -36,7 +36,7 @@ const UiTextBalance: React.FC<UiTextBalanceProps> = ({ text, animate = 'keyboard
 
         while (
           testDiv.offsetWidth < containerWidth * 0.9 &&
-          testDiv.offsetHeight < containerHeight / words.length
+          testDiv.offsetHeight < containerHeight / words.length 
         ) {
           fontSize += 1;
           testDiv.style.fontSize = `${fontSize}px`;
@@ -56,7 +56,8 @@ const UiTextBalance: React.FC<UiTextBalanceProps> = ({ text, animate = 'keyboard
       setDisplayedText('');
       let currentIndex = 0;
       const typingInterval = setInterval(() => {
-        setDisplayedText((prev) => prev + text.charAt(currentIndex));
+
+        setDisplayedText((prev) => prev + text.charAt(currentIndex - 1));
         currentIndex++;
         if (currentIndex === text.length) {
           clearInterval(typingInterval);
@@ -66,24 +67,25 @@ const UiTextBalance: React.FC<UiTextBalanceProps> = ({ text, animate = 'keyboard
     } else {
       setDisplayedText(text);
     }
-  }, [animate, text]);
+  }, [text]);
 
   return (
     <>
       <style jsx>{styles}</style>
       <div ref={containerRef} className="ui-text-balance">
-        {displayedText.split(' ').map((word, index) => (
-          <div
-            key={index}
-            className="ui-text-balance__text"
-            style={{
-              fontSize: scales[index] ? `${scales[index]}px` : '10px',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {word}
-          </div>
-        ))}
+        <div className="ui-text-balance__content">
+          {displayedText.split(' ').map((word, index) => (
+            <div
+              key={index}
+              className="ui-text-balance__text"
+              style={{
+                fontSize: scales[index] ? `${scales[index]}px` : '10px',
+              }}
+            >
+              {word}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

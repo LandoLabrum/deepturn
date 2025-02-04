@@ -1,8 +1,9 @@
-.d-flex{
- display: flex;
- justify-content: center;
- align-items: center;
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 @keyframes grow-up {
     0% {
         height: 0;
@@ -39,6 +40,7 @@
     }
 
     min-height: max-content;
+
     @media(max-width:900px) {
         min-height: unset;
         overflow-x: hidden;
@@ -46,6 +48,7 @@
         align-items: flex-start;
         overflow-y: auto;
     }
+
     &__header {
         width: var(--s-4-width);
         min-height: var(--s-element);
@@ -53,6 +56,7 @@
         justify-content: flex-start;
         padding: 0 var(--s-4);
         border-bottom: solid 1px var(--gray-70);
+
         &--title {
             line-height: 1;
             width: inherit;
@@ -61,21 +65,23 @@
             color: var(--gray-50);
         }
     }
-    
+
     border: solid 1px var(--gray-70);
     border-radius: var(--border-radius);
     overflow: hidden;
     height: 100%;
+
     &__container {
         background-color: var(--black);
         box-shadow: inset 0 -10px 15px 10px var(--gray-70-o);
         overflow-x: hidden;
         width: 100%;
         height: var(--s-9-width);
+
         &--content {
             height: 100%;
             width: 100%;
-            
+
             // @media(min-width:900px) {
             //     min-height: 400px;
             //     // min-height: 500px;
@@ -91,23 +97,25 @@
                 gap: var(--s-9);
                 width: 100%;
                 max-width: 30px;
+
                 &:hover {
                     filter: brightness(1.2)
                 }
 
                 // @media(max-width:900px) {
-                    height: 35px;
-                    max-width: calc(100% - 20px);
-                    margin: auto;
-                    flex-direction: row;
-                    justify-content: flex-start;
-                    align-items: center;
-                    
-                    &::before {
-                        content: attr(data-key);
-                        white-space: nowrap;
-                        color: var(--gray-50);
-                    }
+                height: 35px;
+                max-width: calc(100% - 20px);
+                margin: auto;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+
+                &::before {
+                    content: attr(data-key);
+                    white-space: nowrap;
+                    color: var(--gray-50);
+                }
+
                 // }
 
                 .column-container {
@@ -118,25 +126,13 @@
                     justify-content: flex-end;
                     flex-direction: column;
 
-                    @media(min-width:1100px) {
+                    justify-content: space-between;
+                    flex-direction: row-reverse;
+                    animation: grow-right 2s;
 
-                        justify-content: space-between;
-                        // animation: grow-up 2s;
-                    }
-
-                    // @media(max-width:900px) {
-                    //     flex-direction: row-reverse;
-                    //     animation: grow-right 2s;
-                    // }
-          flex-direction: row-reverse;
-                        animation: grow-right 2s;
                     &__value {
-                        // visibility: hidden;
                         text-align: center;
                         padding: 0 var(--s-9);
-                        // @media(max-width:900px) {
-                        //     visibility: visible;
-                        // }
                     }
 
                     &:hover {
@@ -194,7 +190,7 @@
                         // display: none;
 
                         // @media(max-width:900px) {
-                            // display: unset;
+                        // display: unset;
                         // }
                     }
                 }
@@ -207,9 +203,8 @@
                 color: var(--gray-50);
                 white-space: nowrap;
                 text-align: center;
-        
-                @media(max-width:900px) {
-                }
+
+                @media(max-width:900px) {}
             }
         }
     }

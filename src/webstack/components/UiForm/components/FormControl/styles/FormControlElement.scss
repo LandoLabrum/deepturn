@@ -158,6 +158,38 @@
 
     // PSUEDO's
     // FORM CONTROL ELEMENTS - APPLY HELPERS
+    .inherit {
+        // Inherits properties from the parent
+        --ui-icon-color: inherit;
+        --ui-icon-width: inherit;
+        --ui-icon-height: inherit;
+        text-decoration: inherit;
+        color: inherit;
+        background-color: inherit;
+        height: inherit;
+        min-height: inherit;
+        max-height: inherit;
+        width: inherit;
+        min-width: inherit;
+        max-width: inherit;
+        padding: inherit;
+        margin: inherit;
+        display: inherit;
+        justify-content: inherit;
+        align-items: inherit;
+        flex-direction: inherit;
+        gap: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        font-family: inherit;
+        border: inherit;
+        outline: inherit;
+        border-radius: inherit;
+        box-shadow: inherit;
+        aspect-ratio: inherit;
+        position: inherit;
+      
+      }
 
     &:not(&--warning, &--nav-item, &--nav-item--active, &--center, &--glow, &--checkbox, &--primary, &--inherit, &--dark, &--transparent, &--lite, &--flat, &--secondary, &--link, &--select, &--invalid, &--input, &--textarea, &--signature) {
         @extend %element-color;
@@ -381,6 +413,12 @@
         white-space: unset;
         justify-content: flex-start;
         height: auto;
+    }
+    &--inherit{
+        display: inherit;
+        justify-content: inherit;
+        align-items: inherit;
+        width: inherit;
     }
 
     &--signature {

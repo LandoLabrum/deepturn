@@ -19,30 +19,28 @@ import environment from '~/src/core/environment';
 import keyStringConverter from '@webstack/helpers/keyStringConverter';
 import { Router, useRouter } from 'next/router';
 import UiBarGraph from '@webstack/components/Graphs/UiBarGraph/UiBarGraph';
-import { capitalize } from 'lodash';
+import { capitalize, first } from 'lodash';
 
 const ProductBuild: React.FC = () => {
   const { scrollTo, setScrollTo } = useScrollTo({ scrollToTop: true });
   // const view = String(query?.step)?.length?query?.step:'';
-  const { openModal, closeModal, isModalOpen } = useModal();
+  const { openModal, closeModal,replaceModal, isModalOpen } = useModal();
   const [view, setView] = useState<undefined | string>();
   const [lastView, setLasView] = useState<undefined | string>();
   const [message, setMessage] = useState<any>();
-  const {  fields, setField, onSubmit, response, clearForm, fieldErrors } = useProductBuildForm();
+  const { fields, setField, onSubmit, request,response, clearForm, fieldErrors } = useProductBuildForm();
   const [loading, setLoading] = useLoader();
 
   const user = useUser();
   const guest = useGuest();
 
-  const viewKeys = ['usage', 'build', 'contact'];
   const handleView = (newView?: any) => {
+    console.log({request, fields})
     const handleReloadScroll = () => {
       setScrollTo("product-build")
     }
     handleReloadScroll()
-    const checkL = () => {
-      const fieldNames = fields?.map((f) => f.name);
-      const fieldPaths = fields?.map((f) => f.path);
+    // const checkL = () => {
       if (guest) {
         return openModal({
           dismissable: false,
@@ -54,43 +52,24 @@ const ProductBuild: React.FC = () => {
           },
         });
       }
-      // if (fieldNames?.length || fieldPaths?.length) {
-      else if (fieldNames) {
-
+      else if (request && request?.length) {
         return openModal({
           dismissable: false,
           confirm: {
             title: 'Continue where you left off?',
             statements: [
-              { label: 'Continue', onClick: () => setView('usage') },
+              { label: 'Continue', onClick: () => setView('build') },
               { label: 'Restart', onClick: clearForm },
             ],
           },
         });
       }
-      // }
-      // console.log({ guest, fieldNames: fieldNames || "NAMAA" })
-      // console.log({ checkL: JSON.stringify({ fieldNames, fieldPaths, viewKeys }) });
-    };
-
-
-
-    if (!view && firstView) {
-      setView(String(firstView));
-      return checkL();
-
-    }
-
+    if(!view )setView(String(firstView));
     const navViews = ['next', 'back'];
     setLasView(view);
 
     if (newView && !navViews.includes(newView)) {
       setView(newView);
-      // console.log({
-      //   FUNC: 'newView',
-      //   fields,
-      //   newView,
-      // });
       // HANDLE ACTIONS
     } else if (newView == 'back') {
       // console.log({ FUNC: "actionViews", view });
@@ -124,7 +103,7 @@ const ProductBuild: React.FC = () => {
 
       const { name, value, checked, type } = e?.target || {};
       if (!name) return;
-console.log({name,value,checked})
+      // console.log({ name, value, checked })
       const fieldData = { name, value, checked, type };
 
       if (requestPath) {
@@ -142,7 +121,7 @@ console.log({name,value,checked})
         handleView('build');
       }
 
-      setLoading({ active: false });
+      return setLoading({ active: false });
     },
     [setField, loading],
   );
@@ -169,6 +148,7 @@ console.log({name,value,checked})
     onSubmit && await onSubmit?.()
     setLoading({ active: false });
   }
+
   const views: any = {
     usage: (
       <ProductBuildUsageView
@@ -194,7 +174,7 @@ console.log({name,value,checked})
         handleForm(e, 'user')
       }}
       onSubmit={handleSubmit}
-      user={ user }
+      user={user}
     />,
     'invalid': <div className='product-quote__invalid'>
       <div className='product-quote__invalid--status'>
@@ -222,41 +202,12 @@ console.log({name,value,checked})
     </div>
   };
 
-  const currentView = views?.[view ?? ''];
-  const firstView = Object.keys(views)?.[0];
-  const viewsLeft = () => {
-    let context = Number(Object.entries(viewKeys)?.find((vie: any) => vie[1] == view)?.[0]) + 1;
-    return context;
-  }
 
-  const fieldsComplete = fields && calculateTotal(fields) > 20;
-  const buildComplete = view == 'build' && fieldsComplete;
-  const buttonsList = () => {
-    const isDisabled = () =>{
-      if(view == 'usage' && !fields?.length) return true;
-      if(view == 'build' && !fieldsComplete) return true;   
-    }
-    const nextIndex = viewsLeft();
-    const nextBtn = { name: 'next', children: `${viewKeys?.[nextIndex]}`, variant: isDisabled()&&'disabled', disabled: isDisabled(), traits: { afterIcon: "fa-chevron-right", width: "max-content" } }
-    const backBtn = { name: 'back', children: lastView ?? "", traits: { beforeIcon: "fa-chevron-left", width: "max-content", }, }
-    if (view == firstView) return [nextBtn];
-    return [
-      backBtn,
-      nextBtn
-    ]
-  }
+
+
   useEffect(() => {
-    if (loading?.active) console.log({ loading: true, view })
     if (response) {
       setLoading({ active: false })
-      //   {
-      //     "response": {
-      //         "password_email_sent": false,
-      //         "status": "guest",
-      //         "email": "fdsaTEST@test.com",
-      //         "data": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoiY3VzX1JhQ2lmaGxzenJWZ1d1Iiwib2JqZWN0IjoiY3VzdG9tZXIiLCJhZGRyZXNzIjp7ImNpdHkiOiJNdXJyYXkiLCJjb3VudHJ5IjoiVVMiLCJsaW5lMSI6IjU0MzAgUyA5MDAgRSIsImxpbmUyIjoiIiwicG9zdGFsX2NvZGUiOiI4NDEwNyIsInN0YXRlIjoiVVQifSwiYmFsYW5jZSI6MCwiY3JlYXRlZCI6MTczNjgzMTExOCwiY3VycmVuY3kiOm51bGwsImRlZmF1bHRfc291cmNlIjpudWxsLCJkZWxpbnF1ZW50IjpmYWxzZSwiZGVzY3JpcHRpb24iOm51bGwsImRpc2NvdW50IjpudWxsLCJlbWFpbCI6ImZkc2FURVNUQHRlc3QuY29tIiwiaW52b2ljZV9wcmVmaXgiOiJBQ0FERkM2MyIsImludm9pY2Vfc2V0dGluZ3MiOnsiY3VzdG9tX2ZpZWxkcyI6bnVsbCwiZGVmYXVsdF9wYXltZW50X21ldGhvZCI6bnVsbCwiZm9vdGVyIjpudWxsLCJyZW5kZXJpbmdfb3B0aW9ucyI6bnVsbH0sImxpdmVtb2RlIjpmYWxzZSwibWV0YWRhdGEiOnt9LCJuYW1lIjoiZmRzYSBmZHNhZmQiLCJuZXh0X2ludm9pY2Vfc2VxdWVuY2UiOjEsInBob25lIjpudWxsLCJwcmVmZXJyZWRfbG9jYWxlcyI6W10sInNoaXBwaW5nIjpudWxsLCJ0YXhfZXhlbXB0Ijoibm9uZSIsInRlc3RfY2xvY2siOm51bGwsImV4cCI6MTczNjgzMTQxOSwiaWF0IjoxNzM2ODMxMTE5fSwiZm9ybSI6InNpZ24tdXAifQ.EgJ9iINuwejzXwnAhd06r9g2aEUt24iBq9s9_kUn0j4"
-      //     }
-      // }
       if (response?.email) {
         handleView('success');
         setMessage(response.email);
@@ -264,17 +215,46 @@ console.log({name,value,checked})
         handleView(response.status);
         setMessage(response.message);
       }
-      // if (response.email) {handleView('success');}
-      // else if (response?.status) handleView('invalid');
-      // else alert({STATUS:"AN ERROR OCCURRED, PLEASE NOTIFY admin@deepturn.com", data:response})
+    }else if(request)handleView();
+    console.log({R:request?.length})
+  }, [request, response]);
 
-    } else {
-      handleView();
-    }
-  }, [response]);
-  const viewKeysLen = viewKeys?.length
+
+  const viewKeys = ['usage', 'build', 'contact'];
+
+  const buttonsList = () => {
+    const isDisabled = () => {
+      if (view == 'usage'){
+        // HAS FIELD VALUES
+        if (fields && fields.length > 0){
+          return false;
+        }
+        return true;
+      }
+      if (view == 'build' && !fieldsComplete) return true;
+      return false;
+    };
+    const nextIndex = viewsLeft();
+    const nextBtn = { name: 'next', children: `${viewKeys?.[nextIndex]}`, variant: isDisabled() && 'disabled', disabled: isDisabled(), traits: { afterIcon: "fa-chevron-right", width: "max-content" } }
+    const backBtn = { name: 'back', children: lastView ?? "", traits: { beforeIcon: "fa-chevron-left", width: "max-content", }, }
+    // if (view == firstView) return [nextBtn];
+    return [
+      backBtn,
+      nextBtn
+    ]
+  }
+
+  const currentView = views?.[view ?? ''];
+  const firstView = Object.keys(views)?.[0];
+  const fieldsComplete = fields && calculateTotal(fields) > 20;
+  const buildComplete = view == 'build' && fieldsComplete;
+  const viewKeysLen = viewKeys?.length + 1;
+  const viewsLeft = () => {
+    let context = Number(Object.entries(viewKeys)?.find((vie: any) => vie[1] == view)?.[0]) + 1;
+    return context;
+  }
   const data: any = [
-    { count: viewsLeft() , date: `${viewsLeft()} of ${viewKeysLen}` },
+    { count: viewsLeft(), date: `${viewsLeft()} of ${viewKeysLen}` },
     { count: viewKeysLen, date: '' },
   ];
   return (
@@ -283,22 +263,28 @@ console.log({name,value,checked})
       <div
         id='product-build'
         className='product-build'
-        >
-        {viewsLeft() < viewKeysLen + 1
-          && (
-            <>
-              <div className='product-build--header'>
-                <div className='product-build--header__marquee'>
-                  {environment.merchant.name && <UiIcon icon={`${environment.merchant.name}-logo`} />}
-                  {capitalize(view)} | Step {viewsLeft()}, of {viewKeysLen} .
-                </div>
-                <div className='product-build--header__nav'>
-                  {buttonsList().map((btn: any, index: number) => btn && btn?.children !== "undefined" &&
-                    <div key={index}>
-                      <UiButton variant='inherit' onClick={(e)=>handleView(e.target.name)}{...btn}>{btn?.children}</UiButton>
-                      </div>
-                  )}
-                  {/* <UiButtonGroup
+      >
+        {JSON.stringify({
+          fields:Object.values(fields),
+          // viewsLeft: viewsLeft(),
+          // isDisabled:isDisabled()?.toString()||'n/a',
+          // buildComplete,
+          // view
+        })}
+        {viewsLeft() < viewKeysLen && (
+          <>
+            <div className='product-build--header'>
+              <div className='product-build--header__marquee'>
+                {environment.merchant.name && <UiIcon icon={`${environment.merchant.name}-logo`} />}
+                {capitalize(view)} | Step {viewsLeft()}, of {viewKeysLen} .
+              </div>
+              <div className='product-build--header__nav'>
+                {buttonsList().map((btn: any, index: number) => btn && btn?.children !== "undefined" &&
+                  <div key={index}>
+                    <UiButton variant='inherit' onClick={(e) => handleView(e.target.name)}{...btn}>{btn?.children}</UiButton>
+                  </div>
+                )}
+                {/* <UiButtonGroup
                     variant='inherit'
                     btnSize='sm'
                     onSelect={(e: any) => {
@@ -307,15 +293,15 @@ console.log({name,value,checked})
                     }} size={{ md: 2 }}
                     btns={buttonsList()}
                   /> */}
-                </div>
-
               </div>
-        {view&&viewKeys?.includes(view)&&<UiBarGraph data={data} />}
 
-              {/* <UiBarGraph data={data} /> */}
-            </>
+            </div>
+            {view && viewKeys?.includes(view) && <UiBarGraph data={data} />}
 
-          ) || <div className='product-build--no-header'></div>}
+            {/* <UiBarGraph data={data} /> */}
+          </>
+
+        ) || <div className='product-build--no-header'></div>}
         <div className="product-build--body">
           <div className='product-build--body__description'>
             {defaultProductBuild?.[String(view)]?.description}

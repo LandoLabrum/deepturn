@@ -115,7 +115,7 @@ const NirvanaEnergy = () => {
           {/* </div> */}
           <div className='nirvana-energy__bg-overlay--content'>
             <div className='nirvana-energy__bg-overlay--content__text' >
-              {bgLoaded && <UiTextBalance text="_Configure your backup system"/>}
+              {bgLoaded && <UiTextBalance text="CONFIGURE YOUR BACKUP SYSTEM"/>}
             </div>
             {view == 'start' && 
             <div className='nirvana-energy__bg-overlay--content__glb' >

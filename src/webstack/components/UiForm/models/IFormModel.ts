@@ -1,4 +1,3 @@
-import { IRoute } from "@shared/components/Navbar/data/routes";
 import { IFormControlVariant } from "@webstack/components/AdapTable/models/IVariant";
 import { ITraits } from "@webstack/components/UiForm/components/FormControl/FormControl";
 import { UserAddress } from "~/src/models/ICustomer";
@@ -12,7 +11,6 @@ export type OForm = {
 } | boolean | string;
 
 export type IFormField = {
-    checked?: boolean;
     name: string;
     id?: string;
     error?: string;
@@ -39,6 +37,9 @@ export type IFormField = {
             message?: string
         };
     }
+    // OPTIONALS
+    checked?: boolean;
+    path?: string | string[];       
 }
 
 export interface IForm {
