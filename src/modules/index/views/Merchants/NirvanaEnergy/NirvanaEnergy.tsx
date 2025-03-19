@@ -115,7 +115,7 @@ const NirvanaEnergy = () => {
           {/* </div> */}
           <div className='nirvana-energy__bg-overlay--content'>
             <div className='nirvana-energy__bg-overlay--content__text' >
-              {bgLoaded && <UiTextBalance text="CONFIGURE YOUR BACKUP SYSTEM"/>}
+              {bgLoaded && <UiTextBalance text="CALCULATE YOUR NEEDS"/>}
             </div>
             {view == 'start' && 
             <div className='nirvana-energy__bg-overlay--content__glb' >
@@ -141,7 +141,7 @@ const NirvanaEnergy = () => {
 
         <div className='nirvana-energy__content--first'>
           <div className='nirvana-energy__content--title'>
-            It&apos;s Time to Create your Nirvana!
+            Protect your future, create your Nirvana.
           </div>
           <div className='nirvana-energy__content--label'>
             On and Off-grid battery back up
@@ -152,7 +152,16 @@ const NirvanaEnergy = () => {
 
 
           {view == 'start' && <>
-            <div className='list'>
+          <div className='d-flex s-w-100' style={{minHeight:'500px'}}>
+            {/* <video src="/merchant/nirv1/videos/nirv1_questions.mp4" width='100%' autoPlay={true} muted/> */}
+            {width > 1100 ? (<UiMedia height={500}
+          // onLoad={(props) => setBgLoaded(true)}
+            type='video' autoplay={true} muted={true} loop={true} src="https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/nirv1_questions.mp4" />) : (
+            <UiMedia           
+              alt='nirv1-home' src='/merchant/nirv1/backgrounds/redrock-wall.jpeg' />
+          )}
+          </div>
+            {/* <div className='list'>
               <div className='nirvana-energy__content--sub-title'>6 Key Questions to Enhance Your Solar System with Batteries</div>
               <div className='nirvana-energy__content--label'><UiIcon icon="fa-cube" />Can I add batteries to my exisiting solar system?</div>
               <div className='nirvana-energy__content--label'><UiIcon icon="fa-cube" />What determines that the battery will back up what I need?</div>
@@ -160,7 +169,7 @@ const NirvanaEnergy = () => {
               <div className='nirvana-energy__content--label'><UiIcon icon="fa-cube" />What does this battery setup have that others dont?</div>
               <div className='nirvana-energy__content--label'><UiIcon icon="fa-cube" />Is there a limit to how much the batteries can power in my home at the same time?</div>
               <div className='nirvana-energy__content--label'><UiIcon icon="fa-cube" />Can I change what I want backed up in the future</div>
-            </div>
+            </div> */}
 
             <div className='nirvana-energy__content--title'>
               The Importance of Backup Batteries
