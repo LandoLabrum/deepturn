@@ -264,13 +264,13 @@ const ProductBuild: React.FC = () => {
         id='product-build'
         className='product-build'
       >
-        {JSON.stringify({
+        {/* {JSON.stringify({
           fields:Object.values(fields),
           // viewsLeft: viewsLeft(),
           // isDisabled:isDisabled()?.toString()||'n/a',
           // buildComplete,
           // view
-        })}
+        })} */}
         {viewsLeft() < viewKeysLen && (
           <>
             <div className='product-build--header'>

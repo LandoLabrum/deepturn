@@ -1,16 +1,15 @@
 // Relative Path: ./UiButtonGroup.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './UiButtonGroup.scss';
-import AdaptGrid, { IAdaptGrid } from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
+import AdaptGrid, { iAdaptGrid } from '@webstack/components/Containers/AdaptGrid/AdaptGrid';
 import UiButton, { IButton } from '../../UiButton/UiButton';
 import { IFormControlSize } from '../../FormControl/FormControl';
-import useWindow from '@webstack/hooks/window/useWindow';
 
 
 export interface IUiButtonGroup {
   label?: string;
   variant?: string;
-  size?: IAdaptGrid | IFormControlSize | string;
+  size?: iAdaptGrid | IFormControlSize | string;
   btnSize?: IFormControlSize;
   btns?: IButton[];
   onSelect?: (e: any) => void;

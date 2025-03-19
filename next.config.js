@@ -6,14 +6,32 @@ const nextConfig = {
     // Rule for .scss or .css files
     config.module.rules.push({
       test: /\.s?css$/,
-      use: [
-        defaultLoaders.babel,
+      oneOf: [
         {
-          loader: require("styled-jsx/webpack").loader,
-          options: { type: "scoped" },
+          resourceQuery: /raw/, // Handle imports with `?raw`
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          use: [
+            defaultLoaders.babel,
+            {
+              loader: require('styled-jsx/webpack').loader,
+              options: { type: 'scoped' },
+            },
+          ],
         },
       ],
     });
+    // config.module.rules.push({
+    //   test: /\.s?css$/,
+    //   use: [
+    //     defaultLoaders.babel,
+    //     {
+    //       loader: require("styled-jsx/webpack").loader,
+    //       options: { type: "scoped" },
+    //     },
+    //   ],
+    // });
 
     // Add this to handle ES modules in node_modules
     if (!isServer) {
