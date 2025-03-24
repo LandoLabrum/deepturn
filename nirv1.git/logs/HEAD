@@ -1,72 +1,3 @@
-0000000000000000000000000000000000000000 7040e8d37555e34041acbffb1681de47ddb95fde landolabrum <lando@deepturn.com> 1715475571 +0000	clone: from https://github.com/landolabrum/nirvana-energy.git
-7040e8d37555e34041acbffb1681de47ddb95fde 910ec84c197225a3fff8071222c17496ea4c74bc landolabrum <lando@deepturn.com> 1715475657 +0000	commit: lando 12.05.24-01:00:57
-910ec84c197225a3fff8071222c17496ea4c74bc d5a8af0711dba00580a089723234771fb7ff4dee landolabrum <lando@deepturn.com> 1715475687 +0000	commit: Deploy to gh-pages
-d5a8af0711dba00580a089723234771fb7ff4dee 4b6eeff9774be549eae0a92a6695228f7927940c landolabrum <lando@deepturn.com> 1715476234 +0000	commit: Deploy to gh-pages
-4b6eeff9774be549eae0a92a6695228f7927940c c1aa2cff3be855bffb45232c743a2faffd0ac157 landolabrum <lando@deepturn.com> 1715476372 +0000	commit: Deploy to gh-pages
-c1aa2cff3be855bffb45232c743a2faffd0ac157 fac89c209da4d8d9dc94cc5d354b24d72d354355 landolabrum <lando@deepturn.com> 1715820473 +0000	commit: Deploy to gh-pages
-fac89c209da4d8d9dc94cc5d354b24d72d354355 8dd697c8ddc3a68616a0304c5b77ba1ed8e6df7d landolabrum <lando@deepturn.com> 1715823068 +0000	commit: Deploy to gh-pages
-8dd697c8ddc3a68616a0304c5b77ba1ed8e6df7d a82390358b57b3b5b831d72961061f37d4e7d74e landolabrum <lando@deepturn.com> 1716260464 +0000	commit: Deploy to gh-pages
-a82390358b57b3b5b831d72961061f37d4e7d74e 0ace0362e529214cdabf46c9582d70f1339bf080 landolabrum <lando@deepturn.com> 1716348784 +0000	commit: Deploy to gh-pages
-0ace0362e529214cdabf46c9582d70f1339bf080 50c8cf3a98a58be272e125018dd1e63362ade7a4 landolabrum <lando@deepturn.com> 1716531426 +0000	commit: Deploy to gh-pages
-50c8cf3a98a58be272e125018dd1e63362ade7a4 d6256ed1d76c9c935ed66a1b186f41758ccace01 landolabrum <lando@deepturn.com> 1716537485 +0000	commit: Deploy to gh-pages
-d6256ed1d76c9c935ed66a1b186f41758ccace01 f2b74a356fc3f9f9be54e8541d535f60b1fbc38b landolabrum <lando@deepturn.com> 1716556036 +0000	commit: Deploy to gh-pages
-f2b74a356fc3f9f9be54e8541d535f60b1fbc38b 34a5cdb7326f80b8bb3379029d2dae4fe50ed4d3 landolabrum <lando@deepturn.com> 1716558928 +0000	commit: lando 24.05.24-13:55:28
-34a5cdb7326f80b8bb3379029d2dae4fe50ed4d3 a218cdf1a9c3f8335688bed2a95abdb8c3c41abb landolabrum <lando@deepturn.com> 1719129478 +0000	commit: Deploy to gh-pages
-a218cdf1a9c3f8335688bed2a95abdb8c3c41abb ff0775a9b79231211379db094e121b3c23d1cd88 landolabrum <lando@deepturn.com> 1719129594 +0000	commit: Deploy to gh-pages
-ff0775a9b79231211379db094e121b3c23d1cd88 c622c92cbd4cf5d70934e60bba9bb20d07c8ad77 landolabrum <lando@deepturn.com> 1719129842 +0000	commit: Deploy to gh-pages
-c622c92cbd4cf5d70934e60bba9bb20d07c8ad77 ac4fef3ef598e113f426ecf80f38a3edd354504c landolabrum <lando@deepturn.com> 1719130006 +0000	commit: Deploy to gh-pages
-ac4fef3ef598e113f426ecf80f38a3edd354504c 3835ebda48d1c64c9e4143a58468757876612f26 landolabrum <lando@deepturn.com> 1719142979 +0000	commit: Deploy to gh-pages
-3835ebda48d1c64c9e4143a58468757876612f26 bbe80d2e6a50b937bd484de167d800a48a57cfa9 landolabrum <lando@deepturn.com> 1719144136 +0000	commit: Deploy to gh-pages
-bbe80d2e6a50b937bd484de167d800a48a57cfa9 6f9cf179da81076a79174d505172d317bdb5c4c5 landolabrum <lando@deepturn.com> 1719144185 +0000	commit: Deploy to gh-pages
-6f9cf179da81076a79174d505172d317bdb5c4c5 6281437b8932c8f53360806cb34a615c2f2a90b2 landolabrum <lando@deepturn.com> 1719144789 +0000	commit: Deploy to gh-pages
-6281437b8932c8f53360806cb34a615c2f2a90b2 8833f6274ca08c261ce45029a86da3c2adf4233b landolabrum <lando@deepturn.com> 1719276105 +0000	commit: Deploy to gh-pages
-8833f6274ca08c261ce45029a86da3c2adf4233b 45c6039fb3c1438845faa91c2d7572454c0fe4af landolabrum <lando@deepturn.com> 1719462508 +0000	commit: Deploy to gh-pages
-45c6039fb3c1438845faa91c2d7572454c0fe4af f15b8bef3127c3c5b7386eb0421eae947597bf9b landolabrum <lando@deepturn.com> 1719462537 +0000	commit: Deploy to gh-pages
-f15b8bef3127c3c5b7386eb0421eae947597bf9b d4eb6067aa1ebd392656e293f1cd9c9df13098b3 landolabrum <lando@deepturn.com> 1719630432 +0000	commit: Deploy to gh-pages
-d4eb6067aa1ebd392656e293f1cd9c9df13098b3 914d6a5cae8e73db17b3396fc17d3d39220e03ab landolabrum <lando@deepturn.com> 1719743566 +0000	commit: Deploy to gh-pages
-914d6a5cae8e73db17b3396fc17d3d39220e03ab 2197d00d7b6e051d545c724a387cea3185b3c5c6 landolabrum <lando@deepturn.com> 1719791874 +0000	commit: Deploy to gh-pages
-2197d00d7b6e051d545c724a387cea3185b3c5c6 ea1a915aa7504bbdb0dd0793ce1a6e5bfd97fed8 landolabrum <lando@deepturn.com> 1719798662 +0000	commit: Deploy to gh-pages
-ea1a915aa7504bbdb0dd0793ce1a6e5bfd97fed8 30dd8609d107a6c46ab47a46bd6ab8d5c03a83d3 landolabrum <lando@deepturn.com> 1719919593 +0000	commit: Deploy to gh-pages
-30dd8609d107a6c46ab47a46bd6ab8d5c03a83d3 3c5dac3ffb33c3ffceaab46b53aae16667321e94 landolabrum <lando@deepturn.com> 1730541519 +0000	commit: lando 02.11.24-09:58:39
-3c5dac3ffb33c3ffceaab46b53aae16667321e94 f5cee8f16f053743ed455d88471f830946a102f5 landolabrum <lando@deepturn.com> 1730541733 +0000	commit: Deploy to gh-pages
-f5cee8f16f053743ed455d88471f830946a102f5 ec98a3b07957b6d8eb54769d43f5dae6a5b4f430 landolabrum <lando@deepturn.com> 1731064286 +0000	commit: Deploy to gh-pages
-ec98a3b07957b6d8eb54769d43f5dae6a5b4f430 c0891cc295efd5000ff82bf9884cc590850a9e0a landolabrum <lando@deepturn.com> 1731148372 +0000	commit: Deploy to gh-pages
-c0891cc295efd5000ff82bf9884cc590850a9e0a 38f81dcebc5bb815a1f509ae0d5f897c9bd18fea landolabrum <lando@deepturn.com> 1731153327 +0000	commit: Deploy to gh-pages
-38f81dcebc5bb815a1f509ae0d5f897c9bd18fea 83493cfee0d23e8f75658a58e34bedc607f4634e landolabrum <lando@deepturn.com> 1731155200 +0000	commit: Deploy to gh-pages
-83493cfee0d23e8f75658a58e34bedc607f4634e 28bb895bfeb067567e63c4f95ae3f468e63feb71 landolabrum <lando@deepturn.com> 1731673042 +0000	commit: Deploy to gh-pages
-28bb895bfeb067567e63c4f95ae3f468e63feb71 2c8e19513b8403a0998450572520d63af3c9d7bd landolabrum <lando@deepturn.com> 1731673943 +0000	commit: Deploy to gh-pages
-2c8e19513b8403a0998450572520d63af3c9d7bd 323b02f7dfcf15d08c5583bb9655204378c77f86 landolabrum <lando@deepturn.com> 1731674074 +0000	commit: Deploy to gh-pages
-323b02f7dfcf15d08c5583bb9655204378c77f86 ee3c2f939f3606de21a0841f26f1e96a6bd6f74c landolabrum <lando@deepturn.com> 1731677977 +0000	commit: Deploy to gh-pages
-ee3c2f939f3606de21a0841f26f1e96a6bd6f74c fe1870510599d9a8715b3aca3b4c3af58c044d92 landolabrum <lando@deepturn.com> 1731678144 +0000	commit: Deploy to gh-pages
-fe1870510599d9a8715b3aca3b4c3af58c044d92 8af59fff3073d464dcee52c8bac7d976a37032e6 landolabrum <lando@deepturn.com> 1731678339 +0000	commit: Deploy to gh-pages
-8af59fff3073d464dcee52c8bac7d976a37032e6 01f273fce741be534c220581404233285c03d088 landolabrum <lando@deepturn.com> 1732147025 +0000	commit: lando 20.11.24-23:57:05
-01f273fce741be534c220581404233285c03d088 b94fd398e964ea5a24bbc08a3ff7380be7621bc9 landolabrum <lando@deepturn.com> 1732148245 +0000	commit: Deploy to gh-pages
-b94fd398e964ea5a24bbc08a3ff7380be7621bc9 62243f5842ad1ecb9a29342d1c89c165053bcf2b landolabrum <lando@deepturn.com> 1732149347 +0000	commit: Deploy to gh-pages
-62243f5842ad1ecb9a29342d1c89c165053bcf2b 0683defa21fa59d11f3da7ad3b1dd14b13e998cc landolabrum <lando@deepturn.com> 1732151603 +0000	commit: Deploy to gh-pages
-0683defa21fa59d11f3da7ad3b1dd14b13e998cc a90c6838a77ac80a2bcacb4b47a728775c05768b landolabrum <lando@deepturn.com> 1732457899 +0000	commit: Deploy to gh-pages
-a90c6838a77ac80a2bcacb4b47a728775c05768b 1c25c5ce5a53b480538b052289013f706b7febf1 landolabrum <lando@deepturn.com> 1732457988 +0000	commit: Deploy to gh-pages
-1c25c5ce5a53b480538b052289013f706b7febf1 ad1c0df43a64a218c1c72256a6865d5bfa8f1320 landolabrum <lando@deepturn.com> 1733568511 +0000	commit: Deploy to gh-pages
-ad1c0df43a64a218c1c72256a6865d5bfa8f1320 3cd2dc8433e35dbaf1c130c6b78baf9d56872dcc landolabrum <lando@deepturn.com> 1733568570 +0000	commit: Deploy to gh-pages
-3cd2dc8433e35dbaf1c130c6b78baf9d56872dcc bff1a6552966f31546629abf3a20914094127229 landolabrum <lando@deepturn.com> 1733569004 +0000	commit: Deploy to gh-pages
-bff1a6552966f31546629abf3a20914094127229 f23143e00263eb53d8cf3326e2139311ab6845e1 landolabrum <lando@deepturn.com> 1733569924 +0000	commit: Deploy to gh-pages
-f23143e00263eb53d8cf3326e2139311ab6845e1 a013486c54e91496ac46625fbe7fea70ed2269ec landolabrum <lando@deepturn.com> 1733570094 +0000	commit: Deploy to gh-pages
-a013486c54e91496ac46625fbe7fea70ed2269ec f30ab30682f97ca0a6397119df27b10ba331a397 landolabrum <lando@deepturn.com> 1733570227 +0000	commit: Deploy to gh-pages
-f30ab30682f97ca0a6397119df27b10ba331a397 5a24084cf261f68721927c3fbd52dbabaec57530 landolabrum <lando@deepturn.com> 1733570257 +0000	commit: Deploy to gh-pages
-5a24084cf261f68721927c3fbd52dbabaec57530 16b6a3f3f4af8549d02302b9fb26d107767e5281 landolabrum <lando@deepturn.com> 1733704102 +0000	commit: Deploy to gh-pages
-16b6a3f3f4af8549d02302b9fb26d107767e5281 64cc82a1bd99c38d31a931ad8665c4d375c86b84 landolabrum <lando@deepturn.com> 1733704393 +0000	commit: Deploy to gh-pages
-64cc82a1bd99c38d31a931ad8665c4d375c86b84 6474784ff43ded757a0850f992283cffe6a40fc1 landolabrum <lando@deepturn.com> 1733705189 +0000	commit: Deploy to gh-pages
-6474784ff43ded757a0850f992283cffe6a40fc1 fd3a8c91c9c35101817f3d968e3b4afea3e3d33f landolabrum <lando@deepturn.com> 1733726357 +0000	commit: Deploy to gh-pages
-fd3a8c91c9c35101817f3d968e3b4afea3e3d33f db902d8480014645b550e823ab3ec8c1b5965724 landolabrum <lando@deepturn.com> 1734414738 +0000	commit: lando 17.12.24-05:52:18
-db902d8480014645b550e823ab3ec8c1b5965724 03a46da001e15deb47dfb961f53d14c1107f435d landolabrum <lando@deepturn.com> 1734414819 +0000	commit: Deploy to gh-pages
-03a46da001e15deb47dfb961f53d14c1107f435d 38313fec95e45625d1777c17907c2c8edbc5b86c landolabrum <lando@deepturn.com> 1734578237 +0000	commit: Deploy to gh-pages
-38313fec95e45625d1777c17907c2c8edbc5b86c 4e237da305081c0c4a0406e90facda55af0cf28b landolabrum <lando@deepturn.com> 1734578304 +0000	commit: Deploy to gh-pages
-4e237da305081c0c4a0406e90facda55af0cf28b 81ef41b1cc802baf82fc0bdbb8e1109570c2c157 landolabrum <lando@deepturn.com> 1734578519 +0000	commit: lando 19.12.24-03:21:59
-81ef41b1cc802baf82fc0bdbb8e1109570c2c157 f32245ef9974ed0aa83bc687ee9ca052e16eda49 landolabrum <lando@deepturn.com> 1734581265 +0000	commit: Deploy to gh-pages
-f32245ef9974ed0aa83bc687ee9ca052e16eda49 297e0be7e9dae841bc7d8901e7439a155b6d43f3 landolabrum <lando@deepturn.com> 1734595796 +0000	commit: Deploy to gh-pages
-297e0be7e9dae841bc7d8901e7439a155b6d43f3 d4ac8ae71da097e6d0b60ced6cb0764c40440a4b landolabrum <lando@deepturn.com> 1734595823 +0000	commit: Deploy to gh-pages
-d4ac8ae71da097e6d0b60ced6cb0764c40440a4b 99ae449b026576602e2ee559e16eeafca02d2074 landolabrum <lando@deepturn.com> 1734596387 +0000	commit: Deploy to gh-pages
-99ae449b026576602e2ee559e16eeafca02d2074 a8c911d4ef7c06b785faf924a7fdab650c4c75c8 landolabrum <lando@deepturn.com> 1734596449 +0000	commit: Deploy to gh-pages
-a8c911d4ef7c06b785faf924a7fdab650c4c75c8 0b64e5905febba58ce133d4a6e2e3acce5ca7855 landolabrum <lando@deepturn.com> 1734596654 +0000	commit: Deploy to gh-pages
 0b64e5905febba58ce133d4a6e2e3acce5ca7855 766f13e93ecfeec3a2d5ad42b64dfe671887633a landolabrum <lando@deepturn.com> 1742367898 -0600	commit: Fix corrupted deploy.js
 766f13e93ecfeec3a2d5ad42b64dfe671887633a f4a0d53bbcd08e9d9fc53f970872dd3d90eec13b landolabrum <lando@deepturn.com> 1742367935 -0600	commit: Deploy to gh-pages
 f4a0d53bbcd08e9d9fc53f970872dd3d90eec13b 7b2a654f0afe88fc650e1c4d368617eae2ead576 landolabrum <lando@deepturn.com> 1742367989 -0600	commit: Deploy to gh-pages
@@ -79,3 +10,4 @@ bbc3748fcafa126a08fd6e247683c7443c1431cb d5f4c668058f3259cb61ddf3715d0a01bb412b3
 d5f4c668058f3259cb61ddf3715d0a01bb412b3a d3275ac0cdcc326ff8579f808b2efd7d3700e0e0 landolabrum <lando@deepturn.com> 1742368627 -0600	commit: Deploy to gh-pages
 d3275ac0cdcc326ff8579f808b2efd7d3700e0e0 0c9639d3840acab7041b9f6706c8bde7262827f4 landolabrum <lando@deepturn.com> 1742368828 -0600	commit: Deploy to gh-pages
 0c9639d3840acab7041b9f6706c8bde7262827f4 06460061d751a24391f5900035721e8fc920989a landolabrum <lando@deepturn.com> 1742369065 -0600	commit: Deploy to gh-pages
+06460061d751a24391f5900035721e8fc920989a 5a9153a688a2a9c4d02d9a399317ecb1d8cc7984 landolabrum <lando@deepturn.com> 1742791383 -0600	commit: lando 23.03.25-22:43:03

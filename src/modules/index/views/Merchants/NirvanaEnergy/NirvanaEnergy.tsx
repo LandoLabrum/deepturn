@@ -13,6 +13,7 @@ import useWindow from '@webstack/hooks/window/useWindow';
 import { useRouter } from 'next/router';
 import GLBViewer from '@webstack/components/ThreeComponents/ThreeGLB/ThreeGLB';
 import UiTextBalance from '@webstack/components/Text/UiTextBalance/UiTextBalance';
+import environment from '~/src/core/environment';
 
 const NirvanaEnergyIcon = () => {
   const nStyle = `.nirv{
@@ -153,10 +154,10 @@ const NirvanaEnergy = () => {
 
           {view == 'start' && <>
           <div className='d-flex s-w-100' style={{minHeight:'500px'}}>
-            {/* <video src="/merchant/nirv1/videos/nirv1_questions.mp4" width='100%' autoPlay={true} muted/> */}
+            <video src="/merchant/nirv1/videos/nirv1_questions.mp4" width='100%' autoPlay={true} muted/>
             {width > 1100 ? (<UiMedia height={500}
           // onLoad={(props) => setBgLoaded(true)}
-            type='video' autoplay={true} muted={true} loop={true} src="https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/nirv1_questions.mp4" />) : (
+            type='video' autoplay={true} muted={true} loop={true} src="https://github.com/landolabrum/assets/raw/refs/heads/main/nirv1/b-roll/nirv1_questions.webm" />) : (
             <UiMedia           
               alt='nirv1-home' src='/merchant/nirv1/backgrounds/redrock-wall.jpeg' />
           )}

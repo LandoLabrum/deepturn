@@ -6,6 +6,7 @@ import SurveillanceController from '../SurveillanceController/SurveillanceContro
 import { useRouter } from 'next/router';
 import UiButton from '@webstack/components/UiForm/views/UiButton/UiButton';
 import environment from '~/src/core/environment';
+const serverUrl:string = String(process.env.NEXT_SERVER_URL?.trim())
 
 // Remember to create a sibling SCSS file with the same name as this component
 interface ISurveillanceDetails {
@@ -28,7 +29,7 @@ const SurveillanceDetails: React.FC<ISurveillanceDetails> = ({ id: id }: ISurvei
         </div>
         <div className='surveillance-details__body'>
           <div className='surveillance-details__body--media'>
-            <UiMedia src={`https://tiktok.soy/api/stream/rtsp?id=${id}`} />
+            <UiMedia src={`https://${serverUrl}/api/stream/rtsp?id=${id}`} />
           </div>
           <div className='surveillance-details__body--controls'>
             <SurveillanceController cameraId={id} />
